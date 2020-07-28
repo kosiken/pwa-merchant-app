@@ -3,11 +3,13 @@ import Button from './Button/Button';
 import IconButton from './IconButton/IconButton'
 import SwitchBox from './SwitchBox/SwitchBox';
 import BottomNav from './BottomNav/BottomNav';
+import Typography from './Typography/Typography';
 
 export {
     Input,
     Button,
     IconButton,
     SwitchBox,
-    BottomNav
+    BottomNav,
+    Typography
 };

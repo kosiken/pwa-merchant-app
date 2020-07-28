@@ -6,6 +6,62 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+a {
+  text-decoration: none;
+}
+.f-form {
+  border-radius: 8px;
+  border: none;
+  display: block;
+  flex-shrink: 0;
+  margin: 0 auto;
+  min-height: 0;
+  transition: 0.2s;
+  max-width: 450px;
+  width: 95%;
+  padding: 10px 5px;
+  position: relative;
+}
+
+.flex {
+  display: flex;
+}
+
+.central {
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  &::before {
+    min-height: 30px;
+    padding: 10px;
+    content: "";
+    display: block;
+    box-flex: 1;
+    flex-grow: 1;
+    height: 24px;
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    box-flex: 1;
+    flex-grow: 1;
+    height: 24px;
+    min-height: 63.9996px;
+  }
+}
+
+.brand-div {
+  text-align: center;
+  margin: 10px;
+}
+
+@media all and (min-width: 699px) {
+  .f-form {
+    padding: 40px;
+    border: 1px solid #dadce0;
+  }
 }
