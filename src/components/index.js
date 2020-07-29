@@ -6,7 +6,7 @@ import BottomNav from './BottomNav/BottomNav';
 import Typography from './Typography/Typography';
 import TopBar from './TopBar/TopBar';
 import Checkbox from './Checkbox/Checkbox';
-
+import CustomerListItem from './CustomerListItem/CustomerListItem'
 export {
     Input,
     Button,
@@ -14,5 +14,6 @@ export {
     SwitchBox,
     BottomNav,
     Typography,
-    TopBar,Checkbox
+    TopBar,Checkbox,
+    CustomerListItem
 };

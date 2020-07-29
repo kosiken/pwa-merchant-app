@@ -1,16 +1,20 @@
 import React from 'react';
 import classNames from 'classnames';
 import styles from './IconButton.module.scss';
-function IconButton({children,onClick, active, variant, ...otherProps}) {
-
+function IconButton({children,onClick, active, disabled, variant, ...otherProps}) {
+	const clicked = () => {
+	if(!disabled) onClick()
+	
+	}
   const classes = classNames(styles.IconButton, styles[variant], {
         [styles.active]: active,
+        [styles.disabled]: disabled
        
     })
     
     //console.log(styles)
     return (
-       <span className={classes} onClick={onClick} {...otherProps} >
+       <span className={classes} onClick={clicked} {...otherProps} >
            {children}
        </span>
     )
