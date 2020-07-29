@@ -47,7 +47,7 @@ const CreateOrder = () => {
     }
 
     return (
-        <div>
+        <div style={{minHeight:'100vh'}}>
             <TopBar title="Create Order" />
 
 

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import styles from './IconButton.module.scss';
 function IconButton({children,onClick, active, disabled, variant, ...otherProps}) {
 	const clicked = () => {
-	if(!disabled) onClick()
+	if(!disabled && onClick) onClick()
 	
 	}
   const classes = classNames(styles.IconButton, styles[variant], {
@@ -21,3 +21,5 @@ function IconButton({children,onClick, active, disabled, variant, ...otherProps}
 }
 
 export default IconButton
+
+
