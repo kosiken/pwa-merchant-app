@@ -4,17 +4,18 @@ import './TopBar.scss'
 import IconButton from '../IconButton/IconButton'
 
 import { FiMoreVertical as MoreIcon } from 'react-icons/fi'
-import logo from "../assets/logo-variant.png";
+import logo from "../../assets/logo-variant.png";
 
 const TopBar = () => {
     return (
+     
         <div className="top-bar flex">
             <Link to="/">
                 <img
                     alt=""
                     src={logo}
-                    width="60"
-                    height="60"
+                    width="50"
+                    height="50"
 
                 />
             </Link>

@@ -1,8 +1,10 @@
 .top-bar {
-    width: 100vw;
-    display: flex;
-    position: fixed;
-    top: 0;
-    left: 0;
-    justify-content: space-between;
+  width: 90vw;
+  display: flex;
+  position: sticky;
+  top: 0;
+  left: 0;
+  justify-content: space-between;
+  padding: 15px;
+  margin: 0 auto;
 }

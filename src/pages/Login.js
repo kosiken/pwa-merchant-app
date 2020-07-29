@@ -16,8 +16,8 @@ const Login = () => {
                         height="60"
 
                     /></div>
-                    <Input type="email" name="Email Address" style={{ margin: '0 auto' }} />
-                    <Input type="password" name="Password" style={{ margin: '0 auto' }} />
+                    <Input type="email" name="email" label="Email Address" style={{ margin: '0 auto' }} />
+                    <Input type="password" name="password" label="Password" style={{ margin: '0 auto' }} />
 
                     <Link to="/recovery"><Typography variant="primary" > Forgot Password? </Typography></Link>
                     <Button full>Login</Button>
