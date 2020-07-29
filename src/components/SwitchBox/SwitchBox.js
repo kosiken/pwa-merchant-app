@@ -4,8 +4,8 @@ const SwitchBox = ({ options, value, onChange }) => {
 
     let [selected, setSelected] = useState(!!value ? value : options[0])
     useEffect(() => {
-       if(onChange) onChange(selected)
-   
+        if (onChange) onChange(selected)
+
     }, [selected, onChange])
 
     return (

@@ -11,11 +11,14 @@ import styles from './CustomerListItem.module.scss';
 const CustomerListItem = ({ customer }) => {
     return (
         <div className={[styles['customer-list-item']]}>
-            <span>
-                <UserIcon />
-            </span>
-
-            <Typography>{customer.name}</Typography>
+            <div className={styles['header']}>
+                <span>
+                    <UserIcon />
+                </span>
+                <section className={styles['']}>
+                    <Typography>{customer.name}</Typography>
+                </section>
+            </div>
             <IconButton active>
                 <CloseIcon />
             </IconButton>

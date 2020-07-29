@@ -1,24 +1,21 @@
 @import "../styles/colors.scss";
 
 .typography {
-text-decoration: none;
-
-
-
+  text-decoration: none;
 }
 .title {
-margin: 0
+  margin: 0;
 }
-.secondary{
-    color: $secondary;
+.secondary {
+  color: $secondary;
 }
 .primary {
-    color: $primary;
+  color: $primary;
 }
 .white {
-color: white;
+  color: white;
 }
 
-.gray{
-    color: #868686;
+.gray {
+  color: #868686;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BottomNav} from './components'
+import { BottomNav } from './components'
 import Customers from "./pages/Customers";
 import CreateOrder from "./pages/CreateOrder";
 
@@ -16,12 +16,12 @@ function App() {
         <Route exact path="/customers">
           <Customers />
         </Route>
-         <Route exact path="/login">
+        <Route exact path="/login">
           <Login />
         </Route>
       </Switch>
-      
-      <BottomNav/>
+
+      <BottomNav />
     </Router>
   );
 }

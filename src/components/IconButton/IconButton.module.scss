@@ -1,44 +1,41 @@
 @import "../styles/colors.scss";
 
 .IconButton {
-   
-    opacity: 1;
-    color: #463F3F;
-    font-size: 20px;
-    padding: 5px;
-    cursor: pointer;
-    transition: opacity .2s ease-in;
-      &:hover {
-        opacity: 0.5;
-    }
-    &:focus {
-        opacity: 0.5;
-    }
+  opacity: 1;
+  color: #463f3f;
+  font-size: 20px;
+  padding: 5px;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in;
+  &:hover {
+    opacity: 0.5;
+  }
+  &:focus {
+    opacity: 0.5;
+  }
 
-    &.active {
-        color: $primary;
-    }
+  &.active {
+    color: $primary;
+  }
 
-    &.rounded {
-        border-radius: 50%;
-    }
-    &.beveled-edge {
-        border-radius: 8px;
-        color: white;
-        background-color: $secondary;
-        display: flex;
-justify-content: center;
-align-items: center;
-width: 20%;
-height: 30px;
- font-size: 15px;
-    }
-    
-    &.disabled {
-     color: $gray-100;
+  &.rounded {
+    border-radius: 50%;
+  }
+  &.beveled-edge {
+    border-radius: 8px;
+    color: white;
+    background-color: $secondary;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 30px;
+    font-size: 15px;
+  }
+
+  &.disabled {
+    color: $gray-100;
     background-color: $gray-300;
     cursor: initial;
-    
-    }
+  }
 }
-

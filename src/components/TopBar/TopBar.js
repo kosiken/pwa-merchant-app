@@ -6,12 +6,12 @@ import Typography from '../Typography/Typography'
 import { FiMoreVertical as MoreIcon } from 'react-icons/fi'
 import logo from "../../assets/logo-variant.png";
 
-const TopBar = ({title, btn}) => {
+const TopBar = ({ title, btn }) => {
     return (
-     
+
         <div className="top-bar flex">
-            {!!btn? (<div> {btn}</div>):(<Link to="/">
-            
+            {!!btn ? (<div> {btn}</div>) : (<Link to="/">
+
                 <img
                     alt=""
                     src={logo}
@@ -19,13 +19,13 @@ const TopBar = ({title, btn}) => {
                     height="40"
 
                 />
-                </Link>)
-                }
-                
-             <Typography title>
-                {title|| 'Page One'}
+            </Link>)
+            }
+
+            <Typography title>
+                {title || 'Page One'}
             </Typography>
-            <IconButton>                      
+            <IconButton>
                 <MoreIcon />
             </IconButton>
         </div>

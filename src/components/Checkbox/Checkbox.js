@@ -1,4 +1,4 @@
-import React, {  useCallback, useState, forwardRef } from 'react';
+import React, { useCallback, useState, forwardRef } from 'react';
 import classNames from 'classnames';
 
 import styles from './Checkbox.module.scss';
