@@ -1,0 +1,67 @@
+@import "../styles/colors.scss";
+
+.checkbox {
+  color: #3d6084;
+  display: flex;
+
+  align-items: center;
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
+
+  .checkbox-label {
+    color: inherit;
+  }
+  .checkbox-span {
+    display: inherit;
+    margin: 0 0 1px 0;
+    color: #bfcada;
+  }
+
+  .checkbox-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    margin-right: 12px;
+  }
+
+  .checkbox-icon-checked {
+    display: none;
+  }
+
+  &.active {
+    .checkbox-icon-unchecked {
+      display: none;
+    }
+    .checkbox-icon-checked {
+      display: inherit;
+
+      color: $secondary;
+    }
+  }
+
+  &:focus-within {
+    .checkbox-icon-unchecked {
+      color: #6f88a2;
+    }
+  }
+
+  &:hover {
+    .checkbox-icon-unchecked {
+      color: #6f88a2;
+    }
+  }
+
+  &.disabled {
+    color: #bfcada;
+    .checkbox-icon-unchecked {
+      color: inherit;
+    }
+    .checkbox-icon-checked {
+      color: inherit;
+    }
+  }
+}

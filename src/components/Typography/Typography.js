@@ -7,13 +7,13 @@ import styles from './Typography.module.scss';
 function Typography(props) {
 
    const {title,  inline, small, children,variant,  ...otherProps} = props;
-
+   const classes2 = classNames(styles.typography,styles.title, styles[variant] );
    const classes = classNames(styles.typography, styles[variant] );
    if(title) {
 return (
-    <h1 className={classes} {...otherProps}>
+    <h4 className={classes2} {...otherProps}>
         {children}
-    </h1>
+    </h4>
 )
    }
    if(inline) {

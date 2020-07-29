@@ -5,7 +5,7 @@ import SwitchBox from './SwitchBox/SwitchBox';
 import BottomNav from './BottomNav/BottomNav';
 import Typography from './Typography/Typography';
 import TopBar from './TopBar/TopBar';
-
+import Checkbox from './Checkbox/Checkbox';
 
 export {
     Input,
@@ -14,5 +14,5 @@ export {
     SwitchBox,
     BottomNav,
     Typography,
-    TopBar
+    TopBar,Checkbox
 };
