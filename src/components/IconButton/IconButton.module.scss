@@ -18,5 +18,20 @@
     &.active {
         color: $primary;
     }
+
+    &.rounded {
+        border-radius: 50%;
+    }
+    &.beveled-edge {
+        border-radius: 8px;
+        color: white;
+        background-color: $secondary;
+        display: flex;
+justify-content: center;
+align-items: center;
+width: 20%;
+height: 40px;
+ font-size: 15px;
+    }
 }
 
