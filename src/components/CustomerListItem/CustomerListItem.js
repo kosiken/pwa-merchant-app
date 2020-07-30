@@ -15,14 +15,22 @@ const CustomerListItem = ({ customer }) => {
                 <span>
                     <UserIcon />
                 </span>
-                <section className={styles['']}>
-                    <Typography>{customer.name}</Typography>
+                <section className={styles['customer-info']}>
+                    <Typography style={{
+                    
+                    fontWeight: '600'
+                    }}>{customer.name} - {customer.phone}</Typography>
                 </section>
             </div>
-            <IconButton active>
-                <CloseIcon />
-            </IconButton>
+           <div className={styles['customer-info']}>
+           
+           <p>
+           
+           Before we do that, there are a couple of functions that we need in order to create
+           the customizable SVG arc. I found these on StackOverflow.
+            </p>
         </div>
+         </div>
     )
 }
 

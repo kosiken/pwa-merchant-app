@@ -1,8 +1,21 @@
 .customer-list-item {
+   margin: 10px;
+   box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302),0 4px 8px 3px rgba(60,64,67,0.149);
+   background-color: #fff;
+   padding-bottom: 10px;
+   &:hover {
+   border: 0.5px solid black;
+   }
   .header {
     display: flex;
-    justify-content: space-between;
+    padding: 10px 10px 0;
     align-items: center;
-    padding: 10px;
+    
+    
+    
+  }
+  
+  .customer-info {
+  margin-left: 1em;
   }
 }

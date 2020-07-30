@@ -20,7 +20,7 @@ const BottomNav = () => {
                 </IconButton>
             </Link>
 
-            <Link to="/profile">
+            <Link to="/customers">
                 <IconButton active={location.pathname === '/profile'}>
                     <UserIcon />
                 </IconButton>

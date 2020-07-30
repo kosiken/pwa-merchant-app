@@ -55,16 +55,55 @@ a {
     min-height: 63.9996px;
   }
 }
+.loader {
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+position: relative;
+width: 100px;
+height: 100px;font-size: 40px;line-height: 30px;padding-top: 10px;
 
+span {
+color: #333;
+font-size: 12px;
+
+font-weight: 600;
+text-transform: uppercase;
+}
+
+}
 .brand-div {
   text-align: center;
   margin: 10px;
 }
 
+.loader-svg {
+position: absolute;
+top: 0;
+
+left: 0;
+width: 100px;
+height: 100px;
+}
+
+.customers {
+width: 100%;
+padding: 10px 0;
+margin: 10px 0;
+max-width:550px;
+min-height: 50vh;
+}
 @media all and (min-width: 699px) {
   .f-form {
     padding: 40px;
     border: 1px solid #dadce0;
      background-color: white;
   }
+  .customers {
+width: 85%;
+padding: 20px 10px;
+margin: 10px auto;
+
+}
 }
