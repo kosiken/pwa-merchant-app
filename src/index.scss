@@ -87,7 +87,7 @@ width: 100px;
 height: 100px;
 }
 
-.customers {
+.customers, .orders {
 width: 100%;
 padding: 10px 0;
 margin: 10px 0;
@@ -100,7 +100,7 @@ min-height: 50vh;
     border: 1px solid #dadce0;
      background-color: white;
   }
-  .customers {
+  .customers,  .orders {
 width: 85%;
 padding: 20px 10px;
 margin: 10px auto;

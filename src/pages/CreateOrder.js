@@ -4,7 +4,7 @@ import { TopBar, SwitchBox, Input, Button, IconButton, Checkbox, Typography } fr
 import uuid from 'uuid/v4';
 
 // import { Link } from "react-router-dom";
-import { FiPlus as PlusIcon } from 'react-icons/fi'
+import { FiPlus as PlusIcon, FiX as CloseIcon } from 'react-icons/fi'
 
 
 
@@ -44,7 +44,10 @@ const CreateOrder = () => {
     console.log(foods)
     setFoods(foods.concat([{ name: currentFood, quantity }]))
   }
-
+	const removeFood = (food) => {
+	console.log(foods.filter(f => f !== food))
+	setFoods(foods.filter(f => f.name !== food))
+	}
   return (
     <div style={{ minHeight: '100vh' }}>
       <TopBar title="Create Order" />
@@ -120,8 +123,10 @@ const CreateOrder = () => {
               justifyContent: 'space-between',
               padding: '0 15px'
             }} className="flex" key={uuid()} >
-              <Typography>{food.name} </Typography>
-              <Typography>{food.quantity} </Typography>
+              <Typography>{food.name} {food.quantity} </Typography>
+              <IconButton style={{color: 'red'}} onClick={() => {removeFood(food.name)}}>
+              	<CloseIcon />
+              </IconButton>
             </section>))}
 
           <Button full>Create Order</Button>

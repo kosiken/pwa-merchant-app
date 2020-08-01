@@ -1,8 +1,8 @@
 import React from 'react';
 import Typography from '../Typography/Typography'
-import IconButton from '../IconButton/IconButton'
 
-import { FiUser as UserIcon, FiX as CloseIcon } from 'react-icons/fi'
+
+import { FiUser as UserIcon } from 'react-icons/fi'
 import styles from './CustomerListItem.module.scss';
 
 

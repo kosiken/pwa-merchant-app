@@ -8,6 +8,7 @@ import TopBar from './TopBar/TopBar';
 import Checkbox from './Checkbox/Checkbox';
 import CustomerListItem from './CustomerListItem/CustomerListItem'
 import Loader from './Loader/Loader';
+import Order from './Order/Order';
 
 
 export {
@@ -19,5 +20,6 @@ export {
     Typography,
     TopBar,Checkbox,
     CustomerListItem,
-    Loader
+    Loader,
+    Order
 };
