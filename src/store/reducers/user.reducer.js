@@ -1,28 +1,21 @@
-  
-import { SIGNUP_USER, LOGIN_USER, LOGOUT_USER } from "../types";
-
+import { SIGNUP_USER, LOGIN_USER, LOGOUT_USER } from '../types';
 
 const initialState = {
   user: {},
   isAuthorized: false,
   debug: false,
   token: null,
- 
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   let returnValue = state;
   let { user } = action;
   if (!user) {
-    console.warn("action.user is empty");
-    
+    console.warn('action.user is empty');
   }
-   let nUser = User.defaultUser();
+  let nUser = {};
   switch (action.type) {
     case SIGNUP_USER:
-     
-    
-
       returnValue = {
         ...state,
         user: nUser,
@@ -32,19 +25,18 @@ export default function(state = initialState, action) {
       break;
 
     case LOGIN_USER:
-  if(!state.debug){
-  console.log(user)
-  
-  returnValue = {
-  ...state,
-  user,
-  isAuthorized: true,
-  token: user.token
-  
-  }
-  
-  break;
-  }
+      if (!state.debug) {
+        console.log(user);
+
+        returnValue = {
+          ...state,
+          user,
+          isAuthorized: true,
+          token: user.token,
+        };
+
+        break;
+      }
       nUser.email = user.email;
 
       returnValue = {
@@ -52,17 +44,15 @@ export default function(state = initialState, action) {
         user: nUser,
         isAuthorized: true,
       };
-      
-     
 
       break;
     case LOGOUT_USER:
       returnValue = initialState;
       break;
     default:
-      console.warn("Unknown action " + action.type);
+      console.warn('Unknown action ' + action.type);
       break;
   }
- 
+
   return returnValue;
-};
+}

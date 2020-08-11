@@ -1,13 +1,13 @@
 body {
   margin: 0;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f5f5f5;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 a {
@@ -25,7 +25,6 @@ a {
   width: 95%;
   padding: 10px 5px;
   position: relative;
- 
 }
 
 .flex {
@@ -39,7 +38,7 @@ a {
   &::before {
     min-height: 30px;
     padding: 10px;
-    content: "";
+    content: '';
     display: block;
     box-flex: 1;
     flex-grow: 1;
@@ -47,7 +46,7 @@ a {
   }
 
   &::after {
-    content: "";
+    content: '';
     display: block;
     box-flex: 1;
     flex-grow: 1;
@@ -56,22 +55,24 @@ a {
   }
 }
 .loader {
-display: flex;
-align-items: center;
-justify-content: center;
-flex-direction: column;
-position: relative;
-width: 100px;
-height: 100px;font-size: 40px;line-height: 30px;padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  font-size: 40px;
+  line-height: 30px;
+  padding-top: 10px;
 
-span {
-color: #333;
-font-size: 12px;
+  span {
+    color: #333;
+    font-size: 12px;
 
-font-weight: 600;
-text-transform: uppercase;
-}
-
+    font-weight: 600;
+    text-transform: uppercase;
+  }
 }
 .brand-div {
   text-align: center;
@@ -79,31 +80,32 @@ text-transform: uppercase;
 }
 
 .loader-svg {
-position: absolute;
-top: 0;
+  position: absolute;
+  top: 0;
 
-left: 0;
-width: 100px;
-height: 100px;
+  left: 0;
+  width: 100px;
+  height: 100px;
 }
 
-.customers, .orders {
-width: 100%;
-padding: 10px 0;
-margin: 10px 0;
-max-width:550px;
-min-height: 50vh;
+.customers,
+.orders {
+  width: 100%;
+  padding: 10px 0;
+  margin: 10px 0;
+  max-width: 550px;
+  min-height: 50vh;
 }
 @media all and (min-width: 699px) {
   .f-form {
-    padding: 40px;
+    padding: 30px;
     border: 1px solid #dadce0;
-     background-color: white;
+    background-color: white;
   }
-  .customers,  .orders {
-width: 85%;
-padding: 20px 10px;
-margin: 10px auto;
-
-}
+  .customers,
+  .orders {
+    width: 85%;
+    padding: 20px 10px;
+    margin: 10px auto;
+  }
 }
