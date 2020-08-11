@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { SnackbarProvider } from 'notistack';
 import fun from './store';
 import Pages from './Pages';
 function App() {
@@ -10,7 +11,9 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={<p>loading</p>} persistor={persistor}>
-        <Pages />
+        <SnackbarProvider>
+          <Pages />
+        </SnackbarProvider>
       </PersistGate>
     </Provider>
   );

@@ -1,15 +1,22 @@
-import React from 'react'
-import styles from './Button.module.scss'
-import classNames from 'classnames'
-const Button = ({ children, full, onClick, color = 'primary', ...otherProps }) => {
-    
+import React from 'react';
+import styles from './Button.module.scss';
+import classNames from 'classnames';
+const Button = ({
+  children,
+  full,
+  onClick,
+  color = 'primary',
+  ...otherProps
+}) => {
+  const classes = classNames(styles['f-btn'], styles[color], {
+    [styles['full']]: full,
+  });
 
-    const classes = classNames(styles['f-btn'], styles[color], {
-        [styles['full']]: full
-    });
+  return (
+    <button className={classes} onClick={onClick} {...otherProps}>
+      {children}
+    </button>
+  );
+};
 
-    return (<button className={classes} onClick={onClick} {...otherProps}>{children}</button>)
-
-}
-
-export default Button
+export default Button;

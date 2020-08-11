@@ -43,7 +43,6 @@ const UnAuththenticated = () => {
 
           <Route exact path="/signup">
             <SignUp />
-            <BottomNav />
           </Route>
         </Switch>
       </Router>
@@ -54,11 +53,8 @@ const UnAuththenticated = () => {
 const Pages = () => {
   const user = useSelector((state) => state.auth.isAuthorized);
   console.log(user);
-  return (
-    <div>
-      <p>{user.toString()}</p>
-      <UnAuththenticated />
-    </div>
-  );
+
+  if (user) return <Auththenticated />;
+  return <UnAuththenticated />;
 };
 export default Pages;

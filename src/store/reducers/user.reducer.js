@@ -18,7 +18,8 @@ export default function (state = initialState, action) {
     case SIGNUP_USER:
       returnValue = {
         ...state,
-        user: nUser,
+        user: user.Vendor,
+        token: user.token,
         isAuthorized: true,
       };
 
@@ -30,9 +31,9 @@ export default function (state = initialState, action) {
 
         returnValue = {
           ...state,
-          user,
-          isAuthorized: true,
+          user: user.Vendor,
           token: user.token,
+          isAuthorized: true,
         };
 
         break;

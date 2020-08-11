@@ -1,25 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input, Button, Typography } from '../components';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useSnackbar } from 'notistack';
+
 import { useForm } from 'react-hook-form';
 import api from '../api';
 import logo from '../assets/logo-variant.png';
 const Login = () => {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [key, setKey] = useState('');
+
+  const [open, setOpen] = useState(false);
+
+  function handleOpen(m) {
+    setKey(enqueueSnackbar(m));
+  }
+  useEffect(() => {
+    const handleClose = () => {
+      setOpen(false);
+      closeSnackbar(key);
+    };
+
+    let timeout;
+    if (open) {
+      timeout = setTimeout(handleClose, 2000);
+    }
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+  const { register, handleSubmit, errors, getValues } = useForm();
   const dispatch = useDispatch();
-
-  const { register, handleSubmit, errors } = useForm();
-
   const submit = (formData) => {
-    dispatch({
-      type: 'LOGIN_USER',
-      user: {
-        full_name: 'Allison Kosy',
-      },
-    });
-    //   api.login(formData)
-    //   .then(console.log)
-    //   .catch(console.log)
+    api
+      .login(formData)
+      .then((user) => {
+        dispatch({ user, type: 'SIGNUP_USER' });
+      })
+      .catch((err) => {
+        handleOpen(err.data.error);
+      });
   };
   return (
     <div className="flex central">

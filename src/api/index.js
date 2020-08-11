@@ -16,8 +16,7 @@ class FiveChowError extends Error {
 let prod = false;
 
 const Axios = axios.create({
-  baseURL:
-    (prod ? 'https://api.500chow.com' : 'http://127.0.0.1:8000') + '/api/',
+  baseURL: prod ? 'https://api.500chow.com' : 'http://127.0.0.1:3000',
   headers: { 'Content-Type': 'application/json' },
 });
 
@@ -44,18 +43,23 @@ class FiveApi {
         throw new FiveChowError(resp);
       }
     } catch (err) {
-      throw new FiveChowError({
-        data: {
-          error: err.message,
-          code: 5010,
-        },
-      });
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
     }
   }
 
   async register(user) {
     try {
-      let resp = await this.api.post('/vendors/login/', user);
+      let resp = await this.api.post('/vendors/register/', user);
 
       if (goodResponse(resp)) {
         return resp.data;
@@ -63,12 +67,17 @@ class FiveApi {
         throw new FiveChowError(resp);
       }
     } catch (err) {
-      throw new FiveChowError({
-        data: {
-          error: err.message,
-          code: 5010,
-        },
-      });
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
     }
   }
 }
