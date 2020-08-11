@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './TopBar.scss';
-import IconButton from '../IconButton/IconButton';
+
 import Typography from '../Typography/Typography';
 import { FiMoreVertical as MoreIcon } from 'react-icons/fi';
 import logo from '../../assets/logo-variant.png';
 
 const TopBar = ({ title, btn }) => {
   return (
-    <div className="top-bar flex">
+    <div className="top-bar">
       {!!btn ? (
         <div> {btn}</div>
       ) : (
@@ -17,10 +17,14 @@ const TopBar = ({ title, btn }) => {
         </Link>
       )}
 
-      <Typography title>{title || 'Page One'}</Typography>
-      <IconButton>
-        <MoreIcon />
-      </IconButton>
+      <Typography
+        title
+        style={{
+          margin: '0 0 0 10px',
+        }}
+      >
+        {title || 'Page One'}
+      </Typography>
     </div>
   );
 };

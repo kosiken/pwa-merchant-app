@@ -3,11 +3,11 @@
   position: sticky;
   top: 0;
   left: 0;
-  justify-content: space-between;
+  align-items: center;
   padding: 10px 15px;
   margin: 0 0 12px;
   z-index: 999;
   background-color: white;
   align-items: center;
-  border-bottom: 1px solid #443f3fad;
+  box-shadow: -2px 2px 5px #d9d9d9;
 }

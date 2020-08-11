@@ -19,7 +19,7 @@ const Order = ({ order }) => {
   return (
     <div className={[styles['order-item']]}>
       <div className={styles['header']}>
-        <span style={{ fontSize: '2em' }}>
+        <span className={styles['avatar']}>
           <UserIcon />
         </span>
         <section className={styles['customer-info']}>
@@ -34,7 +34,11 @@ const Order = ({ order }) => {
         </section>
       </div>
 
-      <ul>
+      <ul
+        style={{
+          margin: '0',
+        }}
+      >
         {order.items.map((item) => (
           <li key={uuid()}>{`${item.count} x ${item.food}`}</li>
         ))}
