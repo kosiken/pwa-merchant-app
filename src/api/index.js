@@ -80,6 +80,30 @@ class FiveApi {
       }
     }
   }
+
+  async getFoods(id = 13) {
+    try {
+      let resp = await this.api.get('/food_items/by_vendor/' + id);
+
+      if (goodResponse(resp)) {
+        return resp.data;
+      } else {
+        throw new FiveChowError(resp);
+      }
+    } catch (err) {
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
+    }
+  }
 }
 
 export default new FiveApi(Axios);

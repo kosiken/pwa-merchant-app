@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSnackbar } from 'notistack';
+
 import { useForm } from 'react-hook-form';
+import api from '../api';
 import {
   TopBar,
   SwitchBox,
@@ -8,6 +12,7 @@ import {
   IconButton,
   Checkbox,
   Typography,
+  ComboBox,
 } from '../components';
 import { v4 as uuid } from 'uuid';
 
@@ -17,9 +22,10 @@ import { FiPlus as PlusIcon, FiX as CloseIcon } from 'react-icons/fi';
 const CreateOrder = () => {
   let [tab, setTab] = useState('New');
   let [foods, setFoods] = useState([]);
+  let [items, setItems] = useState([]);
   let [currentFood, setCurrentFood] = useState('');
   let [quantity, setQuantity] = useState('');
-  let foodRef = useRef(null);
+  // let foodRef = useRef(null);
   let quantityRef = useRef(null);
   const { register, handleSubmit, errors } = useForm();
   const handleSubmitCallback = (s) => {};
@@ -31,8 +37,12 @@ const CreateOrder = () => {
   const changeQuantity = (e) => {
     setQuantity(e.target.value);
   };
+
   useEffect(() => {
-    foodRef.current.value = '';
+    api.getFoods().then(setItems).catch(console.log);
+  }, []);
+  useEffect(() => {
+    //  foodRef.current.value = '';
     quantityRef.current.value = '';
   }, [foods]);
 
@@ -114,14 +124,7 @@ const CreateOrder = () => {
 
           <div style={{ margin: '1em 0 0' }}>
             <section style={{ width: '60%', display: 'inline-block' }}>
-              <Input
-                type="text"
-                name="food"
-                label="Food"
-                style={{ margin: '0 auto' }}
-                ref={foodRef}
-                onChange={changeCurrentFood}
-              />
+              <ComboBox items={items} onChange={changeCurrentFood} />
             </section>
             <section
               style={{

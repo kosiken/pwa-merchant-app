@@ -9,6 +9,7 @@ import Checkbox from './Checkbox/Checkbox';
 import CustomerListItem from './CustomerListItem/CustomerListItem';
 import Loader from './Loader/Loader';
 import Order from './Order/Order';
+import ComboBox from './ComboBox/ComboBox';
 
 export {
   Input,
@@ -22,4 +23,5 @@ export {
   CustomerListItem,
   Loader,
   Order,
+  ComboBox,
 };

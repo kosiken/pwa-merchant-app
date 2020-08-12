@@ -3,10 +3,12 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; //
 import thunk from 'redux-thunk';
 import Auth from './reducers/user.reducer';
+import Food from './reducers/food.reducer';
 // import { persistStore, autoRehydrate } from "redux-persist";
 
 const RootReducer = combineReducers({
   auth: Auth,
+  food: Food,
 });
 const persistConfig = {
   key: 'root',
