@@ -10,6 +10,7 @@ import CustomerListItem from './CustomerListItem/CustomerListItem';
 import Loader from './Loader/Loader';
 import Order from './Order/Order';
 import ComboBox from './ComboBox/ComboBox';
+import ComboBox2 from './ComboBox2/ComboBox2';
 
 export {
   Input,
@@ -24,4 +25,5 @@ export {
   Loader,
   Order,
   ComboBox,
+  ComboBox2,
 };

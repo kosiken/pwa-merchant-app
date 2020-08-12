@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-
 import { useForm } from 'react-hook-form';
 import api from '../api';
 import {
@@ -13,6 +12,7 @@ import {
   Checkbox,
   Typography,
   ComboBox,
+  ComboBox2,
 } from '../components';
 import { v4 as uuid } from 'uuid';
 
@@ -23,21 +23,82 @@ const CreateOrder = () => {
   let [tab, setTab] = useState('New');
   let [foods, setFoods] = useState([]);
   let [items, setItems] = useState([]);
+  let [lItems, setLItems] = useState([
+    {
+      name_of_area: 'Ikeja',
+      state: 'Lagos',
+      latitude: 15,
+      longitude: 20,
+      full_address: '10 Frank Estate, Ajah, Ikeja Lagos',
+      plus_code: '+234',
+      google_map_link: 'https://goo.gl/465767899',
+      id: 1,
+    },
+  ]);
   let [currentFood, setCurrentFood] = useState('');
+  let [currentLocation, setCurrentLocation] = useState(null);
   let [quantity, setQuantity] = useState('');
-  // let foodRef = useRef(null);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [key, setKey] = useState('');
+
+  const [open, setOpen] = useState(false);
+
+  function handleOpen(m) {
+    setKey(enqueueSnackbar(m));
+  }
+  const {
+    user: { id },
+    token,
+  } = useSelector((state) => state.auth);
+  let formRef = useRef(null);
   let quantityRef = useRef(null);
   const { register, handleSubmit, errors } = useForm();
-  const handleSubmitCallback = (s) => {};
+  const handleSubmitCallback = (s) => {
+    api
+      .createOrder(
+        {
+          user: 90000,
+          vendor_customer: 1,
+          vendor: id,
+          delivery_address: currentLocation,
+          order_items: foods,
+        },
+        token
+      )
+      .then((result) => {
+        handleOpen('Order Created');
+      })
+      .catch((err) => {
+        handleOpen(err.data.error);
+      });
+  };
 
   const changeCurrentFood = (e) => {
     setCurrentFood(e.target.value);
   };
 
+  const changeCurrentAddress = (e) => {
+    setCurrentLocation(e.target.value);
+  };
+
   const changeQuantity = (e) => {
     setQuantity(e.target.value);
   };
+  useEffect(() => {
+    const handleClose = () => {
+      setOpen(false);
+      closeSnackbar(key);
+    };
 
+    let timeout;
+    if (open) {
+      timeout = setTimeout(handleClose, 2000);
+    }
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
   useEffect(() => {
     api.getFoods().then(setItems).catch(console.log);
   }, []);
@@ -48,7 +109,7 @@ const CreateOrder = () => {
 
   const addFood = (e) => {
     console.log(foods);
-    setFoods(foods.concat([{ name: currentFood, quantity }]));
+    setFoods(foods.concat([{ ...currentFood, quantity }]));
   };
   const removeFood = (food) => {
     console.log(foods.filter((f) => f !== food));
@@ -65,6 +126,7 @@ const CreateOrder = () => {
           marginTop: '1.5em',
         }}
         onSubmit={handleSubmit(handleSubmitCallback)}
+        ref={formRef}
       >
         <div className="container">
           <Input
@@ -100,21 +162,7 @@ const CreateOrder = () => {
               style={{ margin: '0 auto' }}
             />
           )}
-          {tab === 'New' && (
-            <Input
-              type="text"
-              name="address"
-              label="Address"
-              style={{ margin: '0 auto' }}
-              ref={register({
-                required: {
-                  value: true,
-                  message: 'Customer address is required',
-                },
-              })}
-              error={errors.address}
-            />
-          )}
+          <ComboBox2 items={lItems} onChange={changeCurrentAddress} />
           {tab === 'New' && (
             <Checkbox
               label="Save this customer for next time"

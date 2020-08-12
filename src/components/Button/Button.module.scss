@@ -12,6 +12,15 @@
 
   &.primary {
     background-color: $primary;
+    &:hover {
+      background-color: darken($color: $primary, $amount: 20%);
+    }
+  }
+  &.secondary {
+    background-color: $secondary;
+    &:hover {
+      background-color: darken($color: $secondary, $amount: 20%);
+    }
   }
   &.full {
     width: 95%;
@@ -22,9 +31,5 @@
     color: $gray-100;
     background-color: $gray-300;
     cursor: initial;
-  }
-
-  &:hover {
-    background-color: darken($color: $primary, $amount: 20%);
   }
 }

@@ -32,13 +32,11 @@ function useFoods(ref, foodsArray) {
     (e) => {
       setFoods(
         foodsArray.filter((l) => {
-          console.log(l);
           return new RegExp(e.target.value.toLowerCase()).test(
             l.name.toLowerCase()
           );
         })
       );
-      console.log(foodsArray.length);
     },
     [foodsArray]
   );
@@ -59,7 +57,7 @@ function Foodselect({ Foods, theRef, onChange }) {
               theRef.current.value = l.name;
               onChange({
                 target: {
-                  value: l.name,
+                  value: l,
                 },
               });
             }}
