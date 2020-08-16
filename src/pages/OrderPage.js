@@ -45,7 +45,6 @@ const OrderPage = () => {
 
   return (
     <div style={{ minHeight: '100vh' }}>
-      <TopBar title="Orders" />
       <div className="orders">
         {orders.map((order) => (
           <Order key={uuid()} order={order} />

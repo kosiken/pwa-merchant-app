@@ -3,16 +3,27 @@ import { Input, Button, Typography } from '../components';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { useForm } from 'react-hook-form';
 import api from '../api';
 import logo from '../assets/logo-variant.png';
 const Login = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
-
+  let [isLoading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  function renderLoading(message) {
+    if (isLoading)
+      return (
+        <CircularProgress
+          style={{
+            color: '#ffffff',
+          }}
+        />
+      );
 
+    return message;
+  }
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
@@ -31,9 +42,10 @@ const Login = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
-  const { register, handleSubmit, errors, getValues } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const dispatch = useDispatch();
   const submit = (formData) => {
+    setLoading(true);
     api
       .login(formData)
       .then((user) => {
@@ -41,6 +53,7 @@ const Login = () => {
       })
       .catch((err) => {
         handleOpen(err.data.error);
+        setLoading(false);
       });
   };
   return (
@@ -90,7 +103,9 @@ const Login = () => {
               Sign Up
             </Typography>
           </Link>
-          <Button full>Login</Button>
+          <Button full disabled={isLoading}>
+            {renderLoading('Login')}
+          </Button>
         </div>
       </form>
       <div>

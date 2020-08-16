@@ -6,6 +6,7 @@ import {
   FiHome as HomeIcon,
   FiUser as UserIcon,
   FiFileText as PaperIcon,
+  FiMenu,
 } from 'react-icons/fi';
 const BottomNav = () => {
   const location = useLocation();

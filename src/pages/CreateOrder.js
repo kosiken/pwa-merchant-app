@@ -4,7 +4,6 @@ import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
 import api from '../api';
 import {
-  TopBar,
   SwitchBox,
   Input,
   Button,
@@ -116,9 +115,7 @@ const CreateOrder = () => {
     setFoods(foods.filter((f) => f.name !== food));
   };
   return (
-    <div style={{ minHeight: '100vh' }}>
-      <TopBar title="Create Order" />
-
+    <div style={{ minHeight: '100vh', margin: '1em 0 0' }}>
       <SwitchBox options={['Existing', 'New']} value={tab} onChange={setTab} />
       <form
         className="f-form"

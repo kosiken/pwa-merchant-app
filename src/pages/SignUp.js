@@ -7,12 +7,25 @@ import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
 import api from '../api';
 import logo from '../assets/logo-variant.png';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 const SignUp = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
-
+  let [isLoading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  function renderLoading(message) {
+    if (isLoading)
+      return (
+        <CircularProgress
+          style={{
+            color: '#ffffff',
+          }}
+        />
+      );
 
+    return message;
+  }
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
@@ -34,12 +47,20 @@ const SignUp = () => {
   const { register, handleSubmit, errors, getValues } = useForm();
   const dispatch = useDispatch();
   const submit = (formData) => {
+  if(formData.password!== formData.password2 ) return;
+  setLoading(true);
     api
       .register(formData)
       .then((user) => {
         dispatch({ user, type: 'SIGNUP_USER' });
+
+        setTimeout(() => {
+          window.location.pathname = '/';
+        }, 500);
       })
+
       .catch((err) => {
+        setLoading(false);
         handleOpen(err.data.error);
       });
   };
@@ -130,10 +151,14 @@ const SignUp = () => {
                 : {}
             }
           />
-          <Link to="/recovery">
-            <Typography variant="primary"> Forgot Password? </Typography>
+          <Link to="/">
+            <Typography    style={{
+                color: '#5d97c6',
+              }}> Login </Typography>
           </Link>
-          <Button full>SignUp</Button>
+          <Button full disabled={isLoading}>
+            {renderLoading('Sign Up')}
+          </Button>
         </div>
       </form>
       <div>

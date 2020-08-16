@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TopBar, CustomerListItem, Typography } from '../components';
+import { CustomerListItem, Typography } from '../components';
 //import { TopBar, SwitchBox, Input, Button, IconButton, Checkbox } from '../components'
 // import { Link } from "react-router-dom";
 import { v4 as uuid } from 'uuid';
@@ -14,7 +14,6 @@ const Customers = () => {
 
   return (
     <div style={{ minHeight: '100vh' }}>
-      <TopBar title="Customers" />
       <div className="customers">
         {customers.map((customer) => (
           <CustomerListItem key={uuid()} customer={customer} />
