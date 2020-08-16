@@ -140,7 +140,7 @@ const CreateOrder = () => {
             <Input
               type="text"
               name="name"
-              label="Name"
+              label="Customer Name"
               ref={register({
                 required: {
                   value: true,
@@ -155,11 +155,11 @@ const CreateOrder = () => {
           <Input
             type="tel"
             name="phone"
-            label="Phone Number"
+            label="Customer Phone Number"
             ref={register({
               required: {
                 value: true,
-                message: 'Phone Number is required',
+                message: 'Customer Phone Number is required',
               },
 
               min: {
