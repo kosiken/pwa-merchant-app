@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 import { useForm } from 'react-hook-form';
-import {
-  Input,
-  Button,
-  Checkbox,
-  TopBar,
-  CustomerListItem,
-  Typography,
-} from '../components';
+import { Input, Button, Checkbox, Toast, Typography } from '../components';
 import api from '../api';
 //import { TopBar, SwitchBox, Input, Button, IconButton, Checkbox } from '../components'
 // import { Link } from "react-router-dom";
@@ -53,6 +46,7 @@ const FoodItems = () => {
 
   return (
     <div style={{ minHeight: '100vh' }}>
+      <Toast message={'Add to your food items'} />
       <form
         onSubmit={handleSubmit(handleSubmitCallback)}
         className="f-form"
@@ -60,13 +54,6 @@ const FoodItems = () => {
           marginTop: '1.5em',
         }}
       >
-        <Typography
-          style={{
-            fontWeight: '600',
-          }}
-        >
-          Add to your Menu
-        </Typography>
         <div className="container">
           <Input
             ref={register({
@@ -101,13 +88,7 @@ const FoodItems = () => {
           <div style={{ margin: '20px' }}>
             <Checkbox name="is_available" label="Available?" ref={register()} />
           </div>
-          {/* <Input
-            required
-            type="number"
-            name="quantity"
-            label="Quantity"
-            style={{ margin: '0 auto' }}
-          /> */}
+
           <Button full>Add Item</Button>
         </div>
       </form>

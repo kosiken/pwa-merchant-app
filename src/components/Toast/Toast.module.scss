@@ -1,0 +1,16 @@
+@import '../styles/colors.scss';
+
+.toast {
+  padding: 1.2em 15px;
+}
+.primary {
+  background-color: rgba($color: $primary, $alpha: 0.21);
+}
+
+.secondary {
+  background-color: rgba($color: $secondary, $alpha: 0.21);
+}
+
+.info {
+  background-color: rgba($color: $info, $alpha: 0.21);
+}
