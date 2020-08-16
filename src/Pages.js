@@ -8,6 +8,7 @@ import CreateOrder from './pages/CreateOrder';
 import OrderPage from './pages/OrderPage';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import FoodItems from './pages/FoodItems';
 const Auththenticated = () => {
   return (
     <div>
@@ -17,11 +18,14 @@ const Auththenticated = () => {
             <CreateOrder />
             <BottomNav />
           </Route>
+          <Route exact path="/FoodItems">
+            <FoodItems />
+            <BottomNav />
+          </Route>
           <Route exact path="/customers">
             <Customers />
             <BottomNav />
           </Route>
-
           <Route exact path="/notifications">
             <OrderPage />
             <BottomNav />

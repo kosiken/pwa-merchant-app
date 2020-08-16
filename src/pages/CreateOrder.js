@@ -22,8 +22,8 @@ import { FiPlus as PlusIcon, FiX as CloseIcon } from 'react-icons/fi';
 const CreateOrder = () => {
   let [tab, setTab] = useState('New');
   let [foods, setFoods] = useState([]);
-  let [items, setItems] = useState([]);
-  let [lItems, setLItems] = useState([
+  let [foodItems, setFoodItems] = useState([]);
+  let [locations, setLocations] = useState([
     {
       name_of_area: 'Ikeja',
       state: 'Lagos',
@@ -52,16 +52,15 @@ const CreateOrder = () => {
   } = useSelector((state) => state.auth);
   let formRef = useRef(null);
   let quantityRef = useRef(null);
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, getValues } = useForm();
   const handleSubmitCallback = (s) => {
     api
       .createOrder(
         {
-          user: 90000,
-          vendor_customer: 1,
-          vendor: id,
+          full_name: getValues('name'),
+          phone_number: getValues('phone'),
           delivery_address: currentLocation,
-          order_items: foods,
+          food_items: foods,
         },
         token
       )
@@ -99,10 +98,20 @@ const CreateOrder = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
+
   useEffect(() => {
-    api.getFoods().then(setItems).catch(console.log);
-  }, []);
-  useEffect(() => {
+    (async () => {
+      try {
+        let meals = await api.getMeals();
+        let food = await api.getFoods();
+
+        setFoodItems(food.concat(meals));
+
+        api.getAddresses().then(setLocations).catch(console.log);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
     //  foodRef.current.value = '';
     quantityRef.current.value = '';
   }, [foods]);
@@ -121,6 +130,7 @@ const CreateOrder = () => {
 
       <SwitchBox options={['Existing', 'New']} value={tab} onChange={setTab} />
       <form
+        autoComplete="off"
         className="f-form"
         style={{
           marginTop: '1.5em',
@@ -129,40 +139,41 @@ const CreateOrder = () => {
         ref={formRef}
       >
         <div className="container">
-          <Input
-            type="text"
-            name="name"
-            label="Name"
-            ref={register({
-              required: {
-                value: true,
-                message: 'Customer name is required',
-              },
-            })}
-            error={errors.name}
-            style={{ margin: '0 auto' }}
-          />
           {tab === 'New' && (
             <Input
-              type="tel"
-              name="phone"
-              label="Phone Number"
+              type="text"
+              name="name"
+              label="Name"
               ref={register({
                 required: {
                   value: true,
-                  message: 'Phone Number is required',
-                },
-
-                min: {
-                  value: 10,
-                  message: 'Invalid Phone Number',
+                  message: 'Customer name is required',
                 },
               })}
-              error={errors.phone}
+              error={errors.name}
               style={{ margin: '0 auto' }}
             />
           )}
-          <ComboBox2 items={lItems} onChange={changeCurrentAddress} />
+
+          <Input
+            type="tel"
+            name="phone"
+            label="Phone Number"
+            ref={register({
+              required: {
+                value: true,
+                message: 'Phone Number is required',
+              },
+
+              min: {
+                value: 10,
+                message: 'Invalid Phone Number',
+              },
+            })}
+            error={errors.phone}
+            style={{ margin: '0 auto' }}
+          />
+          <ComboBox2 items={locations} onChange={changeCurrentAddress} />
           {tab === 'New' && (
             <Checkbox
               label="Save this customer for next time"
@@ -172,7 +183,7 @@ const CreateOrder = () => {
 
           <div style={{ margin: '1em 0 0' }}>
             <section style={{ width: '60%', display: 'inline-block' }}>
-              <ComboBox items={items} onChange={changeCurrentFood} />
+              <ComboBox items={foodItems} onChange={changeCurrentFood} />
             </section>
             <section
               style={{

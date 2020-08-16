@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { v4 as uuid } from 'uuid';
+import _ from 'lodash';
 import Typography from '../Typography/Typography';
 
 import { FiUser as UserIcon } from 'react-icons/fi';
@@ -10,12 +11,13 @@ const Order = ({ order }) => {
     'Processing',
     'Submitted',
     'Accepted',
-    'Shipped',
+    'Created',
     'Delivered',
     'Cancelled',
   ];
-  const status = statuses[order.status];
+  const status = order.status || 'Processing';
   const classes = classNames(styles.status, styles[status.toLocaleLowerCase()]);
+
   return (
     <div className={[styles['order-item']]}>
       <div className={styles['header']}>
@@ -29,7 +31,7 @@ const Order = ({ order }) => {
               marginLeft: '1em',
             }}
           >
-            {order.customer.name}
+            {order.VendorCustomer.full_name}
           </Typography>
         </section>
       </div>
@@ -39,9 +41,14 @@ const Order = ({ order }) => {
           margin: '0',
         }}
       >
-        {order.items.map((item) => (
-          <li key={uuid()}>{`${item.count} x ${item.food}`}</li>
-        ))}
+        {!_.isEmpty(order.FoodItems) &&
+          order.FoodItems.map((item) => (
+            <li key={uuid()}>{`${item.quantity || 1} x ${item.name}`}</li>
+          ))}
+        {!_.isEmpty(order.Meals) &&
+          order.Meals.map((item) => (
+            <li key={uuid()}>{`${item.quantity || 1} x ${item.name}`}</li>
+          ))}
       </ul>
       <section
         className="flex"
@@ -51,7 +58,9 @@ const Order = ({ order }) => {
         }}
       >
         <span className={classes}>{status}</span>
-        <Typography inline>Total - {order.total_order_price}</Typography>
+        <Typography inline>
+          Total - NGN{order.total_order_price || 0.0}
+        </Typography>
       </section>
     </div>
   );
