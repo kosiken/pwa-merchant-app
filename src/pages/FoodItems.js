@@ -24,7 +24,7 @@ const FoodItems = () => {
   const [key, setKey] = useState('');
 
   const [open, setOpen] = useState(false);
-  const [is_available, setis_available] = useState(false);
+  const [is_available, setIsAvailable] = useState(true);
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
@@ -93,13 +93,7 @@ const FoodItems = () => {
             label="Price"
             style={{ margin: '0 auto' }}
           />
-          <div style={{ margin: '20px' }}>
-            <Checkbox
-              value={is_available}
-              onChange={(e) => setis_available(e)}
-              label="Available?"
-            />
-          </div>
+          <div style={{ margin: '20px' }}></div>
           {/* <Input
             required
             type="number"
