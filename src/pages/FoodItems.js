@@ -25,7 +25,7 @@ const FoodItems = () => {
   const [key, setKey] = useState('');
   const { register, handleSubmit, errors, getValues } = useForm();
   const [open, setOpen] = useState(false);
-  const [is_available, setis_available] = useState(false);
+  const [is_available, setIsAvailable] = useState(true);
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
