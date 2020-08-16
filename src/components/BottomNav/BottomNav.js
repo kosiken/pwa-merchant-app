@@ -6,7 +6,8 @@ import {
   FiHome as HomeIcon,
   FiUser as UserIcon,
   FiFileText as PaperIcon,
-  FiMenu,
+  FiShoppingBag as ShoppingBag,
+  FiDatabase as Database,
 } from 'react-icons/fi';
 const BottomNav = () => {
   const location = useLocation();
@@ -21,6 +22,12 @@ const BottomNav = () => {
       <Link to="/notifications">
         <IconButton active={location.pathname === '/notifications'}>
           <PaperIcon />
+        </IconButton>
+      </Link>
+
+      <Link to="/FoodItems">
+        <IconButton active={location.pathname === '/FoodItems'}>
+          <Database />
         </IconButton>
       </Link>
 

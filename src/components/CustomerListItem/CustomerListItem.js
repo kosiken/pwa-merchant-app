@@ -17,17 +17,17 @@ const CustomerListItem = ({ customer }) => {
               fontWeight: '600',
             }}
           >
-            {customer.name} - {customer.phone}
+            {customer.full_name} - {customer.phone_number}
           </Typography>
         </section>
       </div>
-      <div className={styles['customer-info']}>
+      {/* <div className={styles['customer-info']}>
         <p>
           Before we do that, there are a couple of functions that we need in
           order to create the customizable SVG arc. I found these on
           StackOverflow.
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };

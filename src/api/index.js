@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Server from './beta';
 
 function goodResponse(resp) {
   let val = resp.status === 200 || resp.status === 201;
@@ -38,6 +39,7 @@ class FiveApi {
       let resp = await this.api.post('/vendors/login/', user);
 
       if (goodResponse(resp)) {
+        localStorage.setItem('token', resp.data.token);
         return resp.data;
       } else {
         throw new FiveChowError(resp);
@@ -62,6 +64,7 @@ class FiveApi {
       let resp = await this.api.post('/vendors/register/', user);
 
       if (goodResponse(resp)) {
+        localStorage.setItem('token', resp.data.token);
         return resp.data;
       } else {
         throw new FiveChowError(resp);
@@ -81,9 +84,84 @@ class FiveApi {
     }
   }
 
-  async getFoods(id = 13) {
+  async getCustomers() {
     try {
-      let resp = await this.api.get('/food_items/by_vendor/' + id);
+      let resp = await Server.get('/vendors/customers');
+
+      if (goodResponse(resp)) {
+        return resp.data;
+      } else {
+        throw new FiveChowError(resp);
+      }
+    } catch (err) {
+      console.log(err);
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
+    }
+  }
+
+  async getOrders() {
+    try {
+      let resp = await Server.get('/vendors/orders');
+
+      if (goodResponse(resp)) {
+        return resp.data;
+      } else {
+        throw new FiveChowError(resp);
+      }
+    } catch (err) {
+      console.log(err);
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
+    }
+  }
+
+  async getAddresses() {
+    try {
+      let resp = await Server.get('/address');
+
+      if (goodResponse(resp)) {
+        return resp.data;
+      } else {
+        throw new FiveChowError(resp);
+      }
+    } catch (err) {
+      console.log(err);
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
+    }
+  }
+
+  async getFoods() {
+    try {
+      let resp = await Server.get('/vendors/food_items');
 
       if (goodResponse(resp)) {
         return resp.data;
@@ -105,13 +183,57 @@ class FiveApi {
     }
   }
 
-  async createOrder(order, token) {
+  async getMeals() {
     try {
-      let resp = await this.api.post('/orders/create/', order, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      let resp = await Server.get('/vendors/meals');
+
+      if (goodResponse(resp)) {
+        return resp.data;
+      } else {
+        throw new FiveChowError(resp);
+      }
+    } catch (err) {
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
+    }
+  }
+
+  async createFood(food) {
+    try {
+      let resp = await Server.post('/vendors/food_item/', food);
+
+      if (goodResponse(resp)) {
+        return resp.data;
+      } else {
+        throw new FiveChowError(resp);
+      }
+    } catch (err) {
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
+    }
+  }
+
+  async createOrder(order) {
+    try {
+      let resp = await Server.post('/vendors/order/', order);
 
       if (goodResponse(resp)) {
         return resp.data;

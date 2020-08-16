@@ -34,13 +34,13 @@ const useStyles = makeStyles((theme) => ({
       width: drawerWidth,
       flexShrink: 0,
     },
-    
   },
   appBar: {
     [theme.breakpoints.up('sm')]: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
-    },backgroundColor: '#f0324b',
+    },
+    backgroundColor: '#f0324b',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -72,15 +72,23 @@ const TopBar = ({ title, btn, window }) => {
 
   const drawer = (
     <div>
-     <div style={{
-     padding: '20px',
-     display: 'flex',
-alignItems: 'center'
-     }}>
-     
-       <Avatar alt="500 logo" src={logo} /> <Typography inline style={{
-       marginLeft:'10px'}}>500 chow</Typography>
-       </div>
+      <div
+        style={{
+          padding: '20px',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar alt="500 logo" src={logo} />{' '}
+        <Typography
+          inline
+          style={{
+            marginLeft: '10px',
+          }}
+        >
+          500 chow
+        </Typography>
+      </div>
       <Divider />
       <List>
         <Link
@@ -88,7 +96,10 @@ alignItems: 'center'
           className={location.pathname === '/' ? 'link active-link' : 'link'}
         >
           <ListItem button>
-            <ListItemIcon  className={location.pathname === '/' ? 'active-link' : ''} style={{fontSize: '1.2em'}}>
+            <ListItemIcon
+              className={location.pathname === '/' ? 'active-link' : ''}
+              style={{ fontSize: '1.2em' }}
+            >
               <HomeIcon />
             </ListItemIcon>
             <ListItemText>Home</ListItemText>
@@ -101,9 +112,12 @@ alignItems: 'center'
           }
         >
           <ListItem button>
-            <ListItemIcon    className={
-            location.pathname === '/notifications' ? 'active-link' : ''
-          } style={{fontSize: '1.2em'}}>
+            <ListItemIcon
+              className={
+                location.pathname === '/notifications' ? 'active-link' : ''
+              }
+              style={{ fontSize: '1.2em' }}
+            >
               <PaperIcon />
             </ListItemIcon>
             <ListItemText>Notifications</ListItemText>
@@ -112,14 +126,15 @@ alignItems: 'center'
 
         <Link
           to="/customers"
-          className={
-            location.pathname === '/customers' ? 'active-link' : ''
-          }
+          className={location.pathname === '/customers' ? 'active-link' : ''}
         >
           <ListItem button>
-            <ListItemIcon     className={
-            location.pathname === '/customers' ? 'active-link' : ''
-          } style={{fontSize: '1.2em'}}>
+            <ListItemIcon
+              className={
+                location.pathname === '/customers' ? 'active-link' : ''
+              }
+              style={{ fontSize: '1.2em' }}
+            >
               <UserIcon />
             </ListItemIcon>
             <ListItemText>Customers</ListItemText>
@@ -147,7 +162,9 @@ alignItems: 'center'
           >
             <MenuIcon />
           </IconButton>
-          <Typography style={{fontWeight: 'bold'}}>{title || 'Page One'}</Typography>
+          <Typography style={{ fontWeight: 'bold' }}>
+            {title || 'Page One'}
+          </Typography>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer}>

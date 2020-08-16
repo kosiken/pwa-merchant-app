@@ -98,7 +98,7 @@ function ComboBox({ items, onChange }) {
   return (
     <div className="add-div">
       <Input
-        type="text"
+        type="search"
         name="food"
         label="Food"
         style={{ margin: '0 auto' }}

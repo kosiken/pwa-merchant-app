@@ -1,23 +1,36 @@
 import React, { useState, useEffect } from 'react';
+import _ from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
 import { CustomerListItem, Typography } from '../components';
+import api from '../api';
 //import { TopBar, SwitchBox, Input, Button, IconButton, Checkbox } from '../components'
 // import { Link } from "react-router-dom";
 import { v4 as uuid } from 'uuid';
 
 const Customers = () => {
-  let [customers, setCustomers] = useState([
-    { name: 'John Lennon', phone: '080320978654' },
-    { name: 'Luis Scola', phone: '080320656654' },
-    { name: 'Kyle Kuzma', phone: '0807890978654' },
-    { name: 'John Bryne', phone: '080920978654' },
-  ]);
+  // const { customers } = useSelector((state) => state.customer);
+  // const dispatch = useDispatch();
+
+  const [customers, setCustomers] = useState([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        let __customers = await api.getCustomers();
+        setCustomers(__customers);
+        // dispatch({ type: 'GET_CUSTOMERS', __customers });
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   return (
     <div style={{ minHeight: '100vh' }}>
       <div className="customers">
-        {customers.map((customer) => (
-          <CustomerListItem key={uuid()} customer={customer} />
-        ))}
+        {!_.isEmpty(customers) &&
+          customers.map((customer) => (
+            <CustomerListItem key={uuid()} customer={customer} />
+          ))}
       </div>
       <Typography style={{ textAlign: 'center' }}>
         Made with{' '}

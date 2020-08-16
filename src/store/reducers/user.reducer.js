@@ -22,7 +22,6 @@ export default function (state = initialState, action) {
         token: user.token,
         isAuthorized: true,
       };
-
       break;
 
     case LOGIN_USER:
@@ -39,17 +38,17 @@ export default function (state = initialState, action) {
         break;
       }
       nUser.email = user.email;
-
       returnValue = {
         ...state,
         user: nUser,
         isAuthorized: true,
       };
-
       break;
+
     case LOGOUT_USER:
       returnValue = initialState;
       break;
+
     default:
       console.warn('Unknown action ' + action.type);
       break;
