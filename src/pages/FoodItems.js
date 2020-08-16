@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 import { useForm } from 'react-hook-form';
-import { useSelector, useDispatch } from 'react-redux';
 import {
   Input,
   Button,
@@ -24,11 +23,6 @@ const FoodItems = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
   const { register, handleSubmit, errors, getValues } = useForm();
-  const [open, setOpen] = useState(false);
-  const [is_available, setIsAvailable] = useState(true);
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState(0);
-  const [quantity, setQuantity] = useState(0);
 
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
@@ -85,13 +79,11 @@ const FoodItems = () => {
             type="text"
             name="name"
             label="Name"
-            onChange={(e) => setName(e.target.value)}
             style={{ margin: '0 auto' }}
           />
           <Input
             type="text"
             name="price"
-            onChange={(e) => setPrice(e.target.value)}
             label="Price"
             style={{ margin: '0 auto' }}
             ref={register({
