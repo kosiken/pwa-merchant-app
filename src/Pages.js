@@ -37,8 +37,15 @@ const Auththenticated = () => {
             </main>
           </Route>
           <Route exact path="/FoodItems">
-            <FoodItems />
-            <BottomNav />
+            <TopBar title="Meals and Menu" />{' '}
+            <main
+              style={{
+                flexGrow: 1,
+              }}
+            >
+              <div className={classes.toolbar} />
+              <FoodItems />
+            </main>
           </Route>
           <Route exact path="/customers">
             <TopBar title="Customers" />

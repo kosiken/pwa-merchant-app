@@ -47,8 +47,8 @@ const SignUp = () => {
   const { register, handleSubmit, errors, getValues } = useForm();
   const dispatch = useDispatch();
   const submit = (formData) => {
-  if(formData.password!== formData.password2 ) return;
-  setLoading(true);
+    if (formData.password !== formData.password2) return;
+    setLoading(true);
     api
       .register(formData)
       .then((user) => {
@@ -152,9 +152,14 @@ const SignUp = () => {
             }
           />
           <Link to="/">
-            <Typography    style={{
+            <Typography
+              style={{
                 color: '#5d97c6',
-              }}> Login </Typography>
+              }}
+            >
+              {' '}
+              Login{' '}
+            </Typography>
           </Link>
           <Button full disabled={isLoading}>
             {renderLoading('Sign Up')}

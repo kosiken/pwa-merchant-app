@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
+import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Input,
@@ -22,7 +23,7 @@ const FoodItems = () => {
   const [foodItems, setFoodItems] = useState([]);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
-
+  const { register, handleSubmit, errors, getValues } = useForm();
   const [open, setOpen] = useState(false);
   const [is_available, setis_available] = useState(false);
   const [name, setName] = useState('');
@@ -45,25 +46,21 @@ const FoodItems = () => {
     })();
   }, []);
 
-  const handleCreateFoodItem = async () => {
-    try {
-      let result = await api.createFood({
-        name,
-        price,
-        is_available,
+  const handleSubmitCallback = (s) => {
+    api
+      .createFood(s)
+      .then((result) => {
+        handleOpen('Order Created');
+      })
+      .catch((err) => {
+        handleOpen(err.data.error);
       });
-
-      handleOpen('Food Added');
-    } catch (err) {
-      handleOpen(err.data.error);
-    }
   };
 
   return (
     <div style={{ minHeight: '100vh' }}>
-      <TopBar title="Meals and Menu" />
       <form
-        onSubmit={handleCreateFoodItem}
+        onSubmit={handleSubmit(handleSubmitCallback)}
         className="f-form"
         style={{
           marginTop: '1.5em',
@@ -78,7 +75,13 @@ const FoodItems = () => {
         </Typography>
         <div className="container">
           <Input
-            required
+            ref={register({
+              required: {
+                value: true,
+                message: 'Food name is required',
+              },
+            })}
+            error={errors.name}
             type="text"
             name="name"
             label="Name"
@@ -86,19 +89,25 @@ const FoodItems = () => {
             style={{ margin: '0 auto' }}
           />
           <Input
-            required
-            type="number"
+            type="text"
             name="price"
             onChange={(e) => setPrice(e.target.value)}
             label="Price"
             style={{ margin: '0 auto' }}
+            ref={register({
+              required: {
+                value: true,
+                message: 'Price is required',
+              },
+              pattern: {
+                value: /^[+-]?([0-9]*[.])?[0-9]+$/,
+                message: 'Invalid price',
+              },
+            })}
+            error={errors.price}
           />
           <div style={{ margin: '20px' }}>
-            <Checkbox
-              value={is_available}
-              onChange={(e) => setis_available(e)}
-              label="Available?"
-            />
+            <Checkbox name="is_available" label="Available?" ref={register()} />
           </div>
           {/* <Input
             required

@@ -15,6 +15,8 @@ import {
   FiUser as UserIcon,
   FiFileText as PaperIcon,
   FiMenu as MenuIcon,
+  FiShoppingBag as ShoppingBag,
+  FiDatabase as Database,
 } from 'react-icons/fi';
 import Avatar from '@material-ui/core/Avatar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -138,6 +140,28 @@ const TopBar = ({ title, btn, window }) => {
               <UserIcon />
             </ListItemIcon>
             <ListItemText>Customers</ListItemText>
+          </ListItem>
+        </Link>
+      </List>
+      {/* <Divider />
+      <List></List> */} <Divider />
+      <List>
+        <Link
+          to="/FoodItems"
+          className={
+            location.pathname === '/FoodItems' ? 'link active-link' : 'link'
+          }
+        >
+          <ListItem button>
+            <ListItemIcon
+              className={
+                location.pathname === '/FoodItems' ? 'active-link' : ''
+              }
+              style={{ fontSize: '1.2em' }}
+            >
+              <Database />
+            </ListItemIcon>
+            <ListItemText>Food Items</ListItemText>
           </ListItem>
         </Link>
       </List>
