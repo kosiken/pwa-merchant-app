@@ -42,8 +42,9 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
-    backgroundColor: '#011627',
-    color: '#ffffff',
+    backgroundColor:'#ffffff',border: '1px solid #dfe1e5',
+    boxShadow: 'none',
+    color:'#000',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -121,7 +122,7 @@ const TopBar = ({ title, btn, window }) => {
       <Divider />
       <List>
         {links.map(({ url, name, Icon }, i) => (
-          <Link to={url} key={'link' + i}  className={location.pathname === url ? 'active-link' : ''}>
+          <Link to={url} key={'link' + i}  className={location.pathname === url ? 'active-link' : 'link'}>
             <ListItem button>
               <ListItemIcon
                 className={location.pathname === url ? 'active-link' : ''}
@@ -137,7 +138,7 @@ const TopBar = ({ title, btn, window }) => {
       <Divider />
       <List>
         {links2.map(({ url, name, Icon }, i) => (
-          <Link to={url} key={'link' + i}  className={location.pathname === url ? 'active-link' : ''}>
+          <Link to={url} key={'link' + i}  className={location.pathname === url ? 'active-link' : 'link'}>
             <ListItem button>
               <ListItemIcon
                 className={location.pathname === url ? 'active-link' : ''}

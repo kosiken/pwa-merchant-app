@@ -5,7 +5,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #edf0fba3;
 }
-
+a{
+color: inherit;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -119,7 +121,7 @@ main {
 .orders {
   width: 100%;
   padding: 10px 0 0;
-  margin: 10px 0;
+  
   max-width: 550px;
   min-height: 50vh;
   background-color: #fff;

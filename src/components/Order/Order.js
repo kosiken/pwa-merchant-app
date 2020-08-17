@@ -7,14 +7,6 @@ import Avatar from '@material-ui/core/Avatar';
 import { FiUser as UserIcon } from 'react-icons/fi';
 import styles from './Order.module.scss';
 const Order = ({ order }) => {
-  const statuses = [
-    'Processing',
-    'Submitted',
-    'Accepted',
-    'Created',
-    'Delivered',
-    'Cancelled',
-  ];
   const status = order.status || 'Processing';
   const classes = classNames(styles.status, styles[status.toLocaleLowerCase()]);
 

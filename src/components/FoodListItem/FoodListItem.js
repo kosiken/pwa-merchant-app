@@ -1,7 +1,6 @@
 import React from 'react';
 import Typography from '../Typography/Typography';
 
-import { FiUser as UserIcon, FiCoffee as Coffee } from 'react-icons/fi';
 import styles from './FoodListItem.module.scss';
 
 const FoodListItem = ({ food_item }) => {
