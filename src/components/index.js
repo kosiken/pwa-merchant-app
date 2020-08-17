@@ -12,6 +12,7 @@ import Order from './Order/Order';
 import ComboBox from './ComboBox/ComboBox';
 import ComboBox2 from './ComboBox2/ComboBox2';
 import Toast from './Toast/Toast';
+import Calender from './Calendar/Calender';
 
 export {
   Input,
@@ -27,4 +28,5 @@ export {
   ComboBox,
   ComboBox2,
   Toast,
+  Calender,
 };

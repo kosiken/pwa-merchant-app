@@ -9,7 +9,7 @@ import IconButton from '../IconButton/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+
 import {
   FiHome as HomeIcon,
   FiUser as UserIcon,
@@ -42,7 +42,9 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
-    backgroundColor: '#f0324b',
+    backgroundColor: '#ffffff',
+    color: '#000000',
+    boxShadow:'none'
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -104,7 +106,9 @@ const TopBar = ({ title, btn, window }) => {
             >
               <HomeIcon />
             </ListItemIcon>
-            <ListItemText>Home</ListItemText>
+            <Typography style={{
+            fontFamily: "'Inter', sans-serif"
+            }}>Home</Typography>
           </ListItem>
         </Link>
         <Link
@@ -122,7 +126,7 @@ const TopBar = ({ title, btn, window }) => {
             >
               <PaperIcon />
             </ListItemIcon>
-            <ListItemText>Notifications</ListItemText>
+            <Typography>Notifications</Typography>
           </ListItem>
         </Link>
 
@@ -139,7 +143,7 @@ const TopBar = ({ title, btn, window }) => {
             >
               <UserIcon />
             </ListItemIcon>
-            <ListItemText>Customers</ListItemText>
+            <Typography>Customers</Typography>
           </ListItem>
         </Link>
       </List>
@@ -161,7 +165,7 @@ const TopBar = ({ title, btn, window }) => {
             >
               <Database />
             </ListItemIcon>
-            <ListItemText>Food Items</ListItemText>
+            <Typography>Food Items</Typography>
           </ListItem>
         </Link>
       </List>

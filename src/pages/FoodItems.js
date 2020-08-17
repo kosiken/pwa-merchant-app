@@ -13,9 +13,9 @@ const FoodItems = () => {
   // const { foodItems } = useSelector((state) => state.customer);
   // const dispatch = useDispatch();
   const [foodItems, setFoodItems] = useState([]);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
-  const { register, handleSubmit, errors, getValues } = useForm();
+  const { register, handleSubmit, errors } = useForm();
 
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));

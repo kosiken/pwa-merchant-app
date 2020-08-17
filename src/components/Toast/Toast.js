@@ -4,12 +4,12 @@ import Typography from '../Typography/Typography';
 import styles from './Toast.module.scss';
 import classNames from 'classnames';
 
-function Toast({ message, color = 'primary', ...otherProps }) {
+function Toast({ children, color = 'primary', ...otherProps }) {
   const classes = classNames(styles['toast'], styles[color]);
 
   return (
     <div className={classes} {...otherProps}>
-      <Typography>{message}</Typography>
+      {children}
     </div>
   );
 }

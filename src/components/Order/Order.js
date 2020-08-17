@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { v4 as uuid } from 'uuid';
 import _ from 'lodash';
 import Typography from '../Typography/Typography';
-
+import Avatar from '@material-ui/core/Avatar';
 import { FiUser as UserIcon } from 'react-icons/fi';
 import styles from './Order.module.scss';
 const Order = ({ order }) => {
@@ -21,9 +21,9 @@ const Order = ({ order }) => {
   return (
     <div className={[styles['order-item']]}>
       <div className={styles['header']}>
-        <span className={styles['avatar']}>
+        <Avatar >
           <UserIcon />
-        </span>
+        </Avatar>
         <section className={styles['customer-info']}>
           <Typography
             style={{

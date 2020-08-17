@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
-import { useSelector, useDispatch } from 'react-redux';
-import { CustomerListItem, Typography } from '../components';
+
+import { CustomerListItem, Typography, Calender } from '../components';
 import api from '../api';
-//import { TopBar, SwitchBox, Input, Button, IconButton, Checkbox } from '../components'
-// import { Link } from "react-router-dom";
+
 import { v4 as uuid } from 'uuid';
 
 const Customers = () => {
@@ -26,6 +25,8 @@ const Customers = () => {
 
   return (
     <div style={{ minHeight: '100vh' }}>
+      <Calender />
+
       <div className="customers">
         {!_.isEmpty(customers) &&
           customers.map((customer) => (
@@ -35,7 +36,7 @@ const Customers = () => {
       <Typography style={{ textAlign: 'center' }}>
         Made with{' '}
         <span role="img" aria-label="love">
-          ❤️{' '}
+          ❤️
         </span>
         <span
           style={{

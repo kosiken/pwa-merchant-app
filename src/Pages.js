@@ -6,10 +6,12 @@ import { TopBar } from './components';
 import Customers from './pages/Customers';
 import CreateOrder from './pages/CreateOrder';
 import OrderPage from './pages/OrderPage';
+
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import { makeStyles } from '@material-ui/core/styles';
 import FoodItems from './pages/FoodItems';
+import Orders from './pages/Orders';
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
@@ -33,9 +35,23 @@ const Auththenticated = () => {
               }}
             >
               <div className={classes.toolbar} />
+
+              <Orders />
+            </main>
+          </Route>
+
+          <Route exact path="/create-order">
+            <TopBar title="Create Order" />
+            <main
+              style={{
+                flexGrow: 1,
+              }}
+            >
+              <div className={classes.toolbar} />
               <CreateOrder />
             </main>
           </Route>
+
           <Route exact path="/FoodItems">
             <TopBar title="Meals and Menu" />{' '}
             <main

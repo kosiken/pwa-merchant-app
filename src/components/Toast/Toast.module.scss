@@ -1,7 +1,7 @@
 @import '../styles/colors.scss';
 
 .toast {
-  padding: 1.2em 15px;
+  padding: 15px;  font-size: 0.8em;
 }
 .primary {
   background-color: rgba($color: $primary, $alpha: 0.21);
