@@ -21,19 +21,16 @@
     &:hover {
       background-color: darken($color: $secondary, $amount: 20%);
     }
-
   }
-  
-     &.clear {
-       background-color: transparent;
-       color: $primary;
-       box-shadow:none;
+
+  &.clear {
+    background-color: transparent;
+    color: $primary;
+    box-shadow: none;
     &:hover {
-     
-color: darken($color: $primary, $amount: 20%);
+      color: darken($color: $primary, $amount: 20%);
     }
-   
-   }
+  }
   &.full {
     width: 95%;
     margin: 0 auto;

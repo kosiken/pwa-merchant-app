@@ -78,7 +78,7 @@ function Foodselect({ Foods, theRef, onChange }) {
         <div focusable>
           {' '}
           <Typography inline>{theRef.current.value} not found </Typography>{' '}
-          <Link to="/create_food">
+          <Link to="/FoodItems">
             {' '}
             <Button>Create </Button>
           </Link>

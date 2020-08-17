@@ -32,6 +32,10 @@
   &.error {
     background-color: rgba($color: red, $alpha: 0.2);
   }
+
+  &.multiline {
+    height: 56px;
+  }
   &:focus {
     background-color: white;
     border: 1px solid $info;

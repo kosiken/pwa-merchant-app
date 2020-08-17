@@ -42,9 +42,8 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
-    backgroundColor: '#ffffff',
-    color: '#000000',
-    boxShadow:'none'
+    backgroundColor: '#011627',
+    color: '#ffffff',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -52,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
-  // necessary for content to be below app bar
+
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
@@ -67,12 +66,38 @@ const TopBar = ({ title, btn, window }) => {
   const location = useLocation();
 
   const classes = useStyles();
-  const theme = useTheme();
+
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  let links = [
+    {
+      url: '/',
+      name: 'Home',
+      Icon: HomeIcon,
+    },
+    {
+      url: '/notifications',
+      name: 'Notifications',
+      Icon: PaperIcon,
+    },
+
+    {
+      url: '/customers',
+      name: 'Customers',
+      Icon: UserIcon,
+    },
+  ];
+
+  const links2 = [
+    {
+      url: '/FoodItems',
+      name: 'Food Items',
+      Icon: ShoppingBag,
+    },
+  ];
 
   const drawer = (
     <div>
@@ -95,82 +120,36 @@ const TopBar = ({ title, btn, window }) => {
       </div>
       <Divider />
       <List>
-        <Link
-          to="/"
-          className={location.pathname === '/' ? 'link active-link' : 'link'}
-        >
-          <ListItem button>
-            <ListItemIcon
-              className={location.pathname === '/' ? 'active-link' : ''}
-              style={{ fontSize: '1.2em' }}
-            >
-              <HomeIcon />
-            </ListItemIcon>
-            <Typography style={{
-            fontFamily: "'Inter', sans-serif"
-            }}>Home</Typography>
-          </ListItem>
-        </Link>
-        <Link
-          to="/notifications"
-          className={
-            location.pathname === '/notifications' ? 'link active-link' : 'link'
-          }
-        >
-          <ListItem button>
-            <ListItemIcon
-              className={
-                location.pathname === '/notifications' ? 'active-link' : ''
-              }
-              style={{ fontSize: '1.2em' }}
-            >
-              <PaperIcon />
-            </ListItemIcon>
-            <Typography>Notifications</Typography>
-          </ListItem>
-        </Link>
-
-        <Link
-          to="/customers"
-          className={location.pathname === '/customers' ? 'active-link' : ''}
-        >
-          <ListItem button>
-            <ListItemIcon
-              className={
-                location.pathname === '/customers' ? 'active-link' : ''
-              }
-              style={{ fontSize: '1.2em' }}
-            >
-              <UserIcon />
-            </ListItemIcon>
-            <Typography>Customers</Typography>
-          </ListItem>
-        </Link>
+        {links.map(({ url, name, Icon }, i) => (
+          <Link to={url} key={'link' + i}  className={location.pathname === url ? 'active-link' : ''}>
+            <ListItem button>
+              <ListItemIcon
+                className={location.pathname === url ? 'active-link' : ''}
+                style={{ fontSize: '1.2em' }}
+              >
+                <Icon />
+              </ListItemIcon>
+              <Typography>{name}</Typography>
+            </ListItem>
+          </Link>
+        ))}
       </List>
-      {/* <Divider />
-      <List></List> */} <Divider />
+      <Divider />
       <List>
-        <Link
-          to="/FoodItems"
-          className={
-            location.pathname === '/FoodItems' ? 'link active-link' : 'link'
-          }
-        >
-          <ListItem button>
-            <ListItemIcon
-              className={
-                location.pathname === '/FoodItems' ? 'active-link' : ''
-              }
-              style={{ fontSize: '1.2em' }}
-            >
-              <Database />
-            </ListItemIcon>
-            <Typography>Food Items</Typography>
-          </ListItem>
-        </Link>
+        {links2.map(({ url, name, Icon }, i) => (
+          <Link to={url} key={'link' + i}  className={location.pathname === url ? 'active-link' : ''}>
+            <ListItem button>
+              <ListItemIcon
+                className={location.pathname === url ? 'active-link' : ''}
+                style={{ fontSize: '1.2em' }}
+              >
+                <Icon />
+              </ListItemIcon>
+              <Typography>{name}</Typography>
+            </ListItem>
+          </Link>
+        ))}
       </List>
-      {/* <Divider />
-      <List></List> */}
     </div>
   );
 
@@ -190,13 +169,10 @@ const TopBar = ({ title, btn, window }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography style={{ fontWeight: 'bold' }}>
-            {title || 'Page One'}
-          </Typography>
+          <Typography>{title || 'Page One'}</Typography>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer}>
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
             container={container}

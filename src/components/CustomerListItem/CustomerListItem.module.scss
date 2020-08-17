@@ -1,15 +1,14 @@
 .customer-list-item {
   margin: 10px;
-  border: 1px solid #bdbdbd;
 
   background-color: #fff;
-  padding-bottom: 10px;
+
   &:hover {
-    border: 0.5px solid black;
+    background-color: rgba(0, 0, 0, 0.04);
   }
   .header {
     display: flex;
-    padding: 10px 10px 0;
+    padding: 10px 10px;
     align-items: center;
   }
 

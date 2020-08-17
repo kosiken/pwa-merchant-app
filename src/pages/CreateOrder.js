@@ -12,7 +12,8 @@ import {
   Checkbox,
   Typography,
   ComboBox,
-  ComboBox2,Toast
+  ComboBox2,
+  Toast,
 } from '../components';
 import { v4 as uuid } from 'uuid';
 
@@ -126,15 +127,16 @@ const CreateOrder = () => {
   };
   return (
     <div style={{ minHeight: '100vh' }}>
-        <Toast color="info" style={{
-        marginBottom:'1em'
-        
-        }} >
-  
-    <Link to="/" >
-    <Button color="clear"> Back</Button>
-    </Link> 
-    </Toast>
+      <Toast
+        color="info"
+        style={{
+          marginBottom: '1em',
+        }}
+      >
+        <Link to="/">
+          <Button color="clear"> Back</Button>
+        </Link>
+      </Toast>
       <SwitchBox options={['Existing', 'New']} value={tab} onChange={setTab} />
       <form
         autoComplete="off"

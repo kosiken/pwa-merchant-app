@@ -3,7 +3,7 @@ body {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  background-color: #edf0fba3;
 }
 
 code {
@@ -12,25 +12,25 @@ code {
 }
 
 table {
-	/* margin: 14px auto;
+  /* margin: 14px auto;
 	padding: 7vh 0;
 	border-collapse: collapse; */
-	
-	padding: 0.5vh 0.5vh;
-	border-collapse: collapse;
-	display: inline-block;
-	border-color: transparent;
-	padding:10px;
-	border-radius: 10px;
-	background-color: #f0324b1c;
+
+  padding: 0.5vh 0.5vh;
+  border-collapse: collapse;
+  display: inline-block;
+  border-color: transparent;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #f0324b1c;
 }
 
 td {
-margin: 10px;
+  margin: 10px;
 
-display: inline-flex;
-flex-direction: column;
-align-items: center;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 a {
@@ -55,7 +55,7 @@ a {
 }
 
 main {
- overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 .central {
@@ -118,48 +118,58 @@ main {
 .customers,
 .orders {
   width: 100%;
-  padding: 10px 0;
+  padding: 10px 0 0;
   margin: 10px 0;
   max-width: 550px;
   min-height: 50vh;
+  background-color: #fff;
 }
 .filters {
-
- font-size: 14px;
- text-align: center;
- overflow-x: scroll;
- padding:10px;
+  font-size: 14px;
+  text-align: center;
+  overflow-x: scroll;
+  padding: 10px;
   span {
- margin-right: 1em
- 
- }
+    margin-right: 1em;
+  }
 }
+
+.customerPage {
+  display: block;
+}
+
+.customers {
+  
+
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
+}
+
 .container {
-width: 100%;
-margin: 0 auto
+  width: 100%;
+  margin: 0 auto;
 }
 @media all and (min-width: 699px) {
   .f-form {
     padding: 30px;
   }
-  .customers,
+
   .orders {
-    width: 85%;
-    padding: 20px 10px;
     margin: 10px auto;
   }
- .container {
-width: 85%;
-margin: 0 auto;
-position: relative
-} 
-.filters {
-
- overflow-x: hidden;
-}
+  .container {
+    width: 85%;
+    margin: 0 auto;
+    position: relative;
+  }
+  .filters {
+    overflow-x: hidden;
+  }
+  .customerPage {
+    display: grid;
+    grid-template-columns: auto 400px;
+  }
   td {
-//margin: 10px;
-padding: 20px;
-
-}
+    //margin: 10px;
+    padding: 20px;
+  }
 }

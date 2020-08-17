@@ -21,7 +21,7 @@ const Order = ({ order }) => {
   return (
     <div className={[styles['order-item']]}>
       <div className={styles['header']}>
-        <Avatar >
+        <Avatar>
           <UserIcon />
         </Avatar>
         <section className={styles['customer-info']}>
