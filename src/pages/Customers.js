@@ -19,7 +19,8 @@ const Customers = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const { register, handleSubmit, errors } = useForm();
-
+let [isLoading, setLoading] = useState(false);
+let [isLoading2, setLoading2] = useState(false);
   const [key, setKey] = useState('');
   const [loaded, setLoaded] = useState(true);
   const [open, setOpen] = useState(false);
@@ -61,7 +62,7 @@ const Customers = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  let [isLoading, setLoading] = useState(false);
+  
   const [customers, setCustomers] = useState([]);
   useEffect(() => {
     (async () => {
@@ -91,7 +92,21 @@ const Customers = () => {
       });
   };
 
-  const handleSubmitCallback2 = (s) => {};
+  const handleSubmitCallback2 = (s) => {
+  
+      api
+      .editCustomer(s)
+      .then((user) => {
+        setCustomers(customers.concat([user]));
+        setLoading2(false);
+      //  document.getElementById('five-form').reset();
+      })
+
+      .catch((err) => {
+        console.log(err.data);
+        handleOpen('Unexpected err');
+      });
+  };
 
   return (
     <div style={{ minHeight: '100vh' }} className="customerPage">
@@ -241,8 +256,8 @@ const Customers = () => {
               <PlusIcon /> Add address from map{' '}
             </Button>
 
-            <Button loading={isLoading} full>
-              Add Item
+            <Button loading={isLoading2} full>
+             Confirm
             </Button>
           </form>
 
