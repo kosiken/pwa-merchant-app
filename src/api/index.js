@@ -254,9 +254,8 @@ class FiveApi {
       }
     }
   }
-  
-  
-    async createCustomer(customer) {
+
+  async createCustomer(customer) {
     try {
       let resp = await Server.post('/vendors/customer/', customer);
 
@@ -279,42 +278,38 @@ class FiveApi {
       }
     }
   }
-  
-  
-  
-  
+
   async searchPlaces(searchString) {
-  try {
-    let resp = await axios.get('https://maps.googleapis.com/maps/api/place/findplacefromtext/json', {
-      params: {
-        input: searchString,
-        key: "AIzaSyBgvTNKV8F5_-jwfc4OAITx60nNcV63784",
-        inputtype: 'textquery'
-      },
-    });
-    if (goodResponse(resp)) {
-      return resp.data;
-    } else {
-      throw new FiveChowError(resp);
-    }
-  } catch (err) {
-    if (err.response) {
-      throw new FiveChowError(err.response);
-    } else {
-      throw new FiveChowError({
-        data: {
-          error: err.message,
-          code: 5010,
-        },
-        status: 0,
-      });
+    try {
+      let resp = await axios.get(
+        'https://maps.googleapis.com/maps/api/place/findplacefromtext/json',
+        {
+          params: {
+            input: searchString,
+            key: 'AIzaSyBgvTNKV8F5_-jwfc4OAITx60nNcV63784',
+            inputtype: 'textquery',
+          },
+        }
+      );
+      if (goodResponse(resp)) {
+        return resp.data;
+      } else {
+        throw new FiveChowError(resp);
+      }
+    } catch (err) {
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
     }
   }
 }
 
-
-
-}
-
 export default new FiveApi(Axios);
-

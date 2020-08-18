@@ -10,12 +10,9 @@ import api from '../../api';
 import styles from './ComboBox2.module.scss';
 import useFocus from '../../hooks/useFocus';
 
-
 function useLocations(ref) {
-  
   const [locations, setLocations] = React.useState([]);
   React.useEffect(() => {
- 
     const node = ref.current;
     if (node) {
       node.addEventListener('input', changeLocations);
@@ -29,22 +26,16 @@ function useLocations(ref) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref]);
   const changeLocations = async (e) => {
-       try{
-   let results = await    api.searchPlaces(e.target.value);
-   console.log(results)
-       }
-       
-       catch(err){
-       
-       console.log(err)
-       }
+    try {
+      let results = await api.searchPlaces(e.target.value);
+      console.log(results);
+    } catch (err) {
+      console.log(err);
     }
+  };
 
   return locations;
 }
-
-
-
 
 function Locationselect({ Locations, theRef, onChange }) {
   if (Locations.length) {
@@ -94,7 +85,7 @@ function ComboBox2({ onChange }) {
   //const ref = React.useRef(null)
 
   let show = useFocus(ref);
-let Locations = useLocations(ref);
+  let Locations = useLocations(ref);
 
   return (
     <div className="locations-div">
@@ -112,7 +103,6 @@ let Locations = useLocations(ref);
           theRef={ref}
         />
       )}{' '}
-      
       <div id="map"></div>
     </div>
   );

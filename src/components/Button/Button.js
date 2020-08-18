@@ -13,15 +13,14 @@ const Button = ({
   const classes = classNames(styles['f-btn'], styles[color], {
     [styles['full']]: full,
   });
-  
-  if(loading)  { return (
-    <button disabled className={classes} {...otherProps}>
-      <CircularProgress color="#fff" />
-    </button>
-  );
-  
+
+  if (loading) {
+    return (
+      <button disabled className={classes} {...otherProps}>
+        <CircularProgress />
+      </button>
+    );
   }
-  
 
   return (
     <button className={classes} onClick={onClick} {...otherProps}>

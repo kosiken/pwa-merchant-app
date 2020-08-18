@@ -37,8 +37,8 @@
     display: block;
   }
   &:disabled {
- background-color: darken($color: $primary, $amount: 20%);
-   
+    background-color: darken($color: $primary, $amount: 20%);
+
     cursor: initial;
   }
 }
