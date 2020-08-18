@@ -7,25 +7,13 @@ import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
 import api from '../api';
 import logo from '../assets/logo-variant.png';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 const SignUp = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
   let [isLoading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  function renderLoading(message) {
-    if (isLoading)
-      return (
-        <CircularProgress
-          style={{
-            color: '#ffffff',
-          }}
-        />
-      );
 
-    return message;
-  }
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
@@ -161,8 +149,8 @@ const SignUp = () => {
               Login{' '}
             </Typography>
           </Link>
-          <Button full disabled={isLoading}>
-            {renderLoading('Sign Up')}
+          <Button full loading={isLoading}>
+            'Sign Up'
           </Button>
         </div>
       </form>

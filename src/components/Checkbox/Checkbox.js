@@ -23,7 +23,7 @@ const Checkbox = forwardRef((props, ref) => {
     if (onChange) {
       onChange(newValue);
     }
-  }, [isChecked, onChange]);
+  }, [disabled, isChecked, onChange]);
 
   const spanUnCheckedClasses = classNames(
     styles['checkbox-span'],

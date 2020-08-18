@@ -5,10 +5,46 @@ import { Link } from 'react-router-dom';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
 //import TextField from "@material-ui/core/TextField";
-import { MdSearch as SearchIcon } from 'react-icons/md';
+import api from '../../api';
 //import Autocomplete from "@material-ui/lab/Autocomplete";
 import styles from './ComboBox2.module.scss';
 import useFocus from '../../hooks/useFocus';
+
+
+function useLocations(ref) {
+  
+  const [locations, setLocations] = React.useState([]);
+  React.useEffect(() => {
+ 
+    const node = ref.current;
+    if (node) {
+      node.addEventListener('input', changeLocations);
+      // node.addEventListener('blur', handleBlur);
+
+      return () => {
+        node.removeEventListener('input', changeLocations);
+        //node.removeEventListener('blur', handleBlur);
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ref]);
+  const changeLocations = async (e) => {
+       try{
+   let results = await    api.searchPlaces(e.target.value);
+   console.log(results)
+       }
+       
+       catch(err){
+       
+       console.log(err)
+       }
+    }
+
+  return locations;
+}
+
+
+
 
 function Locationselect({ Locations, theRef, onChange }) {
   if (Locations.length) {
@@ -23,7 +59,7 @@ function Locationselect({ Locations, theRef, onChange }) {
               theRef.current.value = l.full_address;
               onChange({
                 target: {
-                  value: l.id,
+                  value: l,
                 },
               });
             }}
@@ -53,17 +89,12 @@ function Locationselect({ Locations, theRef, onChange }) {
     );
 }
 
-function ComboBox2({ items, onChange }) {
+function ComboBox2({ onChange }) {
   const ref = React.useRef(null);
   //const ref = React.useRef(null)
 
   let show = useFocus(ref);
-
-  let [Locations, setLocations] = React.useState(items);
-  React.useEffect(() => {
-    //  console.log(foodsArray.length);
-    setLocations(items);
-  }, [items]);
+let Locations = useLocations(ref);
 
   return (
     <div className="locations-div">
@@ -81,6 +112,8 @@ function ComboBox2({ items, onChange }) {
           theRef={ref}
         />
       )}{' '}
+      
+      <div id="map"></div>
     </div>
   );
 }

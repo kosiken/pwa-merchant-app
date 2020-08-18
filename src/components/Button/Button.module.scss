@@ -37,8 +37,8 @@
     display: block;
   }
   &:disabled {
-    color: $gray-100;
-    background-color: $gray-300;
+ background-color: darken($color: $primary, $amount: 20%);
+   
     cursor: initial;
   }
 }
