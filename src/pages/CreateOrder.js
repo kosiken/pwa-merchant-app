@@ -13,11 +13,12 @@ import {
   Typography,
   ComboBox,
   ComboBox2,
+  ComboBox0,
   Toast,
 } from '../components';
-
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { v4 as uuid } from 'uuid';
-
+import TextField from '@material-ui/core/TextField';
 // import { Link } from "react-router-dom";
 import { FiPlus as PlusIcon, FiX as CloseIcon } from 'react-icons/fi';
 
@@ -42,7 +43,8 @@ const CreateOrder = () => {
   let [quantity, setQuantity] = useState('');
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
-
+  const [customers, setCustomers] = useState([]);
+  let [customer, setCustomer] = useState(null);
   const [open, setOpen] = useState(false);
 
   function handleOpen(m) {
@@ -60,8 +62,8 @@ const CreateOrder = () => {
       .createOrder(
         {
           full_name: getValues('name'),
-          phone_number: getValues('phone'),
-          delivery_address: currentLocation,
+          phone_number: customer ? customer.phone_number : getValues('phone'),
+          delivery_address: 'Lion',
           food_items: foods,
         },
         token
@@ -106,7 +108,8 @@ const CreateOrder = () => {
       try {
         let meals = await api.getMeals();
         let food = await api.getFoods();
-
+        let __customers = await api.getCustomers();
+        setCustomers(__customers);
         setFoodItems(food.concat(meals));
 
         api.getAddresses().then(setLocations).catch(console.log);
@@ -149,40 +152,46 @@ const CreateOrder = () => {
         ref={formRef}
       >
         <div className="container">
-          {tab === 'New' && (
-            <Input
-              type="text"
-              name="name"
-              label="Customer Name"
-              ref={register({
-                required: {
-                  value: true,
-                  message: 'Customer name is required',
-                },
-              })}
-              error={errors.name}
-              style={{ margin: '0 auto' }}
-            />
+          {tab === 'Existing' && (
+            <ComboBox0 items={customers} onChange={setCustomer} />
           )}
 
-          <Input
-            type="tel"
-            name="phone"
-            label="Customer Phone Number"
-            ref={register({
-              required: {
-                value: true,
-                message: 'Customer Phone Number is required',
-              },
+          {tab === 'New' && (
+            <>
+              <Input
+                type="text"
+                name="name"
+                label="Customer Name"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: 'Customer name is required',
+                  },
+                })}
+                error={errors.name}
+                style={{ margin: '0 auto' }}
+              />
 
-              min: {
-                value: 10,
-                message: 'Invalid Phone Number',
-              },
-            })}
-            error={errors.phone}
-            style={{ margin: '0 auto' }}
-          />
+              <Input
+                type="tel"
+                name="phone"
+                label="Customer Phone Number"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: 'Customer Phone Number is required',
+                  },
+
+                  min: {
+                    value: 10,
+                    message: 'Invalid Phone Number',
+                  },
+                })}
+                error={errors.phone}
+                style={{ margin: '0 auto' }}
+              />
+            </>
+          )}
           <ComboBox2 items={locations} onChange={changeCurrentAddress} />
           {tab === 'New' && (
             <Checkbox

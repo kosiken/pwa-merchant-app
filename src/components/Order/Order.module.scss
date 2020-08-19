@@ -1,11 +1,15 @@
 @import '../styles/colors.scss';
 
 .order-item {
-  margin: 10px;
-
+  margin: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #fff;
-  padding-bottom: 10px;
-  border: 1px solid #bdbdbd;
+  padding: 10px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
   .header {
     display: flex;
     padding: 10px 10px 0;
@@ -29,7 +33,7 @@
 }
 
 .processing {
-  background-color: $info;
+  background-color: #b99f31;
 }
 .submitted {
   background-color: #392ebd;

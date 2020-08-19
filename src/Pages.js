@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import { makeStyles } from '@material-ui/core/styles';
 import FoodItems from './pages/FoodItems';
+import CreateFoodItem from './pages/CreateFoodItem';
 import Orders from './pages/Orders';
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -49,6 +50,18 @@ const Auththenticated = () => {
             >
               <div className={classes.toolbar} />
               <CreateOrder />
+            </main>
+          </Route>
+
+          <Route exact path="/create-food">
+            <TopBar title="Create Food Item" />{' '}
+            <main
+              style={{
+                flexGrow: 1,
+              }}
+            >
+              <div className={classes.toolbar} />
+              <CreateFoodItem />
             </main>
           </Route>
 

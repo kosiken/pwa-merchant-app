@@ -17,10 +17,10 @@ import { v4 as uuid } from 'uuid';
 
 const Customers = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
+  const [customers, setCustomers] = useState([]);
   const { register, handleSubmit, errors } = useForm();
-let [isLoading, setLoading] = useState(false);
-let [isLoading2, setLoading2] = useState(false);
+  let [isLoading, setLoading] = useState(false);
+  let [isLoading2, setLoading2] = useState(false);
   const [key, setKey] = useState('');
   const [loaded, setLoaded] = useState(true);
   const [open, setOpen] = useState(false);
@@ -62,8 +62,6 @@ let [isLoading2, setLoading2] = useState(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  
-  const [customers, setCustomers] = useState([]);
   useEffect(() => {
     (async () => {
       try {
@@ -93,13 +91,12 @@ let [isLoading2, setLoading2] = useState(false);
   };
 
   const handleSubmitCallback2 = (s) => {
-  
-      api
+    api
       .editCustomer(s)
       .then((user) => {
         setCustomers(customers.concat([user]));
         setLoading2(false);
-      //  document.getElementById('five-form').reset();
+        //  document.getElementById('five-form').reset();
       })
 
       .catch((err) => {
@@ -257,7 +254,7 @@ let [isLoading2, setLoading2] = useState(false);
             </Button>
 
             <Button loading={isLoading2} full>
-             Confirm
+              Confirm
             </Button>
           </form>
 

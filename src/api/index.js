@@ -278,8 +278,8 @@ class FiveApi {
       }
     }
   }
-  
-    async editCustomer(customer) {
+
+  async editCustomer(customer) {
     try {
       let resp = await this.api.put('/vendors/customer', customer);
 

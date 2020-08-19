@@ -3,9 +3,19 @@ import classNames from 'classnames';
 
 import styles from './Typography.module.scss';
 function Typography(props) {
-  const { title, inline, small, children, variant, ...otherProps } = props;
+  const {
+    title,
+    inline,
+    small,
+    bold,
+    children,
+    variant,
+    ...otherProps
+  } = props;
   const classes2 = classNames(styles.typography, styles.title, styles[variant]);
-  const classes = classNames(styles.typography, styles[variant]);
+  const classes = classNames(styles.typography, styles[variant], {
+    [styles.bold]: bold,
+  });
   if (title) {
     return (
       <h4 className={classes2} {...otherProps}>

@@ -2,6 +2,7 @@
 
 .typography {
   text-decoration: none;
+  font-family: 'Inter', sans-serif;
 }
 .title {
   margin: 0;
@@ -18,4 +19,8 @@
 
 .gray {
   color: #868686;
+}
+
+.bold {
+  font-weight: 600;
 }

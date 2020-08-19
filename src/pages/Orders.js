@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api';
-
+import { isEmpty } from 'lodash';
 import {
   SwitchBox,
   Input,
@@ -10,6 +10,7 @@ import {
   Checkbox,
   Typography,
   Toast,
+  Order,
 } from '../components';
 import { FiFileText as PaperIcon } from 'react-icons/fi';
 
@@ -24,6 +25,19 @@ const Orders = () => {
   ];
 
   let [current, setCurrent] = useState('');
+  let [orders, setOrders] = useState([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        let result = await api.getOrders();
+
+        setOrders(result);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+  //  foo
   return (
     <div>
       <Toast
@@ -60,27 +74,45 @@ const Orders = () => {
               {status}
             </Typography>
           ))}
-        </div>
+        </div>{' '}
+      </div>
+      <div
+        className="container"
+        style={{
+          backgroundColor: '#fff',
+          padding: '5px 0',
+        }}
+      >
+        {' '}
+        <div className="container">
+          <div className="orders-list">
+            {orders.map((order, i) => (
+              <Order key={'order' + i} order={order} />
+            ))}
 
-        <div className="orders-list">
-          <Typography
-            title
-            style={{
-              textAlign: 'center',
-              fontSize: '4em',
-              color: 'rgb(136, 136, 136)',
-              marginTop: '20vh',
-            }}
-          >
-            <PaperIcon />
-          </Typography>
-          <Typography
-            style={{
-              textAlign: 'center',
-            }}
-          >
-            No Orders Found
-          </Typography>
+            {isEmpty(orders) && (
+              <>
+                <Typography
+                  title
+                  style={{
+                    textAlign: 'center',
+                    fontSize: '4em',
+                    color: 'rgb(136, 136, 136)',
+                    marginTop: '20vh',
+                  }}
+                >
+                  <PaperIcon />
+                </Typography>
+                <Typography
+                  style={{
+                    textAlign: 'center',
+                  }}
+                >
+                  No Orders Found
+                </Typography>
+              </>
+            )}
+          </div>
         </div>
       </div>{' '}
     </div>

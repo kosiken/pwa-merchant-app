@@ -11,6 +11,7 @@ import Loader from './Loader/Loader';
 import Order from './Order/Order';
 import ComboBox from './ComboBox/ComboBox';
 import ComboBox2 from './ComboBox2/ComboBox2';
+import ComboBox0 from './ComboBox0/ComboBox0';
 import Toast from './Toast/Toast';
 import Calender from './Calendar/Calender';
 
@@ -29,4 +30,5 @@ export {
   ComboBox2,
   Toast,
   Calender,
+  ComboBox0,
 };
