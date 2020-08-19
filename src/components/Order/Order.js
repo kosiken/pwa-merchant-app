@@ -43,7 +43,7 @@ const Order = ({ order }) => {
           >
             {order.VendorCustomer.full_name}
           </Typography>
-          <Typography>
+          <Typography  variant="gray">
             {moment(order.accepted_at).format('MMMM Do YYYY, h:mm:ss a')}
           </Typography>
         </section>

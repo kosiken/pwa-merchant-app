@@ -282,7 +282,7 @@ const Customers = () => {
       </div>
 
       <div className="customers">
-        ..
+     
         <section
           style={{
             display: 'flex',

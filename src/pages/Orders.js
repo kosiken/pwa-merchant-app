@@ -11,6 +11,7 @@ import {
   Typography,
   Toast,
   Order,
+  Loader,
 } from '../components';
 import { FiFileText as PaperIcon } from 'react-icons/fi';
 
@@ -23,7 +24,7 @@ const Orders = () => {
     'Delivered',
     'Cancelled',
   ];
-
+let [isLoading, setLoading] = useState(true);
   let [current, setCurrent] = useState('');
   let [orders, setOrders] = useState([]);
   useEffect(() => {
@@ -81,11 +82,13 @@ const Orders = () => {
         style={{
           backgroundColor: '#fff',
           padding: '5px 0',
+          minHeight: '80vh'
         }}
       >
         {' '}
         <div className="container">
           <div className="orders-list">
+           {isLoading && <Loader />}
             {orders.map((order, i) => (
               <Order key={'order' + i} order={order} />
             ))}
