@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, useRef } from 'react';
+//
 import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
+
 import {
   CustomerListItem,
   Typography,
   Input,
   Button,
   Loader,
+  IconButton,
 } from '../components';
 import Backdrop from '@material-ui/core/Backdrop';
 import api from '../api';
 import { FiPlus as PlusIcon } from 'react-icons/fi';
-
+import { FiSearch as SearchIcon, FiX as CloseIcon } from 'react-icons/fi';
 import { v4 as uuid } from 'uuid';
+import useSearch from '../hooks/useSearch';
 
 const Customers = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -25,12 +28,17 @@ const Customers = () => {
   const [loaded, setLoaded] = useState(true);
   const [open, setOpen] = useState(false);
   const [openb, setOpenb] = useState(false);
+  const [search, setSearch] = useState(false);
+  const [searching, setSearching] = useState('');
+  let ref = useRef(null);
+  let items = useSearch(ref, customers, function (e, l) {
+    return new RegExp(e.toLowerCase()).test(l.full_name.toLowerCase());
+  });
   let [editing, setEditing] = useState({
     full_name: '',
     phone_number: '',
     email_address: '',
   });
-
   const editCustomer = (customer) => {
     setEditing(customer);
     setOpenb(true);
@@ -272,23 +280,54 @@ const Customers = () => {
           </Button>
         </Backdrop>
       </div>
+
       <div className="customers">
-        <Typography
-          small
+        ..
+        <section
           style={{
-            marginLeft: '10px',
+            display: 'flex',
+            padding: '10px',
+            justifyContent: 'space-between',
+            alignItems: 'center',
           }}
         >
-          Your Customers
-        </Typography>
-        {customers.map((customer) => (
+          <Typography
+            small
+            style={{
+              marginLeft: '10px',
+            }}
+          >
+            Your Customers
+          </Typography>
+
+          <IconButton
+            style={{
+              color: '#f0324b',
+            }}
+            onClick={() => {
+              setSearch(!search);
+            }}
+          >
+            {!search && <SearchIcon />}
+            {search && <CloseIcon />}
+          </IconButton>
+        </section>
+        {search && (
+          <Input
+            name="search"
+            type="search"
+            style={{ margin: '0 auto' }}
+            label="Search Customers"
+            ref={ref}
+          />
+        )}
+        {items.map((customer) => (
           <CustomerListItem
             key={uuid()}
             customer={customer}
             onEdit={editCustomer}
           />
         ))}
-
         {loaded && <Loader />}
       </div>
     </div>
