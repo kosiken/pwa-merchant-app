@@ -58,7 +58,7 @@ const FoodItems = () => {
     setOpenb(true);
   };
   const handleSubmitCallback = (s) => {
-      setLoading2(true);
+    setLoading2(true);
     if (s.price) editing.price = s.price;
     if (s.name) editing.name = s.name;
     editing.is_available = s.is_available;
@@ -76,7 +76,7 @@ const FoodItems = () => {
         });
         setFoodItems(foodItems);
         setLoading2(false);
-        document.getElementById('theForm').reset()
+        document.getElementById('theForm').reset();
         handleClose();
         handleOpen('Update Complete');
       })
@@ -100,7 +100,7 @@ const FoodItems = () => {
           <Button color="clear"> Create new</Button>
         </Link>
       </Toast>
-      <br/>
+      <br />
       <Input
         name="search"
         type="search"
@@ -136,10 +136,7 @@ const FoodItems = () => {
             type="text"
             name="name"
             label={editing.name}
-            ref={register({
-          
-            })}
-           
+            ref={register({})}
             style={{ margin: '0 auto' }}
           />
           <Input
@@ -150,7 +147,7 @@ const FoodItems = () => {
             ref={register({})}
             error={errors.email_address}
           />
- 
+
           <div style={{ margin: '20px' }}>
             <Checkbox name="is_available" label="Available?" ref={register()} />
           </div>

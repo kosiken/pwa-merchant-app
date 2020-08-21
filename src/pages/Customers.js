@@ -118,7 +118,7 @@ const Customers = () => {
         });
         setCustomers(customers);
         setLoading2(false);
-        document.getElementById('theForm').reset()
+        document.getElementById('theForm').reset();
         handleClose();
         //  document.getElementById('five-form').reset();
       })

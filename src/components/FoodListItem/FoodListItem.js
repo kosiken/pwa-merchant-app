@@ -39,7 +39,7 @@ const FoodListItem = ({ food_item, onEdit, index }) => {
           {food_item.price}
         </Typography>
       </div>
-      <section  style={{position: 'relative'}}>
+      <section style={{ position: 'relative' }}>
         <span className={classes}>
           {food_item.is_available ? 'Available' : 'Unavailable'}{' '}
         </span>

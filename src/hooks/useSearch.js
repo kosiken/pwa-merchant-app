@@ -3,6 +3,17 @@ import { useState, useEffect, useCallback } from 'react';
 function useSearch(ref, itemArray, func) {
   //console.log(foodsArray);
   const [items, setItems] = useState([]);
+  const changeItems = useCallback(
+    (e) => {
+      setItems(
+        itemArray.filter((l) => {
+          return func(ref.current.value, l);
+        })
+      );
+    },
+
+    [itemArray, func, ref]
+  );
   useEffect(() => {
     setItems(itemArray);
     const node = ref.current;
@@ -15,17 +26,8 @@ function useSearch(ref, itemArray, func) {
         //node.removeEventListener('blur', handleBlur);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref, itemArray]);
-  const changeItems = useCallback(
-    (e) => {
-      setItems(
-        itemArray.filter((l) => {
-          return func(ref.current.value, l);
-        })
-      );
-    },
-    [itemArray, func, ref]
-  );
 
   return items;
 }

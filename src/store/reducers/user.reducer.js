@@ -46,6 +46,7 @@ export default function (state = initialState, action) {
       break;
 
     case LOGOUT_USER:
+      localStorage.removeItem('token');
       returnValue = initialState;
       break;
 

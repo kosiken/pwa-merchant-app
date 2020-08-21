@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -66,11 +67,16 @@ const useStyles = makeStyles((theme) => ({
 
 const TopBar = ({ title, btn, window }) => {
   const location = useLocation();
-
+  const dispatch = useDispatch();
   const classes = useStyles();
-const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const logOut = () => {
+    dispatch({ type: 'LOGOUT_USER' });
+  
+  };
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -193,35 +199,33 @@ const [anchorEl, setAnchorEl] = React.useState(null);
           >
             {title || 'Page One'}
           </Typography>
-          
-               <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-           
-              >
-          <Avatar src={avatar} />
-          
+
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleMenu}
+          >
+            <Avatar src={avatar} />
           </IconButton>
-                  <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Log Out</MenuItem>
-              </Menu>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={open}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem onClick={logOut}>Log Out</MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer}>
