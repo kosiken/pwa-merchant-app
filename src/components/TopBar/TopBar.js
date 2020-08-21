@@ -75,7 +75,6 @@ const TopBar = ({ title, btn, window }) => {
 
   const logOut = () => {
     dispatch({ type: 'LOGOUT_USER' });
-  
   };
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
