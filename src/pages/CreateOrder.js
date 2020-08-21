@@ -16,9 +16,8 @@ import {
   ComboBox0,
   Toast,
 } from '../components';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import { v4 as uuid } from 'uuid';
-import TextField from '@material-ui/core/TextField';
+
 // import { Link } from "react-router-dom";
 import { FiPlus as PlusIcon, FiX as CloseIcon } from 'react-icons/fi';
 
@@ -39,6 +38,7 @@ const CreateOrder = () => {
     },
   ]);
   let [currentFood, setCurrentFood] = useState('');
+  // eslint-disable-next-line no-unused-vars
   let [currentLocation, setCurrentLocation] = useState(null);
   let [quantity, setQuantity] = useState('');
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -50,10 +50,7 @@ const CreateOrder = () => {
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
-  const {
-    user: { id },
-    token,
-  } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
   let formRef = useRef(null);
   let quantityRef = useRef(null);
   const { register, handleSubmit, errors, getValues } = useForm();

@@ -11,7 +11,7 @@ import styles from './ComboBox2.module.scss';
 import useFocus from '../../hooks/useFocus';
 
 function useLocations(ref) {
-  const [locations, setLocations] = React.useState([]);
+  const [locations] = React.useState([]);
   React.useEffect(() => {
     const node = ref.current;
     if (node) {

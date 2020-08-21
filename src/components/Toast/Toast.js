@@ -1,5 +1,4 @@
 import React from 'react';
-import Typography from '../Typography/Typography';
 
 import styles from './Toast.module.scss';
 import classNames from 'classnames';

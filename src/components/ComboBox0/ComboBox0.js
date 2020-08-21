@@ -1,15 +1,12 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import Typography from '../Typography/Typography';
-import { Link } from 'react-router-dom';
+
 import Input from '../Input/Input';
-import Button from '../Button/Button';
-//import TextField from "@material-ui/core/TextField";
-import { MdSearch as SearchIcon } from 'react-icons/md';
+
 //import Autocomplete from "@material-ui/lab/Autocomplete";
 import styles from './ComboBox.module.scss';
 import useFocus from '../../hooks/useFocus';
-import useAutocomplete from '@material-ui/lab/useAutocomplete';
 
 function useCustomers(ref, customerArray) {
   //console.log(foodsArray);

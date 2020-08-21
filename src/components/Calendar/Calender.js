@@ -14,26 +14,24 @@ function getCalender(date, d, m, y) {
     'Saturday',
   ];
 
-  const months = [
-    'January',
-    'Febuary',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+  // const months = [
+  //   'January',
+  //   'Febuary',
+  //   'March',
+  //   'April',
+  //   'May',
+  //   'June',
+  //   'July',
+  //   'August',
+  //   'September',
+  //   'October',
+  //   'November',
+  //   'December',
+  // ];
 
-  let dow = days[d],
-    month = months[m],
-    mon = m + 1;
+  let mon = m + 1;
   let dom = 0;
-  if (mon == 2) {
+  if (mon === 2) {
     dom = y % 4 ? 28 : 29;
   } else if ([4, 6, 9, 11].includes(mon)) {
     dom = 30;
@@ -52,7 +50,7 @@ function getCalender(date, d, m, y) {
     cd = cd - 7;
   }
   console.log(cd, da);
-  if (cd == 0) {
+  if (cd === 0) {
     start = d;
   } else {
     //console.log(`lol`);
@@ -67,7 +65,7 @@ function getCalender(date, d, m, y) {
   }
   for (let i = 0; i < dom; i++) {
     caldays.push({ day: days[(i + start) % 7], date: i + 1 });
-    if ((i + 1) % 7 == 0) {
+    if ((i + 1) % 7 === 0) {
       calender.push([].concat(caldays.slice()));
       caldays = [];
     }

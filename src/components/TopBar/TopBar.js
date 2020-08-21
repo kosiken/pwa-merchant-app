@@ -16,16 +16,15 @@ import {
   FiFileText as PaperIcon,
   FiMenu as MenuIcon,
   FiShoppingBag as ShoppingBag,
-  FiDatabase as Database,
 } from 'react-icons/fi';
 import Avatar from '@material-ui/core/Avatar';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import './TopBar.scss';
 
 import Typography from '../Typography/Typography';
-import { FiMoreVertical as MoreIcon } from 'react-icons/fi';
+import avatar from '../../assets/avatar.png';
 import logo from '../../assets/logo-variant.png';
 
 const drawerWidth = 240;
@@ -42,10 +41,10 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
-    backgroundColor: '#ffffff',
-    border: '1px solid #dfe1e5',
+    backgroundColor: '#f0324b',
+
     boxShadow: 'none',
-    color: '#000',
+    color: '#ffffff',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -186,7 +185,7 @@ const TopBar = ({ title, btn, window }) => {
           >
             {title || 'Page One'}
           </Typography>
-          <Avatar>OP</Avatar>
+          <Avatar src={avatar} />
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer}>

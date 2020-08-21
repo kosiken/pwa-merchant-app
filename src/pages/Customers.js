@@ -29,7 +29,7 @@ const Customers = () => {
   const [open, setOpen] = useState(false);
   const [openb, setOpenb] = useState(false);
   const [search, setSearch] = useState(false);
-  const [searching, setSearching] = useState('');
+
   let ref = useRef(null);
   let items = useSearch(ref, customers, function (e, l) {
     return new RegExp(e.toLowerCase()).test(l.full_name.toLowerCase());
@@ -40,6 +40,7 @@ const Customers = () => {
     email_address: '',
   });
   const editCustomer = (customer) => {
+    //let entries =  ['full_name','phone_number', 'email_address']
     setEditing(customer);
     setOpenb(true);
   };
@@ -47,6 +48,7 @@ const Customers = () => {
   const handleClose = () => {
     setOpenb(false);
   };
+  // eslint-disable-next-line no-unused-vars
   const handleToggle = () => {
     setOpenb(!openb);
   };
@@ -99,17 +101,31 @@ const Customers = () => {
   };
 
   const handleSubmitCallback2 = (s) => {
+    setLoading2(true);
+
+    editing.full_name = s.full_name;
+    editing.email_address = s.email_address;
+    editing.phone_number = s.phone_number;
     api
-      .editCustomer(s)
+      .editModel({ ...editing, model: 'VendorCustomer' })
       .then((user) => {
-        setCustomers(customers.concat([user]));
+        let index = customers.findIndex((customer) => customer.id === user.id);
+        customers[index] = user;
+        setEditing({
+          full_name: '',
+          phone_number: '',
+          email_address: '',
+        });
+        setCustomers(customers);
         setLoading2(false);
+        handleClose();
         //  document.getElementById('five-form').reset();
       })
 
       .catch((err) => {
         console.log(err.data);
         handleOpen('Unexpected err');
+        setLoading2(false);
       });
   };
 
@@ -212,7 +228,7 @@ const Customers = () => {
             <Input
               type="text"
               name="full_name"
-              label="Customer Name"
+              label={editing.full_name}
               ref={register({
                 required: {
                   value: true,
@@ -221,12 +237,11 @@ const Customers = () => {
               })}
               error={errors.full_name}
               style={{ margin: '0 auto' }}
-              value={editing.full_name}
             />
             <Input
               type="email"
               name="email_address"
-              label="Email Address"
+              label={editing.email_address}
               style={{ margin: '0 auto' }}
               ref={register({
                 pattern: {
@@ -235,12 +250,11 @@ const Customers = () => {
                 },
               })}
               error={errors.email_address}
-              value={editing.email_address}
             />
             <Input
               type="tel"
               name="phone_number"
-              label="Customer Phone Number"
+              label={editing.phone_number}
               ref={register({
                 required: {
                   value: true,
@@ -254,12 +268,7 @@ const Customers = () => {
               })}
               error={errors.phone_number}
               style={{ margin: '0 auto' }}
-              value={editing.phone_number}
             />
-
-            <Button color="clear">
-              <PlusIcon /> Add address from map{' '}
-            </Button>
 
             <Button loading={isLoading2} full>
               Confirm
@@ -282,7 +291,6 @@ const Customers = () => {
       </div>
 
       <div className="customers">
-     
         <section
           style={{
             display: 'flex',
@@ -312,15 +320,15 @@ const Customers = () => {
             {search && <CloseIcon />}
           </IconButton>
         </section>
-        {search && (
-          <Input
-            name="search"
-            type="search"
-            style={{ margin: '0 auto' }}
-            label="Search Customers"
-            ref={ref}
-          />
-        )}
+
+        <Input
+          name="search"
+          type="search"
+          style={{ margin: '0 auto', display: search ? 'block' : 'none' }}
+          label="Search Customers"
+          ref={ref}
+        />
+
         {items.map((customer) => (
           <CustomerListItem
             key={uuid()}

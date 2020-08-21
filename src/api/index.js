@@ -334,6 +334,29 @@ class FiveApi {
       }
     }
   }
+
+  async editModel(model) {
+    let resp = await Server.post('/vendors/edit/', model);
+    try {
+      if (goodResponse(resp)) {
+        return resp.data;
+      } else {
+        throw new FiveChowError(resp);
+      }
+    } catch (err) {
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
+    }
+  }
 }
 
 export default new FiveApi(Axios);

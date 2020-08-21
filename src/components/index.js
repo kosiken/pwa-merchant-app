@@ -14,6 +14,7 @@ import ComboBox2 from './ComboBox2/ComboBox2';
 import ComboBox0 from './ComboBox0/ComboBox0';
 import Toast from './Toast/Toast';
 import Calender from './Calendar/Calender';
+import FoodListItem from './FoodListItem/FoodListItem';
 
 export {
   Input,
@@ -31,4 +32,5 @@ export {
   Toast,
   Calender,
   ComboBox0,
+  FoodListItem,
 };

@@ -51,3 +51,18 @@
 .cancelled {
   background-color: red;
 }
+
+.order-section {
+  display: block;
+  padding: 5px;
+}
+
+@media (min-width: 1200px) {
+  .order-section {
+    margin: 10px;
+    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 15% auto;
+    grid-row-gap: 10px;
+  }
+}

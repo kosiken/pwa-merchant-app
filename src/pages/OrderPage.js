@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Order, TopBar, Typography } from '../components';
+import { Order, Typography } from '../components';
 import _ from 'lodash';
 import api from '../api';
 import { v4 as uuid } from 'uuid';

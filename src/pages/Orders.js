@@ -2,17 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api';
 import { isEmpty } from 'lodash';
-import {
-  SwitchBox,
-  Input,
-  Button,
-  IconButton,
-  Checkbox,
-  Typography,
-  Toast,
-  Order,
-  Loader,
-} from '../components';
+import { Button, Typography, Toast, Order, Loader } from '../components';
 import { FiFileText as PaperIcon } from 'react-icons/fi';
 
 const Orders = () => {
@@ -24,7 +14,8 @@ const Orders = () => {
     'Delivered',
     'Cancelled',
   ];
-let [isLoading, setLoading] = useState(true);
+  // eslint-disable-next-line no-unused-vars
+  let [isLoading, setLoading] = useState(true);
   let [current, setCurrent] = useState('');
   let [orders, setOrders] = useState([]);
   useEffect(() => {
@@ -33,8 +24,10 @@ let [isLoading, setLoading] = useState(true);
         let result = await api.getOrders();
 
         setOrders(result);
+        setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     })();
   }, []);
@@ -82,13 +75,13 @@ let [isLoading, setLoading] = useState(true);
         style={{
           backgroundColor: '#fff',
           padding: '5px 0',
-          minHeight: '80vh'
+          minHeight: '80vh',
         }}
       >
         {' '}
         <div className="container">
           <div className="orders-list">
-           {isLoading && <Loader />}
+            {isLoading && <Loader />}
             {orders.map((order, i) => (
               <Order key={'order' + i} order={order} />
             ))}

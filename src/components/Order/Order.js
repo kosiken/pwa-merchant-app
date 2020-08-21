@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import { v4 as uuid } from 'uuid';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
@@ -8,12 +7,10 @@ import Typography from '../Typography/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
+
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Avatar from '@material-ui/core/Avatar';
-import { FiUser as UserIcon } from 'react-icons/fi';
+
 import Dialog from '@material-ui/core/Dialog';
 import styles from './Order.module.scss';
 import moment from 'moment';
@@ -24,10 +21,10 @@ const Order = ({ order }) => {
     setOpen(!open);
   };
 
-  const handleClose = React.useCallback(() => {
+  const handleClose = () => {
     setOpen(!open);
     console.log(open);
-  });
+  };
   const status = order.status || 'Processing';
   const classes = classNames(styles.status, styles[status.toLocaleLowerCase()]);
 
@@ -43,7 +40,7 @@ const Order = ({ order }) => {
           >
             {order.VendorCustomer.full_name}
           </Typography>
-          <Typography  variant="gray">
+          <Typography variant="gray">
             {moment(order.accepted_at).format('MMMM Do YYYY, h:mm:ss a')}
           </Typography>
         </section>
@@ -109,15 +106,7 @@ const Order = ({ order }) => {
                 ))}
             </TableBody>
           </Table>
-          <section
-            style={{
-              margin: '10px',
-              justifyContent: 'space-between',
-              display: 'grid',
-              gridTemplateColumns: '15% auto',
-              gridRowGap: '10px',
-            }}
-          >
+          <section className={styles['order-section']}>
             <Typography small bold>
               Customer
             </Typography>
@@ -125,9 +114,7 @@ const Order = ({ order }) => {
             <Typography
               variant="gray"
               inline
-              style={{
-                marginLeft: '1em',
-              }}
+              style={{ display: 'block', margin: '5px 0 5px 1em' }}
             >
               {order.VendorCustomer.full_name}
             </Typography>
@@ -139,9 +126,7 @@ const Order = ({ order }) => {
             <Typography
               variant="gray"
               inline
-              style={{
-                marginLeft: '1em',
-              }}
+              style={{ display: 'block', margin: '5px 0 5px 1em' }}
             >
               NGN {order.total_order_price || 0.0}
             </Typography>
@@ -152,9 +137,7 @@ const Order = ({ order }) => {
             <Typography
               variant="gray"
               inline
-              style={{
-                marginLeft: '1em',
-              }}
+              style={{ display: 'block', margin: '5px 0 5px 1em' }}
             >
               Most alerts don't need titles. They summarize a decision in a
               sentence or two by eithe
@@ -163,7 +146,12 @@ const Order = ({ order }) => {
             <Typography bold small>
               Status
             </Typography>
-            <span className={classes}>{status}</span>
+            <span
+              style={{ display: 'block', margin: '5px 0 0' }}
+              className={classes}
+            >
+              {status}
+            </span>
           </section>
 
           <Button
