@@ -1,6 +1,9 @@
 import React, { forwardRef } from 'react';
 import styles from './Input.module.scss';
 import classNames from 'classnames';
+import { FiSearch as SearchIcon } from 'react-icons/fi';
+
+
 const Input = forwardRef((props, ref) => {
   const { error, name, label, multiline, type, ...otherProps } = props;
   const classes = classNames(styles['input-div'], {
@@ -26,6 +29,8 @@ const Input = forwardRef((props, ref) => {
 
   return (
     <div className={classes}>
+    
+    
       <input
         type={type}
         name={name}

@@ -10,8 +10,10 @@ import Dialog from '@material-ui/core/Dialog';
 import { RiDeleteBin6Line as DeleteIcon } from 'react-icons/ri';
 import styles from './FoodListItem.module.scss';
 import meat from '../../assets/meat.png';
+import bread from '../../assets/bread.png';
+import hamburger from '../../assets/hamburger.png';
 
-const FoodListItem = ({ food_item, onEdit }) => {
+const FoodListItem = ({ food_item, onEdit, index }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -28,7 +30,7 @@ const FoodListItem = ({ food_item, onEdit }) => {
   });
   return (
     <div className={[styles['food-list-item']]}>
-      <img src={meat} alt={food_item.name} />
+      <img src={[meat, hamburger, bread][index % 3]} alt={food_item.name} />
 
       <div className={styles['header']}>
         <Divider />
@@ -37,7 +39,7 @@ const FoodListItem = ({ food_item, onEdit }) => {
           {food_item.price}
         </Typography>
       </div>
-      <section>
+      <section  style={{position: 'relative'}}>
         <span className={classes}>
           {food_item.is_available ? 'Available' : 'Unavailable'}{' '}
         </span>

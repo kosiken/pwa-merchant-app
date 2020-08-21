@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
-
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
-import IconButton from '../IconButton/IconButton';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-
+import IconButton from '@material-ui/core/IconButton';
 import {
   FiHome as HomeIcon,
   FiUser as UserIcon,
@@ -67,9 +68,16 @@ const TopBar = ({ title, btn, window }) => {
   const location = useLocation();
 
   const classes = useStyles();
-
+const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -185,7 +193,35 @@ const TopBar = ({ title, btn, window }) => {
           >
             {title || 'Page One'}
           </Typography>
+          
+               <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+           
+              >
           <Avatar src={avatar} />
+          
+          </IconButton>
+                  <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>Log Out</MenuItem>
+              </Menu>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer}>

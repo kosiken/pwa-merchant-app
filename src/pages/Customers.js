@@ -118,6 +118,7 @@ const Customers = () => {
         });
         setCustomers(customers);
         setLoading2(false);
+        document.getElementById('theForm').reset()
         handleClose();
         //  document.getElementById('five-form').reset();
       })
@@ -215,6 +216,7 @@ const Customers = () => {
               marginTop: '1.5em',
             }}
             onSubmit={handleSubmit(handleSubmitCallback2)}
+            id="theForm"
           >
             <Typography
               inline

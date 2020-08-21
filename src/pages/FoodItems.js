@@ -33,7 +33,7 @@ const FoodItems = () => {
   let [isLoading2, setLoading2] = useState(false);
   let ref = useRef(null);
   let items = useSearch(ref, foodItems, function (e, l) {
-    return new RegExp(e.toLowerCase()).test(l.full_name.toLowerCase());
+    return new RegExp(e.toLowerCase()).test(l.name.toLowerCase());
   });
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
@@ -58,6 +58,7 @@ const FoodItems = () => {
     setOpenb(true);
   };
   const handleSubmitCallback = (s) => {
+      setLoading2(true);
     if (s.price) editing.price = s.price;
     if (s.name) editing.name = s.name;
     editing.is_available = s.is_available;
@@ -75,6 +76,7 @@ const FoodItems = () => {
         });
         setFoodItems(foodItems);
         setLoading2(false);
+        document.getElementById('theForm').reset()
         handleClose();
         handleOpen('Update Complete');
       })
@@ -98,6 +100,7 @@ const FoodItems = () => {
           <Button color="clear"> Create new</Button>
         </Link>
       </Toast>
+      <br/>
       <Input
         name="search"
         type="search"
@@ -118,6 +121,7 @@ const FoodItems = () => {
             marginTop: '1.5em',
           }}
           onSubmit={handleSubmit(handleSubmitCallback)}
+          id="theForm"
         >
           <Typography
             inline
@@ -130,15 +134,12 @@ const FoodItems = () => {
           </Typography>
           <Input
             type="text"
-            name="full_name"
+            name="name"
             label={editing.name}
             ref={register({
-              required: {
-                value: true,
-                message: 'Customer name is required',
-              },
+          
             })}
-            error={errors.full_name}
+           
             style={{ margin: '0 auto' }}
           />
           <Input
@@ -149,24 +150,7 @@ const FoodItems = () => {
             ref={register({})}
             error={errors.email_address}
           />
-          <Input
-            type="tel"
-            name="phone_number"
-            label={editing.phone_number}
-            ref={register({
-              required: {
-                value: true,
-                message: 'Customer Phone Number is required',
-              },
-
-              min: {
-                value: 10,
-                message: 'Invalid Phone Number',
-              },
-            })}
-            error={errors.phone_number}
-            style={{ margin: '0 auto' }}
-          />
+ 
           <div style={{ margin: '20px' }}>
             <Checkbox name="is_available" label="Available?" ref={register()} />
           </div>
@@ -188,12 +172,13 @@ const FoodItems = () => {
           Close
         </Button>
       </Backdrop>
-      <div className="container">
+      <div className="container food-items">
         {items.map((foodItem, i) => (
           <FoodListItem
             food_item={foodItem}
             key={'food-item' + i}
             onEdit={editFood}
+            index={i}
           />
         ))}
       </div>
