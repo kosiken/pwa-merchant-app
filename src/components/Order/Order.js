@@ -41,7 +41,7 @@ const Order = ({ order }) => {
             {order.VendorCustomer.full_name}
           </Typography>
           <Typography variant="gray">
-            {moment(order.accepted_at).format('MMMM Do YYYY, h:mm:ss a')}
+            {moment(order.accepted_at).format('MMMM Do YYYY, h:mm a')}
           </Typography>
         </section>
         <div>
@@ -63,10 +63,10 @@ const Order = ({ order }) => {
                 <TableCell>
                   <Typography inline>Quantity</Typography>
                 </TableCell>
-                <TableCell align="right">
+                <TableCell align="left">
                   <Typography inline>Food</Typography>
                 </TableCell>
-                <TableCell align="right">
+                <TableCell align="left">
                   <Typography inline>Price</Typography>
                 </TableCell>
               </TableRow>
@@ -79,11 +79,11 @@ const Order = ({ order }) => {
                       {' '}
                       <Typography inline>{item.quantity}</Typography>
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align="left">
                       <Typography inline>{item.name}</Typography>
                     </TableCell>
 
-                    <TableCell align="right">
+                    <TableCell align="left">
                       <Typography inline>{item.price}</Typography>
                     </TableCell>
                   </TableRow>
@@ -95,11 +95,11 @@ const Order = ({ order }) => {
                       {' '}
                       <Typography inline>{item.quantity}</Typography>
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align="left">
                       <Typography inline>{item.name}</Typography>
                     </TableCell>
 
-                    <TableCell align="right">
+                    <TableCell align="left">
                       <Typography inline>{item.price}</Typography>
                     </TableCell>
                   </TableRow>
@@ -158,7 +158,7 @@ const Order = ({ order }) => {
             color="clear"
             full
             style={{
-              textAlign: 'right',
+              textAlign: 'left',
               padding: '10px',
             }}
           >

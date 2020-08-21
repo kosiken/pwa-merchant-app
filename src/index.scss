@@ -35,7 +35,8 @@ td {
 }
 
 a {
-  text-decoration: none;
+  text-decoration: none !important;
+  color: #000 !important;
 }
 .f-form {
   border-radius: 8px;
@@ -45,7 +46,7 @@ a {
   margin: 0 auto;
   min-height: 0;
   transition: 0.2s;
-  max-width: 450px;
+  max-width: 500px;
   width: 95%;
   padding: 10px 5px;
   position: relative;
@@ -159,9 +160,35 @@ main {
   grid-row-gap: 1rem;
   flex-direction: column;
 }
+@media all and (min-width: 699px) {
+  .food-items {
+    padding: 0;
+    display: grid;
+    grid-column-gap: 1rem;
+    grid-template-columns: auto auto;
+    grid-row-gap: 1rem;
+  }
+}
+
 
 @media all and (min-width: 799px) {
   .food-items {
+    padding: 0;
+    display: grid;
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+    //margin: 1.5em 0;
+
+    grid-template-columns: auto auto auto;
+  }
+}
+
+@media (min-width: 1200px) {
+  .customerPage {
+    display: grid;
+    grid-template-columns: auto 350px;
+  }
+    .food-items {
     padding: 0;
     display: grid;
     grid-column-gap: 1rem;
@@ -172,19 +199,4 @@ main {
   }
 }
 
-@media all and (min-width: 576px) {
-  .food-items {
-    padding: 0;
-    display: grid;
-    grid-column-gap: 1rem;
-    grid-template-columns: auto auto auto;
-    grid-row-gap: 1rem;
-  }
-}
 
-@media (min-width: 1200px) {
-  .customerPage {
-    display: grid;
-    grid-template-columns: auto 350px;
-  }
-}

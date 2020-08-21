@@ -99,7 +99,7 @@ function ComboBox({ items, onChange }) {
         type="search"
         name="food"
         label="Food"
-        style={{ margin: '0 auto' }}
+    
         ref={ref}
       />
       {show && <Foodselect Foods={Foods} onChange={onChange} theRef={ref} />}{' '}

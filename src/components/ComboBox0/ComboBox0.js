@@ -79,7 +79,7 @@ function ComboBox({ items, onChange }) {
         type="search"
         name="customer"
         label="Customer name"
-        style={{ margin: '0 auto' }}
+  
         ref={ref}
       />
       {show && (

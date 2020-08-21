@@ -93,7 +93,7 @@ function ComboBox2({ onChange }) {
         type="text"
         name="location"
         label="Location"
-        style={{ margin: '0 auto' }}
+ 
         ref={ref}
       />
       {show && (

@@ -166,7 +166,7 @@ const CreateOrder = () => {
                   },
                 })}
                 error={errors.name}
-                style={{ margin: '0 auto' }}
+                
               />
 
               <Input
@@ -185,7 +185,7 @@ const CreateOrder = () => {
                   },
                 })}
                 error={errors.phone}
-                style={{ margin: '0 auto' }}
+                
               />
             </>
           )}
@@ -214,7 +214,7 @@ const CreateOrder = () => {
                 onChange={changeQuantity}
                 label="Qty"
                 ref={quantityRef}
-                style={{ margin: '0 auto' }}
+                
               />
             </section>
           </div>
