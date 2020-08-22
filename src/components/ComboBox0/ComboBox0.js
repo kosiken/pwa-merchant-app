@@ -4,43 +4,9 @@ import Typography from '../Typography/Typography';
 
 import Input from '../Input/Input';
 
-//import Autocomplete from "@material-ui/lab/Autocomplete";
+import useSearch from '../../hooks/useSearch';
 import styles from './ComboBox.module.scss';
 import useFocus from '../../hooks/useFocus';
-
-function useCustomers(ref, customerArray) {
-  //console.log(foodsArray);
-  const [customers, setCustomers] = React.useState([]);
-  React.useEffect(() => {
-    //  console.log(foodsArray.length);
-    setCustomers(customerArray);
-    const node = ref.current;
-    if (node) {
-      node.addEventListener('input', changeCustomers);
-      // node.addEventListener('blur', handleBlur);
-
-      return () => {
-        node.removeEventListener('input', changeCustomers);
-        //node.removeEventListener('blur', handleBlur);
-      };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ref, customerArray]);
-  const changeCustomers = React.useCallback(
-    (e) => {
-      setCustomers(
-        customerArray.filter((l) => {
-          return new RegExp(e.target.value.toLowerCase()).test(
-            l.full_name.toLowerCase()
-          );
-        })
-      );
-    },
-    [customerArray]
-  );
-
-  return customers;
-}
 
 function CustomerSelect({ items, onChange, theRef }) {
   if (items.length) {
@@ -71,17 +37,15 @@ function ComboBox({ items, onChange }) {
 
   let show = useFocus(ref);
 
-  let customers = useCustomers(ref, items);
+  let customers = useSearch(ref, items, (currentValue, customer) =>
+    new RegExp(currentValue.toLowerCase()).test(
+      customer.full_name.toLowerCase()
+    )
+  );
 
   return (
     <div className="add-div">
-      <Input
-        type="search"
-        name="customer"
-        label="Customer name"
-  
-        ref={ref}
-      />
+      <Input type="search" name="customer" label="Customer name" ref={ref} />
       {show && (
         <CustomerSelect items={customers} onChange={onChange} theRef={ref} />
       )}

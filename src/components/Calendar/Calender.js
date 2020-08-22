@@ -14,21 +14,6 @@ function getCalender(date, d, m, y) {
     'Saturday',
   ];
 
-  // const months = [
-  //   'January',
-  //   'Febuary',
-  //   'March',
-  //   'April',
-  //   'May',
-  //   'June',
-  //   'July',
-  //   'August',
-  //   'September',
-  //   'October',
-  //   'November',
-  //   'December',
-  // ];
-
   let mon = m + 1;
   let dom = 0;
   if (mon === 2) {
