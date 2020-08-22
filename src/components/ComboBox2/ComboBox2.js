@@ -4,9 +4,9 @@ import Typography from '../Typography/Typography';
 import { Link } from 'react-router-dom';
 import Input from '../Input/Input';
 import Button from '../Button/Button';
-//import TextField from "@material-ui/core/TextField";
+
 import api from '../../api';
-//import Autocomplete from "@material-ui/lab/Autocomplete";
+
 import styles from './ComboBox2.module.scss';
 import useFocus from '../../hooks/useFocus';
 
@@ -16,11 +16,9 @@ function useLocations(ref) {
     const node = ref.current;
     if (node) {
       node.addEventListener('input', changeLocations);
-      // node.addEventListener('blur', handleBlur);
 
       return () => {
         node.removeEventListener('input', changeLocations);
-        //node.removeEventListener('blur', handleBlur);
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,13 +87,7 @@ function ComboBox2({ onChange }) {
 
   return (
     <div className="locations-div">
-      <Input
-        type="text"
-        name="location"
-        label="Location"
- 
-        ref={ref}
-      />
+      <Input type="text" name="location" label="Location" ref={ref} />
       {show && (
         <Locationselect
           Locations={Locations}
