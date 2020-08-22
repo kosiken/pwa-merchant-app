@@ -101,11 +101,12 @@ const Customers = () => {
   };
 
   const handleSubmitCallback2 = (s) => {
+  s.preventDefault();
     setLoading2(true);
 
-    editing.full_name = s.full_name;
-    editing.email_address = s.email_address;
-    editing.phone_number = s.phone_number;
+    editing.full_name = document.getElementById("full_name2").value||editing.full_name;
+    editing.email_address = document.getElementById("email_address2").value||editing.full_name;
+    editing.phone_number = document.getElementById("phone_number2").value||  editing.phone_number ;
     api
       .editModel({ ...editing, model: 'VendorCustomer' })
       .then((user) => {
@@ -204,6 +205,8 @@ const Customers = () => {
             Add Item
           </Button>
         </form>
+        
+       
         <Backdrop
           open={openb}
           style={{
@@ -215,7 +218,7 @@ const Customers = () => {
             style={{
               marginTop: '1.5em',
             }}
-            onSubmit={handleSubmit(handleSubmitCallback2)}
+            onSubmit={handleSubmitCallback2}
             id="theForm"
           >
             <Typography
@@ -229,46 +232,24 @@ const Customers = () => {
             </Typography>
             <Input
               type="text"
-              name="full_name"
+              name="full_name2"
               label={editing.full_name}
-              ref={register({
-                required: {
-                  value: true,
-                  message: 'Customer name is required',
-                },
-              })}
-              error={errors.full_name}
+          
+            
               style={{ margin: '0 auto' }}
             />
             <Input
               type="email"
-              name="email_address"
+              name="email_address2"
               label={editing.email_address}
               style={{ margin: '0 auto' }}
-              ref={register({
-                pattern: {
-                  value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
-                  message: 'Invalid Email Address',
-                },
-              })}
-              error={errors.email_address}
+    
             />
             <Input
               type="tel"
-              name="phone_number"
+              name="phone_number2"
               label={editing.phone_number}
-              ref={register({
-                required: {
-                  value: true,
-                  message: 'Customer Phone Number is required',
-                },
-
-                min: {
-                  value: 10,
-                  message: 'Invalid Phone Number',
-                },
-              })}
-              error={errors.phone_number}
+       
               style={{ margin: '0 auto' }}
             />
 
