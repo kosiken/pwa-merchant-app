@@ -8,7 +8,7 @@ import {
   Checkbox,
   Toast,
   Typography,
-  FoodListItem,
+  FoodListItem,Loader
 } from '../components';
 import api from '../api';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -31,6 +31,7 @@ const FoodItems = () => {
   const [openb, setOpenb] = useState(false);
   let [isLoading, setLoading] = useState(false);
   let [isLoading2, setLoading2] = useState(false);
+  let [loading, setLoad] = useState(true);
   let ref = useRef(null);
   let items = useSearch(ref, foodItems, function (e, l) {
     return new RegExp(e.toLowerCase()).test(l.name.toLowerCase());
@@ -46,6 +47,7 @@ const FoodItems = () => {
       try {
         let __foodItems = await api.getFoods();
         setFoodItems(__foodItems);
+         setLoad(false);
         // dispatch({ type: 'GET_CUSTOMERS', __customers });
       } catch (error) {
         console.log(error);
@@ -53,7 +55,6 @@ const FoodItems = () => {
     })();
   }, []);
   const editFood = (food) => {
-    //let entries =  ['full_name','phone_number', 'email_address']
     setEditing(food);
     setOpenb(true);
   };
@@ -169,7 +170,9 @@ const FoodItems = () => {
           Close
         </Button>
       </Backdrop>
+       {loading && <Loader />}
       <div className="container food-items">
+      
         {items.map((foodItem, i) => (
           <FoodListItem
             food_item={foodItem}

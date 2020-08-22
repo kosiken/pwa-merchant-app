@@ -3,14 +3,10 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input, Button, Checkbox, Toast, Typography } from '../components';
 import api from '../api';
-//import { TopBar, SwitchBox, Input, Button, IconButton, Checkbox } from '../components'
 import { Link } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 const CreateFoodItem = () => {
-  // const { foodItems } = useSelector((state) => state.customer);
-  // const dispatch = useDispatch();
-
   const { enqueueSnackbar } = useSnackbar();
   // eslint-disable-next-line no-unused-vars
   const [key, setKey] = useState('');

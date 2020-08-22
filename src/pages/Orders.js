@@ -18,12 +18,17 @@ const Orders = () => {
   let [isLoading, setLoading] = useState(true);
   let [current, setCurrent] = useState('');
   let [orders, setOrders] = useState([]);
+   let [items, setItems] = useState([]);
+   
   useEffect(() => {
     (async () => {
       try {
         let result = await api.getOrders();
+        
+ 
 
         setOrders(result);
+        setItems(result);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -31,6 +36,11 @@ const Orders = () => {
       }
     })();
   }, []);
+  
+  useEffect(() => {
+  console.log(orders.map(order=> order.status))
+  if(current)  setItems(orders.filter(order => order.status === current))
+  }, [current, orders])
   //  foo
   return (
     <div>
@@ -47,10 +57,6 @@ const Orders = () => {
           <Button color="clear"> Create Order</Button>
         </Link>
       </Toast>
-      {/*<Button           style={{
-             position: 'absolute',
-             right: '0'
-            }}>Create Order</Button> */}
       <div className="container">
         <div className="filters">
           {statuses.map((status, i) => (
@@ -82,11 +88,11 @@ const Orders = () => {
         <div className="container">
           <div className="orders-list">
             {isLoading && <Loader />}
-            {orders.map((order, i) => (
+            {items.map((order, i) => (
               <Order key={'order' + i} order={order} />
             ))}
 
-            {isEmpty(orders) && (
+            {!isLoading && isEmpty(items) && (
               <>
                 <Typography
                   title
@@ -110,7 +116,7 @@ const Orders = () => {
             )}
           </div>
         </div>
-      </div>{' '}
+      </div>
     </div>
   );
 };
