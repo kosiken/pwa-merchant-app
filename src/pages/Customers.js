@@ -204,6 +204,7 @@ const Customers = () => {
             Add Item
           </Button>
         </form>
+                                                    {/*
         <Backdrop
           open={openb}
           style={{
@@ -289,7 +290,7 @@ const Customers = () => {
           >
             Close
           </Button>
-        </Backdrop>
+        </Backdrop> */}
       </div>
 
       <div className="customers">
