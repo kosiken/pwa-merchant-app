@@ -101,12 +101,15 @@ const Customers = () => {
   };
 
   const handleSubmitCallback2 = (s) => {
-  s.preventDefault();
+    s.preventDefault();
     setLoading2(true);
 
-    editing.full_name = document.getElementById("full_name2").value||editing.full_name;
-    editing.email_address = document.getElementById("email_address2").value||editing.full_name;
-    editing.phone_number = document.getElementById("phone_number2").value||  editing.phone_number ;
+    editing.full_name =
+      document.getElementById('full_name2').value || editing.full_name;
+    editing.email_address =
+      document.getElementById('email_address2').value || editing.full_name;
+    editing.phone_number =
+      document.getElementById('phone_number2').value || editing.phone_number;
     api
       .editModel({ ...editing, model: 'VendorCustomer' })
       .then((user) => {
@@ -201,12 +204,14 @@ const Customers = () => {
             <PlusIcon /> Add address from map{' '}
           </Button>
 
-          <Button loading={isLoading} full>
+          <Button
+            loading={isLoading}
+            full
+            onClick={handleSubmit(handleSubmitCallback)}
+          >
             Add Item
           </Button>
         </form>
-        
-       
         <Backdrop
           open={openb}
           style={{
@@ -234,8 +239,6 @@ const Customers = () => {
               type="text"
               name="full_name2"
               label={editing.full_name}
-          
-            
               style={{ margin: '0 auto' }}
             />
             <Input
@@ -243,13 +246,11 @@ const Customers = () => {
               name="email_address2"
               label={editing.email_address}
               style={{ margin: '0 auto' }}
-    
             />
             <Input
               type="tel"
               name="phone_number2"
               label={editing.phone_number}
-       
               style={{ margin: '0 auto' }}
             />
 
@@ -270,7 +271,8 @@ const Customers = () => {
           >
             Close
           </Button>
-        </Backdrop>
+        </Backdrop>{' '}
+        */}
       </div>
 
       <div className="customers">
