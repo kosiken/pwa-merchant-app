@@ -200,7 +200,7 @@ const Customers = () => {
             <PlusIcon /> Add address from map{' '}
           </Button>
 
-          <Button loading={isLoading} full>
+          <Button loading={isLoading} full onClick={handleSubmit(handleSubmitCallback)}>
             Add Item
           </Button>
         </form>
