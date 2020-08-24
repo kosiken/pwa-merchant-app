@@ -18,14 +18,12 @@ const Orders = () => {
   let [isLoading, setLoading] = useState(true);
   let [current, setCurrent] = useState('');
   let [orders, setOrders] = useState([]);
-   let [items, setItems] = useState([]);
-   
+  let [items, setItems] = useState([]);
+
   useEffect(() => {
     (async () => {
       try {
         let result = await api.getOrders();
-        
- 
 
         setOrders(result);
         setItems(result);
@@ -36,11 +34,11 @@ const Orders = () => {
       }
     })();
   }, []);
-  
+
   useEffect(() => {
-  console.log(orders.map(order=> order.status))
-  if(current)  setItems(orders.filter(order => order.status === current))
-  }, [current, orders])
+    console.log(orders.map((order) => order.status));
+    if (current) setItems(orders.filter((order) => order.status === current));
+  }, [current, orders]);
   //  foo
   return (
     <div>

@@ -166,7 +166,6 @@ const CreateOrder = () => {
                   },
                 })}
                 error={errors.name}
-                
               />
 
               <Input
@@ -185,7 +184,6 @@ const CreateOrder = () => {
                   },
                 })}
                 error={errors.phone}
-                
               />
             </>
           )}
@@ -214,7 +212,6 @@ const CreateOrder = () => {
                 onChange={changeQuantity}
                 label="Qty"
                 ref={quantityRef}
-                
               />
             </section>
           </div>

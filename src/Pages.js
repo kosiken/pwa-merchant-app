@@ -16,9 +16,7 @@ import Orders from './pages/Orders';
 
 const Auththenticated = () => {
   return (
-    <div
- 
-    >
+    <div>
       <Router>
         <Switch>
           <Route exact path="/">

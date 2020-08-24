@@ -77,4 +77,3 @@ const TopBar = ({ title, btn, window }) => {
 };
 
 export default TopBar;
-

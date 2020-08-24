@@ -1,17 +1,17 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import Typography from '../Typography/Typography';
-import { Link } from 'react-router-dom';
-import Input from '../Input/Input';
-import Button from '../Button/Button';
 
-import api from '../../api';
+import Input from '../Input/Input';
+
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import styles from './ComboBox2.module.scss';
 import useFocus from '../../hooks/useFocus';
-
+import useDebounce from '../../hooks/useDebounce';
 function useLocations(ref) {
-  const [locations] = React.useState([]);
+  const [locations, setLocations] = React.useState([]);
+
   React.useEffect(() => {
     const node = ref.current;
     if (node) {
@@ -24,18 +24,39 @@ function useLocations(ref) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref]);
   const changeLocations = async (e) => {
-    try {
-      let results = await api.searchPlaces(e.target.value);
-      console.log(results);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    setTimeout(() => {
+      try {
+        if (!window.FiveService) return;
+        if (!ref.current.value) return;
+        let request = {
+          query: ref.current.value,
+          fields: ['name', 'formatted_address'],
+        };
 
+        window.FiveService.textSearch(request, function (results, status) {
+          console.log(status);
+
+          if (results instanceof Array) setLocations(results);
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }, 300);
+  };
   return locations;
 }
 
 function Locationselect({ Locations, theRef, onChange }) {
+  let show = useDebounce(theRef.current.value, 3000);
+  if (show) {
+    return (
+      <div className={styles['location-list']}>
+        <div focusable>
+          <CircularProgress color="#f0324b" />
+        </div>
+      </div>
+    );
+  }
   if (Locations.length) {
     return (
       <div className={styles['location-list']}>
@@ -45,7 +66,7 @@ function Locationselect({ Locations, theRef, onChange }) {
             className={styles['location-list-item']}
             key={uuid()}
             onClick={() => {
-              theRef.current.value = l.full_address;
+              theRef.current.value = l.formatted_address;
               onChange({
                 target: {
                   value: l,
@@ -54,13 +75,13 @@ function Locationselect({ Locations, theRef, onChange }) {
             }}
           >
             {' '}
-            <Typography inline> {l.full_address} </Typography>{' '}
+            <Typography inline> {l.formatted_address} </Typography>{' '}
           </div>
         ))}
-        <div style={{ margin: '10px 0' }}>
-          {' '}
+        {/* <div style={{ margin: '10px 0' }}>
+       
           <Button color="secondary">New Address </Button>
-        </div>
+        </div> */}
       </div>
     );
   } else
@@ -68,11 +89,7 @@ function Locationselect({ Locations, theRef, onChange }) {
       <div className={styles['location-list']}>
         <div focusable>
           {' '}
-          <Typography inline>{theRef.current.value} not found </Typography>{' '}
-          <Link to="/create_food">
-            {' '}
-            <Button color="secondary">Create </Button>
-          </Link>
+          <Typography> No results found </Typography>
         </div>
       </div>
     );
@@ -87,7 +104,7 @@ function ComboBox2({ onChange }) {
 
   return (
     <div className="locations-div">
-      <Input type="text" name="location" label="Location" ref={ref} />
+      <Input type="text" name="location" label="Location" multiline ref={ref} />
       {show && (
         <Locationselect
           Locations={Locations}
@@ -95,7 +112,6 @@ function ComboBox2({ onChange }) {
           theRef={ref}
         />
       )}{' '}
-      <div id="map"></div>
     </div>
   );
 }

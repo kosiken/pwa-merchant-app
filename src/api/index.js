@@ -312,7 +312,7 @@ class FiveApi {
             input: searchString,
             key: 'AIzaSyCDRINRTtuQGCi8P7V8lYPcJkuYW5HIKJA',
             inputtype: 'textquery',
-            fields: 'formatted_address,name'
+            fields: 'formatted_address,name',
           },
         }
       );

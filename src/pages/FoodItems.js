@@ -8,7 +8,8 @@ import {
   Checkbox,
   Toast,
   Typography,
-  FoodListItem,Loader
+  FoodListItem,
+  Loader,
 } from '../components';
 import api from '../api';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -47,7 +48,7 @@ const FoodItems = () => {
       try {
         let __foodItems = await api.getFoods();
         setFoodItems(__foodItems);
-         setLoad(false);
+        setLoad(false);
         // dispatch({ type: 'GET_CUSTOMERS', __customers });
       } catch (error) {
         console.log(error);
@@ -170,9 +171,8 @@ const FoodItems = () => {
           Close
         </Button>
       </Backdrop>
-       {loading && <Loader />}
+      {loading && <Loader />}
       <div className="container food-items">
-      
         {items.map((foodItem, i) => (
           <FoodListItem
             food_item={foodItem}
