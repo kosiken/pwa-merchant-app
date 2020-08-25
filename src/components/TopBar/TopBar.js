@@ -2,38 +2,21 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Navbar } from 'react-bootstrap';
-//import { Link } from "react-router-dom";
-
-import logo from '../../assets/logo-variant.png';
+import IconButton from '../IconButton/IconButton';
+import Typography from '../Typography/Typography';
+import { FiUser as UserIcon, FiMenu as MenuIcon } from 'react-icons/fi';
+import './TopBar.scss';
 
 const TopBar = ({ title, btn, window }) => {
-  const location = useLocation();
-  const dispatch = useDispatch();
+  const [drawer, setDrawer] = React.useState(false);
 
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    console.log('here');
+  }, [drawer]);
   const logOut = () => {
     dispatch({ type: 'LOGOUT_USER' });
   };
-
-  let links = [
-    {
-      url: '/',
-      name: 'Home',
-    },
-    {
-      url: '/notifications',
-      name: 'Notifications',
-    },
-
-    {
-      url: '/customers',
-      name: 'Customers',
-    },
-
-    {
-      url: '/FoodItems',
-      name: 'Food Items',
-    },
-  ];
 
   return (
     <Navbar
@@ -41,37 +24,27 @@ const TopBar = ({ title, btn, window }) => {
       sticky="top"
       style={{
         backgroundColor: '#ffdc4a',
+        alignItems: 'center',
       }}
+      className="col-12"
     >
-      <Navbar.Brand>
-        <Link className="rest" to="/">
-          <img
-            alt=""
-            src={logo}
-            width="50"
-            height="50"
-            className="d-inline-block align-top"
-          />{' '}
-        </Link>
-      </Navbar.Brand>
+      <div style={{ flexGrow: 1, padding: '.5em .5em .5em 1em' }}>
+        <Typography inline>{title}</Typography>
+      </div>
 
-      <Navbar.Toggle />
-      <Navbar.Collapse className="justify-content-end">
-        {links.map((link, i) => (
-          <Link
-            to={link.url}
-            key={'link' + i}
-            className={
-              'nav-link ' + (location.pathname === link.url ? 'active' : '')
-            }
-          >
-            {link.name}
-          </Link>
-        ))}
-        <Link to="#" className="nav-link" onClick={logOut}>
-          Log Out
-        </Link>
-      </Navbar.Collapse>
+      <IconButton
+        className="navbar-toggler"
+        onClick={() => {
+          if (!document.getElementById('drawer')) return;
+          if (!drawer) document.getElementById('drawer').classList.add('show');
+          else document.getElementById('drawer').classList.remove('show');
+
+          setDrawer(!drawer);
+        }}
+        style={{ border: 'none' }}
+      >
+        <MenuIcon />
+      </IconButton>
     </Navbar>
   );
 };

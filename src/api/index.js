@@ -255,6 +255,30 @@ class FiveApi {
     }
   }
 
+  async createMeal(meal) {
+    try {
+      let resp = await Server.post('/vendors/meal/', meal);
+
+      if (goodResponse(resp)) {
+        return resp.data;
+      } else {
+        throw new FiveChowError(resp);
+      }
+    } catch (err) {
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
+    }
+  }
+
   async createCustomer(customer) {
     try {
       let resp = await Server.post('/vendors/customer/', customer);

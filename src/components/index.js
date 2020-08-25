@@ -16,6 +16,7 @@ import Toast from './Toast/Toast';
 import Calender from './Calendar/Calender';
 import FoodListItem from './FoodListItem/FoodListItem';
 
+import DrawerNav from './DrawerNav/DrawerNav';
 export {
   Input,
   Button,
@@ -33,4 +34,5 @@ export {
   Calender,
   ComboBox0,
   FoodListItem,
+  DrawerNav,
 };

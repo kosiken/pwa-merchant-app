@@ -1,12 +1,42 @@
 import React, { forwardRef } from 'react';
 import styles from './Input.module.scss';
 import classNames from 'classnames';
-
+import Typography from '../Typography/Typography';
 const Input = forwardRef((props, ref) => {
-  const { error, name, label, multiline, type, ...otherProps } = props;
+  const {
+    error,
+    name,
+    label,
+    multiline,
+    select,
+    options,
+    type,
+    ...otherProps
+  } = props;
   const classes = classNames(styles['input-div'], {
     [styles.error]: !!error,
   });
+
+  if (select) {
+    return (
+      <div className={classes}>
+        <Typography> {label} </Typography>
+        <select
+          className={styles['f-input']}
+          ref={ref}
+          name={name}
+          id={name}
+          {...otherProps}
+        >
+          {options.map((optioni, i) => (
+            <option key={'option' + i} value={optioni.value}>
+              {optioni.text}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }
 
   if (multiline) {
     return (

@@ -52,7 +52,9 @@ a {
   position: relative;
   background-color: #fff;
 }
-
+.collapse-sm {
+  max-width: 240px;
+}
 .flex {
   display: flex;
 }
@@ -60,7 +62,9 @@ a {
 main {
   overflow-x: hidden;
 }
-
+.collapse-sm:not(.show) {
+  display: none;
+}
 .central {
   flex-direction: column;
   min-height: 100vh;
@@ -84,7 +88,15 @@ main {
     min-height: 63.9996px;
   }
 }
+#drawer {
+  position: absolute;
 
+  background-color: #fff;
+  z-index: 9999;
+  ul {
+    height: 100vh;
+  }
+}
 .brand-div {
   text-align: center;
   margin: 10px;
@@ -125,7 +137,14 @@ main {
   border-left: 1px solid rgba(0, 0, 0, 0.12);
   background-color: #fff;
 }
-
+.disp {
+  position: absolute !important;
+  z-index: 9999;
+  background-color: #fff;
+}
+.none {
+  display: none;
+}
 .container {
   width: 100%;
   margin: 0 auto;
@@ -179,6 +198,13 @@ main {
     //margin: 1.5em 0;
 
     grid-template-columns: auto auto auto;
+  }
+  .collapse-sm:not(.show) {
+    display: block;
+  }
+  #drawer {
+    position: relative;
+    z-index: 0;
   }
 }
 
