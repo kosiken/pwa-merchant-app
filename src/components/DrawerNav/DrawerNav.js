@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Typography from '../Typography/Typography';
-import IconButton from '../IconButton/IconButton';
+
 let links = [
   {
     url: '/',

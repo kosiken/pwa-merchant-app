@@ -5,15 +5,14 @@ import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
 import api from '../api';
 import {
-  SwitchBox,
+ 
   Input,
   Button,
   IconButton,
   Checkbox,
   Typography,
   ComboBox,
-  ComboBox2,
-  ComboBox0,
+ 
   Toast,
 } from '../components';
 import { v4 as uuid } from 'uuid';
@@ -22,21 +21,10 @@ import { v4 as uuid } from 'uuid';
 import { FiPlus as PlusIcon, FiX as CloseIcon } from 'react-icons/fi';
 
 const CreateMeal = () => {
-  let [tab, setTab] = useState('New');
+
   let [foods, setFoods] = useState([]);
   let [foodItems, setFoodItems] = useState([]);
-  let [locations, setLocations] = useState([
-    {
-      name_of_area: 'Ikeja',
-      state: 'Lagos',
-      latitude: 15,
-      longitude: 20,
-      full_address: '10 Frank Estate, Ajah, Ikeja Lagos',
-      plus_code: '+234',
-      google_map_link: 'https://goo.gl/465767899',
-      id: 1,
-    },
-  ]);
+
   let [currentFood, setCurrentFood] = useState('');
   // eslint-disable-next-line no-unused-vars
 

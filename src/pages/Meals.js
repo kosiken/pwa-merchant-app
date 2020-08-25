@@ -3,31 +3,29 @@ import React, { useState, useEffect, useRef } from 'react';
 import _ from 'lodash';
 import { useForm } from 'react-hook-form';
 import {
-  Input,
+
   Button,
-  Checkbox,
+
   Toast,
   Typography,
-  FoodListItem,
-  Loader,
+
+  
 } from '../components';
-import api from '../api';
-import Backdrop from '@material-ui/core/Backdrop';
+
 //import { TopBar, SwitchBox, Input, Button, IconButton, Checkbox } from '../components'
 import { Link } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
-import useSearch from '../hooks/useSearch';
+
 
 const Meals = () => {
   // const { foodItems } = useSelector((state) => state.customer);
   // const dispatch = useDispatch();
-  const [foodItems, setMeals] = useState([]);
+  // const [foodItems, setMeals] = useState([]);
 
-  const { register, handleSubmit, errors } = useForm();
+  // const { register, handleSubmit, errors } = useForm();
 
-  let [isLoading, setLoading] = useState(false);
-  let [isLoading2, setLoading2] = useState(false);
-  let [loading, setLoad] = useState(true);
+  // let [isLoading, setLoading] = useState(false);
+  // let [isLoading2, setLoading2] = useState(false);
+  // let [loading, setLoad] = useState(true);
 
   useEffect(() => {
     (async () => {})();
