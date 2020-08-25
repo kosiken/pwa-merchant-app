@@ -9,46 +9,39 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import styles from './ComboBox2.module.scss';
 import useFocus from '../../hooks/useFocus';
 import useDebounce from '../../hooks/useDebounce';
-function useLocations(ref) {
+function useLocations(value) {
   const [locations, setLocations] = React.useState([]);
-
+  const [isSearching, setIsSearching] = React.useState(false);
   React.useEffect(() => {
-    const node = ref.current;
-    if (node) {
-      node.addEventListener('input', changeLocations);
-
-      return () => {
-        node.removeEventListener('input', changeLocations);
-      };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ref]);
-  const changeLocations = async (e) => {
-    setTimeout(() => {
+    if (value) {
+      setIsSearching(true);
       try {
         if (!window.FiveService) return;
-        if (!ref.current.value) return;
+
         let request = {
-          query: ref.current.value,
+          query: value,
           fields: ['name', 'formatted_address'],
         };
 
         window.FiveService.textSearch(request, function (results, status) {
           console.log(status);
-
-          if (results instanceof Array) setLocations(results);
+          if (status === 'ZERO_RESULTS') setLocations([]);
+          if (status === 'OK') {
+            if (results instanceof Array) setLocations(results);
+          }
+          setIsSearching(false);
         });
       } catch (err) {
         console.log(err);
       }
-    }, 300);
-  };
-  return locations;
+    }
+  }, [value]);
+
+  return { locations, isSearching };
 }
 
-function Locationselect({ Locations, theRef, onChange }) {
-  let show = useDebounce(theRef.current.value, 3000);
-  if (show) {
+function Locationselect({ Locations, theRef, onChange, isSearching }) {
+  if (isSearching) {
     return (
       <div className={styles['location-list']}>
         <div focusable>
@@ -99,15 +92,25 @@ function ComboBox2({ onChange }) {
   const ref = React.useRef(null);
   //const ref = React.useRef(null)
 
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
   let show = useFocus(ref);
-  let Locations = useLocations(ref);
+  let { locations, isSearching } = useLocations(debouncedSearchTerm);
 
   return (
     <div className="locations-div">
-      <Input type="text" name="location" label="Location" multiline ref={ref} />
+      <Input
+        type="text"
+        name="location"
+        label="Location"
+        multiline
+        ref={ref}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
       {show && (
         <Locationselect
-          Locations={Locations}
+          Locations={locations}
+          isSearching={isSearching}
           onChange={onChange}
           theRef={ref}
         />
