@@ -77,10 +77,7 @@ function Locationselect({ Locations, theRef, onChange, isSearching }) {
             <Typography inline> {l.full_address} </Typography>{' '}
           </div>
         ))}
-        {/* <div style={{ margin: '10px 0' }}>
-       
-          <Button color="secondary">New Address </Button>
-        </div> */}
+ 
       </div>
     );
   } else
