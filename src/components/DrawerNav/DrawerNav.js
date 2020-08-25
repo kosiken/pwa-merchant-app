@@ -26,7 +26,9 @@ const DrawerNav = ({ children }) => {
   const location = useLocation();
   return (
     <div className="h-100">
-      <div className="row h-100">
+      <div className="row h-100" style={{
+        maxWidth:'100vw'
+      }}>
         <div
           className="col-5 col-md-3 collapse-sm m-0 p-0 "
           style={{
