@@ -20,14 +20,20 @@ function useLocations(value) {
 
         let request = {
           query: value,
-          fields: ['name', 'formatted_address'],
+          fields: ['name', 'formatted_address', 'geometry'],
         };
 
         window.FiveService.textSearch(request, function (results, status) {
           console.log(status);
           if (status === 'ZERO_RESULTS') setLocations([]);
           if (status === 'OK') {
-            if (results instanceof Array) setLocations(results);
+            if (results instanceof Array) setLocations(results.map(result => {
+              return {
+                latitude: result.geometry.lat(),
+      longitude: result.geometry.lng(),
+      full_address: result.formatted_address,
+              }
+            }));
           }
           setIsSearching(false);
         });
@@ -59,7 +65,7 @@ function Locationselect({ Locations, theRef, onChange, isSearching }) {
             className={styles['location-list-item']}
             key={uuid()}
             onClick={() => {
-              theRef.current.value = l.formatted_address;
+              theRef.current.value = l.full_address;
               onChange({
                 target: {
                   value: l,
@@ -68,7 +74,7 @@ function Locationselect({ Locations, theRef, onChange, isSearching }) {
             }}
           >
             {' '}
-            <Typography inline> {l.formatted_address} </Typography>{' '}
+            <Typography inline> {l.full_address} </Typography>{' '}
           </div>
         ))}
         {/* <div style={{ margin: '10px 0' }}>
