@@ -38,7 +38,7 @@ const CreateOrder = () => {
     },
   ]);
   let [currentFood, setCurrentFood] = useState('');
-  // eslint-disable-next-line no-unused-vars
+   
   let [currentLocation, setCurrentLocation] = useState(null);
   let [quantity, setQuantity] = useState('');
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -60,7 +60,7 @@ const CreateOrder = () => {
         {
           full_name: getValues('name'),
           phone_number: customer ? customer.phone_number : getValues('phone'),
-          delivery_address: 'Lion',
+          delivery_address: currentLocation,
           food_items: foods,
         },
         token
