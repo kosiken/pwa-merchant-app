@@ -29,8 +29,8 @@ function useLocations(value) {
           if (status === 'OK') {
             if (results instanceof Array) setLocations(results.map(result => {
               return {
-                latitude: result.geometry.lat(),
-      longitude: result.geometry.lng(),
+                latitude: result.geometry.location.lat(),
+      longitude: result.geometry.location.lng(),
       full_address: result.formatted_address,
               }
             }));
