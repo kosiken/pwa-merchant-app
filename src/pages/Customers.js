@@ -221,9 +221,7 @@ const Customers = () => {
             style={{ margin: '0 auto' }}
           />
           <ComboBox2 onChange={changeCurrentAddress} />
-          <Button color="clear">
-            <PlusIcon /> Add address from map{' '}
-          </Button>
+  
 
           <Button
             loading={isLoading}
