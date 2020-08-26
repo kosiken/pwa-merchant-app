@@ -14,7 +14,7 @@ import {
 } from '../components';
 
 import api from '../api';
-import { FiPlus as PlusIcon } from 'react-icons/fi';
+ 
 import { FiSearch as SearchIcon, FiX as CloseIcon } from 'react-icons/fi';
 import { v4 as uuid } from 'uuid';
 import useSearch from '../hooks/useSearch';
