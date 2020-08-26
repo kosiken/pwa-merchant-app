@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Typography from '../Typography/Typography';
 import { useDispatch } from 'react-redux';
-import Button from '../Button/Button';
 import { Nav, Container, Row, Col, Image } from 'react-bootstrap';
 import avatar from '../../assets/avatar.png';
 let links = [
@@ -85,9 +84,9 @@ const DrawerNav = ({ children }) => {
             <Typography>{link.name}</Typography>
           </Link>
         ))}
-        <Button href="#" onClick={logOut} className="nav-link">
+        <Nav.Link href="#" onClick={logOut}>
           <Typography>Log Out</Typography>
-        </Button>
+        </Nav.Link>
       </Nav>
     </aside>
   );
