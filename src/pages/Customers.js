@@ -199,7 +199,7 @@ const Customers = () => {
               },
             })}
             error={errors.full_name}
-            style={{ margin: '0 auto' }}
+
           />
 
           <Input
@@ -218,7 +218,7 @@ const Customers = () => {
               },
             })}
             error={errors.phone_number}
-            style={{ margin: '0 auto' }}
+        
           />
           <ComboBox2 onChange={changeCurrentAddress} />
   
