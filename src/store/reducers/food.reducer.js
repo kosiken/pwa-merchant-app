@@ -11,8 +11,8 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case GET_FOODS:
       returnValue = {
-        foods: state.foods.concat(action.foods.filter((food) => !food.type)),
-        meals: state.meals.concat(action.foods.filter((food) => !!food.type)),
+        foods: action.foods.filter((food) => !food.type),
+        meals: action.foods.filter((food) => !!food.type),
       };
 
       break;
