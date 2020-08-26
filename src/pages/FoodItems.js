@@ -172,7 +172,12 @@ const FoodItems = () => {
           />
 
           <div style={{ margin: '20px' }}>
-            <Checkbox name="is_available" label="Available?" ref={register()} />
+            <Checkbox
+              name="is_available"
+              label="Available?"
+              checked={editing.is_available}
+              ref={register()}
+            />
           </div>
           <Button loading={isLoading2} full>
             Confirm
