@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
-import { Modal } from 'react-bootstrap';
+import { Modal, Container } from 'react-bootstrap';
 import {
   CustomerListItem,
   Typography,
@@ -178,6 +178,7 @@ const Customers = () => {
           onSubmit={handleSubmit(handleSubmitCallback)}
           id="five-form"
         >
+        <Container>
           <Typography
             inline
             style={{
@@ -231,6 +232,7 @@ const Customers = () => {
           >
             Add Customer
           </Button>
+          </Container>
         </form>
         <Modal
           show={openb}
