@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Input, Button, Checkbox, Toast, Typography } from '../components';
 import api from '../api';
@@ -8,22 +8,27 @@ import { useSnackbar } from 'notistack';
 
 const CreateFoodItem = () => {
   const { enqueueSnackbar } = useSnackbar();
+  const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
   const [key, setKey] = useState('');
   const { register, handleSubmit, errors } = useForm();
-
+  let [isLoading, setLoading] = useState(false);
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
 
   const handleSubmitCallback = (s) => {
+    setLoading(true);
     api
       .createFood(s)
-      .then((result) => {
-        handleOpen('Order Created');
+      .then((food) => {
+        dispatch({ type: 'ADD_FOOD', food });
+        handleOpen('Food Item Created');
+        setLoading(false);
       })
       .catch((err) => {
         handleOpen(err.data.error);
+        setLoading(false);
       });
   };
 
@@ -84,7 +89,9 @@ const CreateFoodItem = () => {
             <Checkbox name="is_available" label="Available?" ref={register()} />
           </div>
 
-          <Button full>Add Item</Button>
+          <Button loading={isLoading} full>
+            Add Item
+          </Button>
         </div>
       </form>
 

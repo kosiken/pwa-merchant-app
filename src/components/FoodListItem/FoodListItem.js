@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import Typography from '../Typography/Typography';
-import Divider from '@material-ui/core/Divider';
+
 import IconButton from '../IconButton/IconButton';
 import Button from '../Button/Button';
 
@@ -30,7 +30,6 @@ const FoodListItem = ({ food_item, onEdit, index }) => {
       {/* <img src={[meat, hamburger, bread][index % 3]} alt={food_item.name} />
        */}
       <div className={styles['header']}>
-        <Divider />
         <Typography>{food_item.name}</Typography>
         <Typography inline variant="gray">
           {food_item.price}

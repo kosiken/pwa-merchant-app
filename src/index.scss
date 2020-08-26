@@ -150,7 +150,7 @@ main {
   top: 0;
   left: 0;
   overflow: auto;
-  z-index: 9999999;
+  z-index: 9999;
   border-right: 1px solid rgba(0, 0, 0, 0.12);
 }
 .show-side-nav {
@@ -231,7 +231,7 @@ main {
     grid-row-gap: 1rem;
     //margin: 1.5em 0;
 
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
   }
   .collapse-sm:not(.show) {
     display: block;
@@ -241,6 +241,9 @@ main {
   }
   #contents {
     margin-left: 290px;
+  }
+  .side-nav {
+    z-index: 99;
   }
 }
 
@@ -256,6 +259,6 @@ main {
     grid-row-gap: 1rem;
     //margin: 1.5em 0;
 
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: auto auto auto;
   }
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
-
+import { Modal } from 'react-bootstrap';
 import {
   CustomerListItem,
   Typography,
@@ -10,8 +10,9 @@ import {
   Button,
   Loader,
   IconButton,
+  ComboBox2,
 } from '../components';
-import Backdrop from '@material-ui/core/Backdrop';
+
 import api from '../api';
 import { FiPlus as PlusIcon } from 'react-icons/fi';
 import { FiSearch as SearchIcon, FiX as CloseIcon } from 'react-icons/fi';
@@ -20,7 +21,7 @@ import useSearch from '../hooks/useSearch';
 
 const Customers = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
+  let [setCurrentLocation] = useState(null);
   const { register, handleSubmit, errors } = useForm();
   let [isLoading, setLoading] = useState(false);
   let [isLoading2, setLoading2] = useState(false);
@@ -36,9 +37,19 @@ const Customers = () => {
     };
   });
   let ref = useRef(null);
-  let items = useSearch(ref, customers, function (e, l) {
-    return new RegExp(e.toLowerCase()).test(l.full_name.toLowerCase());
-  });
+  useEffect(() => {
+    if (!search && !!ref.current) ref.current.value = '';
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search, ref]);
+  let items = useSearch(
+    ref,
+    customers,
+    function (e, l) {
+      return new RegExp(e.toLowerCase()).test(l.full_name.toLowerCase());
+    },
+    true,
+    search
+  );
   let [editing, setEditing] = useState({
     full_name: '',
     phone_number: '',
@@ -57,7 +68,9 @@ const Customers = () => {
   const handleToggle = () => {
     setOpenb(!openb);
   };
-
+  const changeCurrentAddress = (e) => {
+    setCurrentLocation(e.target.value);
+  };
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
@@ -95,6 +108,7 @@ const Customers = () => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const handleSubmitCallback = (s) => {
     setLoading(true);
 
@@ -186,19 +200,7 @@ const Customers = () => {
             error={errors.full_name}
             style={{ margin: '0 auto' }}
           />
-          <Input
-            type="email"
-            name="email_address"
-            label="Email Address"
-            style={{ margin: '0 auto' }}
-            ref={register({
-              pattern: {
-                value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
-                message: 'Invalid Email Address',
-              },
-            })}
-            error={errors.email_address}
-          />
+
           <Input
             type="tel"
             name="phone_number"
@@ -217,7 +219,7 @@ const Customers = () => {
             error={errors.phone_number}
             style={{ margin: '0 auto' }}
           />
-
+          <ComboBox2 onChange={changeCurrentAddress} />
           <Button color="clear">
             <PlusIcon /> Add address from map{' '}
           </Button>
@@ -227,69 +229,65 @@ const Customers = () => {
             full
             onClick={handleSubmit(handleSubmitCallback)}
           >
-            Add Item
+            Add Customer
           </Button>
         </form>
-        <Backdrop
-          open={openb}
-          style={{
-            zIndex: '999',
-          }}
+        <Modal
+          show={openb}
+          onHide={handleClose}
+          size="md"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
         >
-          <form
-            className="f-form"
-            style={{
-              marginTop: '1.5em',
-            }}
-            onSubmit={handleSubmitCallback2}
-            id="theForm"
-          >
-            <Typography
-              inline
+          <Modal.Body>
+            {' '}
+            <form
+              className="f-form"
               style={{
-                margin: '0 0 1em 1em',
-                display: 'block',
+                marginTop: '1.5em',
               }}
+              onSubmit={handleSubmitCallback2}
+              id="theForm"
             >
-              Edit Customer
-            </Typography>
-            <Input
-              type="text"
-              name="full_name2"
-              label={editing.full_name}
-              style={{ margin: '0 auto' }}
-            />
-            <Input
-              type="email"
-              name="email_address2"
-              label={editing.email_address}
-              style={{ margin: '0 auto' }}
-            />
-            <Input
-              type="tel"
-              name="phone_number2"
-              label={editing.phone_number}
-              style={{ margin: '0 auto' }}
-            />
+              <Typography
+                inline
+                style={{
+                  margin: '0 0 1em 1em',
+                  display: 'block',
+                }}
+              >
+                Edit Customer
+              </Typography>
+              <Input
+                type="text"
+                name="full_name2"
+                label={editing.full_name}
+                style={{ margin: '0 auto' }}
+              />
+              <Input
+                type="email"
+                name="email_address2"
+                label={editing.email_address}
+                style={{ margin: '0 auto' }}
+              />
+              <Input
+                type="tel"
+                name="phone_number2"
+                label={editing.phone_number}
+                style={{ margin: '0 auto' }}
+              />
 
-            <Button loading={isLoading2} full>
-              Confirm
-            </Button>
-          </form>
-
-          <Button
-            color="clear"
-            onClick={handleClose}
-            style={{
-              position: 'fixed',
-              bottom: '0',
-              color: 'white',
-              fontSize: '1.2em',
-            }}
-          >
-            Close
-          </Button>
-        </Backdrop>{' '}
+              <Button loading={isLoading2} full>
+                Confirm
+              </Button>
+            </form>{' '}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button color="clear" onClick={handleClose}>
+              Close
+            </Button>{' '}
+          </Modal.Footer>
+        </Modal>
       </div>
 
       <div className="customers">

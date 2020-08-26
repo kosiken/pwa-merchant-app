@@ -26,22 +26,10 @@ const CreateOrder = () => {
   let [tab, setTab] = useState('New');
 
   let [foodItems, setFoodItems] = useState([]);
-  let [locations] = useState([
-    {
-      name_of_area: 'Ikeja',
-      state: 'Lagos',
-      latitude: 15,
-      longitude: 20,
-      full_address: '10 Frank Estate, Ajah, Ikeja Lagos',
-      plus_code: '+234',
-      google_map_link: 'https://goo.gl/465767899',
-      id: 1,
-    },
-  ]);
 
   const [loading, setLoading] = useState(true);
   let [currentFood, setCurrentFood] = useState('');
-
+  const [submitting, setSubmiting] = useState(false);
   let [currentLocation, setCurrentLocation] = useState(null);
   let [quantity, setQuantity] = useState('');
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -65,6 +53,7 @@ const CreateOrder = () => {
   let quantityRef = useRef(null);
   const { register, handleSubmit, errors, getValues } = useForm();
   const handleSubmitCallback = (s) => {
+    setSubmiting(true);
     api
       .createOrder(
         {
@@ -76,9 +65,11 @@ const CreateOrder = () => {
         token
       )
       .then((result) => {
+        setSubmiting(false);
         handleOpen('Order Created');
       })
       .catch((err) => {
+        setSubmiting(false);
         handleOpen(err.data.error);
       });
   };
@@ -220,12 +211,15 @@ const CreateOrder = () => {
               />
             </>
           )}
-          <ComboBox2 items={locations} onChange={changeCurrentAddress} />
+
           {tab === 'New' && (
-            <Checkbox
-              label="Save this customer for next time"
-              style={{ margin: '0 0 1em' }}
-            />
+            <div>
+              <ComboBox2 onChange={changeCurrentAddress} />
+              <Checkbox
+                label="Save this customer for next time"
+                style={{ margin: '0 0 1em' }}
+              />
+            </div>
           )}
 
           <div style={{ margin: '1em 0 0' }}>
@@ -293,7 +287,9 @@ const CreateOrder = () => {
             </section>
           ))}
 
-          <Button full>Create Order</Button>
+          <Button full loading={submitting}>
+            Create Order
+          </Button>
         </div>
       </form>
       <Typography style={{ textAlign: 'center' }}>
