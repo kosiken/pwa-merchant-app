@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Typography from '../Typography/Typography';
+import { useDispatch } from 'react-redux';
+import Button from '../Button/Button';
 import { Nav, Container, Row, Col, Image } from 'react-bootstrap';
 import avatar from '../../assets/avatar.png';
 let links = [
@@ -28,6 +30,13 @@ let links = [
 
 const DrawerNav = ({ children }) => {
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  const logOut = () => {
+    dispatch({
+      type: 'LOGOUT_USER',
+    });
+  };
   return (
     <aside className="side-nav hide" id="drawer">
       <Container
@@ -76,6 +85,9 @@ const DrawerNav = ({ children }) => {
             <Typography>{link.name}</Typography>
           </Link>
         ))}
+        <Button href="#" onClick={logOut} className="nav-link">
+          <Typography>Log Out</Typography>
+        </Button>
       </Nav>
     </aside>
   );
