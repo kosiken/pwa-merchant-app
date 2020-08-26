@@ -13,8 +13,8 @@ import {
   Loader,
 } from '../components';
 import api from '../api';
-import Backdrop from '@material-ui/core/Backdrop';
-//import { TopBar, SwitchBox, Input, Button, IconButton, Checkbox } from '../components'
+
+import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import useSearch from '../hooks/useSearch';
@@ -132,71 +132,67 @@ const FoodItems = () => {
         ref={ref}
       />
 
-      <Backdrop
-        open={openb}
-        style={{
-          zIndex: '999',
-        }}
+      <Modal
+        show={openb}
+        onHide={handleClose}
+        size="md"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
       >
-        <form
-          className="f-form"
-          style={{
-            marginTop: '1.5em',
-          }}
-          onSubmit={handleSubmit(handleSubmitCallback)}
-          id="theForm"
-        >
-          <Typography
-            inline
+        {' '}
+        <Modal.Body>
+          <form
+            className="f-form"
             style={{
-              margin: '0 0 1em 1em',
-              display: 'block',
+              marginTop: '1.5em',
             }}
+            onSubmit={handleSubmit(handleSubmitCallback)}
+            id="theForm"
           >
-            Edit Customer
-          </Typography>
-          <Input
-            type="text"
-            name="name"
-            label={editing.name}
-            ref={register({})}
-            style={{ margin: '0 auto' }}
-          />
-          <Input
-            type="number"
-            name="price"
-            label={editing.price}
-            style={{ margin: '0 auto' }}
-            ref={register({})}
-            error={errors.email_address}
-          />
-
-          <div style={{ margin: '20px' }}>
-            <Checkbox
-              name="is_available"
-              label="Available?"
-              checked={editing.is_available}
-              ref={register()}
+            <Typography
+              inline
+              style={{
+                margin: '0 0 1em 1em',
+                display: 'block',
+              }}
+            >
+              Edit Customer
+            </Typography>
+            <Input
+              type="text"
+              name="name"
+              label={editing.name}
+              ref={register({})}
+              style={{ margin: '0 auto' }}
             />
-          </div>
-          <Button loading={isLoading2} full>
-            Confirm
-          </Button>
-        </form>
+            <Input
+              type="number"
+              name="price"
+              label={editing.price}
+              style={{ margin: '0 auto' }}
+              ref={register({})}
+              error={errors.email_address}
+            />
 
-        <Button
-          color="clear"
-          onClick={handleClose}
-          style={{
-            position: 'fixed',
-            bottom: '0',
-            color: 'white',
-            fontSize: '1.2em',
-          }}
-        >
-          Close
-        </Button>
-      </Backdrop>
+            <div style={{ margin: '20px' }}>
+              <Checkbox
+                name="is_available"
+                label="Available?"
+                checked={editing.is_available}
+                ref={register()}
+              />
+            </div>
+            <Button loading={isLoading2} full>
+              Confirm
+            </Button>
+          </form>{' '}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button color="clear" onClick={handleClose}>
+            Close
+          </Button>{' '}
+        </Modal.Footer>
+      </Modal>
       {loading && <Loader />}
       <div className="container food-items">
         {items.map((foodItem, i) => (

@@ -240,7 +240,6 @@ const Customers = () => {
           centered
         >
           <Modal.Body>
-            {' '}
             <form
               className="f-form"
               style={{
