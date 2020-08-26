@@ -21,12 +21,11 @@ import useSearch from '../hooks/useSearch';
 
 const FoodItems = () => {
   // const { foodItems } = useSelector((state) => state.customer);
-  const [b] = useState('l')
+  const [b] = useState('l');
   // const dispatch = useDispatch();
-   const { foodItems } = useSelector((state) => {
-  
+  const { foodItems } = useSelector((state) => {
     return {
-     foodItems: state.food.foods||[],
+      foodItems: state.food.foods || [],
     };
   });
   const { enqueueSnackbar } = useSnackbar();
@@ -36,7 +35,7 @@ const FoodItems = () => {
     name: '',
     price: '',
   });
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [openb, setOpenb] = useState(false);
   let [isLoading, setLoading] = useState(false);
   let [isLoading2, setLoading2] = useState(false);
@@ -52,24 +51,22 @@ const FoodItems = () => {
     setOpenb(false);
   };
   useEffect(() => {
-   console.log('ere');
+    console.log('ere');
     (async () => {
       try {
-                let meals;
-        if (!foodItems.length)  {
+        let meals;
+        if (!foodItems.length) {
           meals = await api.getMeals();
-   if(meals.length) meals = meals.map(m=> {
-   return {
-   ...m,
-   type: 'meal'
-   }
-   })
-  
-      
-        let  foods = await api.getFoods();
-          dispatch({type: 'GET_FOODS', foods: foods.concat(meals)})
-         
-        
+          if (meals.length)
+            meals = meals.map((m) => {
+              return {
+                ...m,
+                type: 'meal',
+              };
+            });
+
+          let foods = await api.getFoods();
+          dispatch({ type: 'GET_FOODS', foods: foods.concat(meals) });
         }
         setLoad(false);
         // dispatch({ type: 'GET_CUSTOMERS', __customers });
@@ -77,7 +74,7 @@ const FoodItems = () => {
         console.log(error);
       }
     })();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [b]);
   const editFood = (food) => {
     setEditing(food);
@@ -100,7 +97,7 @@ const FoodItems = () => {
           name: '',
           price: '',
         });
-        dispatch({type: 'GET_FOODS', foods: foodItems})
+        dispatch({ type: 'GET_FOODS', foods: foodItems });
         setLoading2(false);
         document.getElementById('theForm').reset();
         handleClose();

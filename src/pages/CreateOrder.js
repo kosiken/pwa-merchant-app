@@ -38,7 +38,7 @@ const CreateOrder = () => {
       id: 1,
     },
   ]);
-  
+
   const [loading, setLoading] = useState(true);
   let [currentFood, setCurrentFood] = useState('');
 
@@ -49,17 +49,16 @@ const CreateOrder = () => {
 
   let [customer, setCustomer] = useState(null);
   const [open, setOpen] = useState(false);
-const dispatch = useDispatch()
+  const dispatch = useDispatch();
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
   const { token, vendorCustomers, vMeals, vFoods } = useSelector((state) => {
-  
     return {
       token: state.auth.token,
-      vendorCustomers: state.customer.customers||[],
-      vMeals: state.food.meals||[],
-      vFoods: state.food.foods|| [],
+      vendorCustomers: state.customer.customers || [],
+      vMeals: state.food.meals || [],
+      vFoods: state.food.foods || [],
     };
   });
   let formRef = useRef(null);
@@ -112,42 +111,40 @@ const dispatch = useDispatch()
   }, [open]);
 
   useEffect(() => {
-  console.log('ere');
+    console.log('ere');
     (async () => {
       try {
         let meals;
-        if (!vFoods.length)  {
+        if (!vFoods.length) {
           meals = await api.getMeals();
-   if(meals.length) meals = meals.map(m=> {
-   return {
-   ...m,
-   type: 'meal'
-   }
-   })
-  
-      
-        let  foods = await api.getFoods();
-          dispatch({type: 'GET_FOODS', foods: foods.concat(meals)})
-         
-        
+          if (meals.length)
+            meals = meals.map((m) => {
+              return {
+                ...m,
+                type: 'meal',
+              };
+            });
+
+          let foods = await api.getFoods();
+          dispatch({ type: 'GET_FOODS', foods: foods.concat(meals) });
         }
         let customers;
-        if(!vendorCustomers.length){
-         customers = await api.getCustomers();
-         dispatch({
-           type:'GET_CUSTOMERS',
-           customers
-         })
+        if (!vendorCustomers.length) {
+          customers = await api.getCustomers();
+          dispatch({
+            type: 'GET_CUSTOMERS',
+            customers,
+          });
         }
-   setLoading(false)
+        setLoading(false);
       } catch (error) {
         console.log(error);
-         setLoading(false)
+        setLoading(false);
       }
     })();
     //  foodRef.current.value = '';
     quantityRef.current.value = '';
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addFood = (e) => {
@@ -182,7 +179,11 @@ const dispatch = useDispatch()
       >
         <div className="container">
           {tab === 'Existing' && (
-            <ComboBox0 items={vendorCustomers} loading={loading} onChange={setCustomer} />
+            <ComboBox0
+              items={vendorCustomers}
+              loading={loading}
+              onChange={setCustomer}
+            />
           )}
 
           {tab === 'New' && (
@@ -229,7 +230,11 @@ const dispatch = useDispatch()
 
           <div style={{ margin: '1em 0 0' }}>
             <section style={{ width: '60%', display: 'inline-block' }}>
-              <ComboBox items={(vFoods.concat(vMeals))} loading={loading} onChange={changeCurrentFood} />
+              <ComboBox
+                items={vFoods.concat(vMeals)}
+                loading={loading}
+                onChange={changeCurrentFood}
+              />
             </section>
             <section
               style={{

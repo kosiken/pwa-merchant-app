@@ -10,7 +10,6 @@ import Dialog from '@material-ui/core/Dialog';
 import { RiDeleteBin6Line as DeleteIcon } from 'react-icons/ri';
 import styles from './FoodListItem.module.scss';
 
-
 const FoodListItem = ({ food_item, onEdit, index }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -28,8 +27,8 @@ const FoodListItem = ({ food_item, onEdit, index }) => {
   });
   return (
     <div className={[styles['food-list-item']]}>
-     {/* <img src={[meat, hamburger, bread][index % 3]} alt={food_item.name} />
-*/}
+      {/* <img src={[meat, hamburger, bread][index % 3]} alt={food_item.name} />
+       */}
       <div className={styles['header']}>
         <Divider />
         <Typography>{food_item.name}</Typography>

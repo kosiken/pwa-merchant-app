@@ -2,19 +2,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import _ from 'lodash';
 import { useForm } from 'react-hook-form';
-import {
-
-  Button,
-
-  Toast,
-  Typography,
-
-  
-} from '../components';
+import { Button, Toast, Typography } from '../components';
 
 //import { TopBar, SwitchBox, Input, Button, IconButton, Checkbox } from '../components'
 import { Link } from 'react-router-dom';
-
 
 const Meals = () => {
   // const { foodItems } = useSelector((state) => state.customer);

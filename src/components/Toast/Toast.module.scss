@@ -2,7 +2,8 @@
 
 .toast {
   padding: 15px;
-  font-size: 0.8em;
+
+  margin: 16px;
 }
 .primary {
   background-color: rgba($color: $primary, $alpha: 0.21);
@@ -13,5 +14,5 @@
 }
 
 .info {
-  background-color: rgba($color: $info, $alpha: 0.21);
+  background-color: #fff;
 }

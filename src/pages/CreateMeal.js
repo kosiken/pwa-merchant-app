@@ -5,14 +5,12 @@ import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
 import api from '../api';
 import {
- 
   Input,
   Button,
   IconButton,
   Checkbox,
   Typography,
   ComboBox,
- 
   Toast,
 } from '../components';
 import { v4 as uuid } from 'uuid';
@@ -21,7 +19,6 @@ import { v4 as uuid } from 'uuid';
 import { FiPlus as PlusIcon, FiX as CloseIcon } from 'react-icons/fi';
 
 const CreateMeal = () => {
-
   let [foods, setFoods] = useState([]);
   let [foodItems, setFoodItems] = useState([]);
 

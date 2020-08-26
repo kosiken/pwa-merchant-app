@@ -40,7 +40,7 @@ function CustomerSelect({ items, onChange, theRef, loading }) {
   } else return false;
 }
 
-function ComboBox({ items, onChange,loading }) {
+function ComboBox({ items, onChange, loading }) {
   const ref = React.useRef(null);
   //const ref = React.useRef(null)
 
@@ -56,7 +56,12 @@ function ComboBox({ items, onChange,loading }) {
     <div className="add-div">
       <Input type="search" name="customer" label="Customer name" ref={ref} />
       {show && (
-        <CustomerSelect items={customers} onChange={onChange} loading={loading} theRef={ref} />
+        <CustomerSelect
+          items={customers}
+          onChange={onChange}
+          loading={loading}
+          theRef={ref}
+        />
       )}
     </div>
   );

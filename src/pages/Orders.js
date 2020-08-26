@@ -77,7 +77,6 @@ const Orders = () => {
       <div
         className="container"
         style={{
-          backgroundColor: '#fff',
           padding: '5px 0',
           minHeight: '80vh',
         }}

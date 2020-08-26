@@ -2,7 +2,7 @@ import { GET_FOODS, ADD_FOOD, GET_MEALS } from '../types';
 
 const initialState = {
   foods: [],
-  meals: []
+  meals: [],
 };
 
 export default function (state = initialState, action) {
@@ -11,17 +11,18 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case GET_FOODS:
       returnValue = {
-        foods:  state.foods.concat(action.foods.filter(food => !food.type)),meals: state.meals.concat(action.foods.filter(food => !!food.type)),
+        foods: state.foods.concat(action.foods.filter((food) => !food.type)),
+        meals: state.meals.concat(action.foods.filter((food) => !!food.type)),
       };
 
       break;
-      case GET_MEALS:
-        returnValue = {
-          meals: action.meals,
-        };
-  
-        break;
-  
+    case GET_MEALS:
+      returnValue = {
+        meals: action.meals,
+      };
+
+      break;
+
     case ADD_FOOD:
       returnValue = {
         foods: state.foods.concat([action.food]),

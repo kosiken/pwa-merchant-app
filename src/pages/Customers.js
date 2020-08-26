@@ -20,21 +20,19 @@ import useSearch from '../hooks/useSearch';
 
 const Customers = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
- 
+
   const { register, handleSubmit, errors } = useForm();
   let [isLoading, setLoading] = useState(false);
   let [isLoading2, setLoading2] = useState(false);
   const [key, setKey] = useState('');
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(true);
   const [open, setOpen] = useState(false);
   const [openb, setOpenb] = useState(false);
   const [search, setSearch] = useState(false);
   const { customers } = useSelector((state) => {
     return {
-      
-      customers: state.customer.customers||[],
- 
+      customers: state.customer.customers || [],
     };
   });
   let ref = useRef(null);
@@ -83,20 +81,19 @@ const Customers = () => {
     (async () => {
       try {
         let _customers;
-        if(!customers.length){
-         _customers = await api.getCustomers();
-         dispatch({
-           type:'GET_CUSTOMERS',
-           customers: _customers
-         })
+        if (!customers.length) {
+          _customers = await api.getCustomers();
+          dispatch({
+            type: 'GET_CUSTOMERS',
+            customers: _customers,
+          });
         }
-        setLoaded(false)
-   
+        setLoaded(false);
       } catch (error) {
         console.log(error);
       }
     })();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handleSubmitCallback = (s) => {
     setLoading(true);
@@ -105,8 +102,9 @@ const Customers = () => {
       .createCustomer(s)
       .then((user) => {
         dispatch({
-type:'ADD_CUSTOMER',
-        customer: user});
+          type: 'ADD_CUSTOMER',
+          customer: user,
+        });
         setLoading(false);
         document.getElementById('five-form').reset();
       })
@@ -138,9 +136,9 @@ type:'ADD_CUSTOMER',
           email_address: '',
         });
         dispatch({
-          type:'GET_CUSTOMERS',
-          customers: customers
-        })
+          type: 'GET_CUSTOMERS',
+          customers: customers,
+        });
         setLoading2(false);
         document.getElementById('theForm').reset();
         handleClose();
@@ -292,7 +290,6 @@ type:'ADD_CUSTOMER',
             Close
           </Button>
         </Backdrop>{' '}
-        */}
       </div>
 
       <div className="customers">

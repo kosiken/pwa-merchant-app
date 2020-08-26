@@ -139,7 +139,7 @@ const Order = ({ order }) => {
               inline
               style={{ display: 'block', margin: '5px 0 5px 1em' }}
             >
-             {order.Address.full_address||` No Address`}
+              {order.Address.full_address || ` No Address`}
             </Typography>
 
             <Typography bold small>

@@ -27,13 +27,16 @@ function useLocations(value) {
           console.log(status);
           if (status === 'ZERO_RESULTS') setLocations([]);
           if (status === 'OK') {
-            if (results instanceof Array) setLocations(results.map(result => {
-              return {
-                latitude: result.geometry.location.lat(),
-      longitude: result.geometry.location.lng(),
-      full_address: result.formatted_address,
-              }
-            }));
+            if (results instanceof Array)
+              setLocations(
+                results.map((result) => {
+                  return {
+                    latitude: result.geometry.location.lat(),
+                    longitude: result.geometry.location.lng(),
+                    full_address: result.formatted_address,
+                  };
+                })
+              );
           }
           setIsSearching(false);
         });
@@ -77,7 +80,6 @@ function Locationselect({ Locations, theRef, onChange, isSearching }) {
             <Typography inline> {l.full_address} </Typography>{' '}
           </div>
         ))}
- 
       </div>
     );
   } else

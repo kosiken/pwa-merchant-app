@@ -71,7 +71,12 @@ function ComboBox({ items, onChange, loading }) {
     <div className="add-div">
       <Input type="search" name="food" label="Food" ref={ref} />
       {show && (
-        <Foodselect Foods={Foods} onChange={onChange} loading={loading} theRef={ref} />
+        <Foodselect
+          Foods={Foods}
+          onChange={onChange}
+          loading={loading}
+          theRef={ref}
+        />
       )}{' '}
     </div>
   );
