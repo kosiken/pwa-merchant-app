@@ -1,14 +1,23 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import Typography from '../Typography/Typography';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Input from '../Input/Input';
 
 import useSearch from '../../hooks/useSearch';
 import styles from './ComboBox.module.scss';
 import useFocus from '../../hooks/useFocus';
 
-function CustomerSelect({ items, onChange, theRef }) {
+function CustomerSelect({ items, onChange, theRef, loading }) {
+  if (loading) {
+    return (
+      <div className={styles['location-list']}>
+        <div focusable>
+          <CircularProgress color="#f0324b" />
+        </div>
+      </div>
+    );
+  }
   if (items.length) {
     return (
       <div className={styles['location-list']}>
@@ -31,7 +40,7 @@ function CustomerSelect({ items, onChange, theRef }) {
   } else return false;
 }
 
-function ComboBox({ items, onChange }) {
+function ComboBox({ items, onChange,loading }) {
   const ref = React.useRef(null);
   //const ref = React.useRef(null)
 
@@ -47,7 +56,7 @@ function ComboBox({ items, onChange }) {
     <div className="add-div">
       <Input type="search" name="customer" label="Customer name" ref={ref} />
       {show && (
-        <CustomerSelect items={customers} onChange={onChange} theRef={ref} />
+        <CustomerSelect items={customers} onChange={onChange} loading={loading} theRef={ref} />
       )}
     </div>
   );

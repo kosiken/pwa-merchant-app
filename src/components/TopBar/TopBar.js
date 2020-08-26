@@ -12,7 +12,10 @@ const TopBar = ({ title, btn, window }) => {
 
   
   React.useEffect(() => {
-    console.log('here');
+             if (!document.getElementById('drawer')) return;
+          if (!drawer) document.getElementById('drawer').classList.add('hide');
+          else document.getElementById('drawer').classList.remove('hide');
+
   }, [drawer]);
 
   return (
@@ -32,10 +35,7 @@ const TopBar = ({ title, btn, window }) => {
       <IconButton
         className="navbar-toggler"
         onClick={() => {
-          if (!document.getElementById('drawer')) return;
-          if (!drawer) document.getElementById('drawer').classList.add('show');
-          else document.getElementById('drawer').classList.remove('show');
-
+ 
           setDrawer(!drawer);
         }}
         style={{ border: 'none' }}

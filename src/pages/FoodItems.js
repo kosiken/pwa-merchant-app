@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
 import _ from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import {
   Input,
@@ -20,8 +21,14 @@ import useSearch from '../hooks/useSearch';
 
 const FoodItems = () => {
   // const { foodItems } = useSelector((state) => state.customer);
+  const [b] = useState('l')
   // const dispatch = useDispatch();
-  const [foodItems, setFoodItems] = useState([]);
+   const { foodItems } = useSelector((state) => {
+  
+    return {
+     foodItems: state.food.foods||[],
+    };
+  });
   const { enqueueSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
   const { register, handleSubmit, errors } = useForm();
@@ -29,6 +36,7 @@ const FoodItems = () => {
     name: '',
     price: '',
   });
+  const dispatch = useDispatch()
   const [openb, setOpenb] = useState(false);
   let [isLoading, setLoading] = useState(false);
   let [isLoading2, setLoading2] = useState(false);
@@ -44,17 +52,33 @@ const FoodItems = () => {
     setOpenb(false);
   };
   useEffect(() => {
+   console.log('ere');
     (async () => {
       try {
-        let __foodItems = await api.getFoods();
-        setFoodItems(__foodItems);
+                let meals;
+        if (!foodItems.length)  {
+          meals = await api.getMeals();
+   if(meals.length) meals = meals.map(m=> {
+   return {
+   ...m,
+   type: 'meal'
+   }
+   })
+  
+      
+        let  foods = await api.getFoods();
+          dispatch({type: 'GET_FOODS', foods: foods.concat(meals)})
+         
+        
+        }
         setLoad(false);
         // dispatch({ type: 'GET_CUSTOMERS', __customers });
       } catch (error) {
         console.log(error);
       }
     })();
-  }, []);
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [b]);
   const editFood = (food) => {
     setEditing(food);
     setOpenb(true);
@@ -76,7 +100,7 @@ const FoodItems = () => {
           name: '',
           price: '',
         });
-        setFoodItems(foodItems);
+        dispatch({type: 'GET_FOODS', foods: foodItems})
         setLoading2(false);
         document.getElementById('theForm').reset();
         handleClose();

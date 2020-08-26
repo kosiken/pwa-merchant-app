@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
@@ -23,9 +24,9 @@ import { FiPlus as PlusIcon, FiX as CloseIcon } from 'react-icons/fi';
 
 const CreateOrder = () => {
   let [tab, setTab] = useState('New');
-  let [foods, setFoods] = useState([]);
+
   let [foodItems, setFoodItems] = useState([]);
-  let [locations, setLocations] = useState([
+  let [locations] = useState([
     {
       name_of_area: 'Ikeja',
       state: 'Lagos',
@@ -37,20 +38,30 @@ const CreateOrder = () => {
       id: 1,
     },
   ]);
+  
+  const [loading, setLoading] = useState(true);
   let [currentFood, setCurrentFood] = useState('');
-   
+
   let [currentLocation, setCurrentLocation] = useState(null);
   let [quantity, setQuantity] = useState('');
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
-  const [customers, setCustomers] = useState([]);
+
   let [customer, setCustomer] = useState(null);
   const [open, setOpen] = useState(false);
-
+const dispatch = useDispatch()
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
-  const { token } = useSelector((state) => state.auth);
+  const { token, vendorCustomers, vMeals, vFoods } = useSelector((state) => {
+  
+    return {
+      token: state.auth.token,
+      vendorCustomers: state.customer.customers||[],
+      vMeals: state.food.meals||[],
+      vFoods: state.food.foods|| [],
+    };
+  });
   let formRef = useRef(null);
   let quantityRef = useRef(null);
   const { register, handleSubmit, errors, getValues } = useForm();
@@ -61,7 +72,7 @@ const CreateOrder = () => {
           full_name: getValues('name'),
           phone_number: customer ? customer.phone_number : getValues('phone'),
           delivery_address: currentLocation,
-          food_items: foods,
+          food_items: foodItems,
         },
         token
       )
@@ -101,30 +112,51 @@ const CreateOrder = () => {
   }, [open]);
 
   useEffect(() => {
+  console.log('ere');
     (async () => {
       try {
-        let meals = await api.getMeals();
-        let food = await api.getFoods();
-        let __customers = await api.getCustomers();
-        setCustomers(__customers);
-        setFoodItems(food.concat(meals));
-
-        api.getAddresses().then(setLocations).catch(console.log);
+        let meals;
+        if (!vFoods.length)  {
+          meals = await api.getMeals();
+   if(meals.length) meals = meals.map(m=> {
+   return {
+   ...m,
+   type: 'meal'
+   }
+   })
+  
+      
+        let  foods = await api.getFoods();
+          dispatch({type: 'GET_FOODS', foods: foods.concat(meals)})
+         
+        
+        }
+        let customers;
+        if(!vendorCustomers.length){
+         customers = await api.getCustomers();
+         dispatch({
+           type:'GET_CUSTOMERS',
+           customers
+         })
+        }
+   setLoading(false)
       } catch (error) {
         console.log(error);
+         setLoading(false)
       }
     })();
     //  foodRef.current.value = '';
     quantityRef.current.value = '';
-  }, [foods]);
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const addFood = (e) => {
-    console.log(foods);
-    setFoods(foods.concat([{ ...currentFood, quantity }]));
+    console.log(foodItems);
+    setFoodItems(foodItems.concat([{ ...currentFood, quantity }]));
   };
   const removeFood = (food) => {
-    console.log(foods.filter((f) => f !== food));
-    setFoods(foods.filter((f) => f.name !== food));
+    console.log(foodItems.filter((f) => f !== food));
+    setFoodItems(foodItems.filter((f) => f.name !== food));
   };
   return (
     <div style={{ minHeight: '100vh' }}>
@@ -150,7 +182,7 @@ const CreateOrder = () => {
       >
         <div className="container">
           {tab === 'Existing' && (
-            <ComboBox0 items={customers} onChange={setCustomer} />
+            <ComboBox0 items={vendorCustomers} loading={loading} onChange={setCustomer} />
           )}
 
           {tab === 'New' && (
@@ -197,7 +229,7 @@ const CreateOrder = () => {
 
           <div style={{ margin: '1em 0 0' }}>
             <section style={{ width: '60%', display: 'inline-block' }}>
-              <ComboBox items={foodItems} onChange={changeCurrentFood} />
+              <ComboBox items={(vFoods.concat(vMeals))} loading={loading} onChange={changeCurrentFood} />
             </section>
             <section
               style={{
@@ -233,7 +265,7 @@ const CreateOrder = () => {
             </IconButton>
           </div>
 
-          {foods.map((food) => (
+          {foodItems.map((food) => (
             <section
               style={{
                 justifyContent: 'space-between',

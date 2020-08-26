@@ -2,10 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { TopBar, DrawerNav } from './components';
+import { TopBar, DrawerNav  } from './components';
 import Customers from './pages/Customers';
 import CreateOrder from './pages/CreateOrder';
-import OrderPage from './pages/OrderPage';
+//import OrderPage from './pages/OrderPage';
 import Meals from './pages/Meals';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -18,91 +18,82 @@ const Auththenticated = () => {
   return (
     <div>
       <Router>
-        <DrawerNav>
+
           <Switch>
             <Route exact path="/">
-              <TopBar title="Create Order" />
-              <main
+            
+              <DrawerNav/> <main id="contents"
                 style={{
                   flexGrow: 1,
                 }}
-              >
+              >  <TopBar title="Create Order" />
                 <Orders />
               </main>
             </Route>
 
             <Route exact path="/create-order">
-              <TopBar title="Create Order" />
-              <main
+            
+              <DrawerNav/> <main id="contents"
                 style={{
                   flexGrow: 1,
                 }}
-              >
+              >  <TopBar title="Create Order" />
                 <CreateOrder />
               </main>
             </Route>
             <Route exact path="/create-meal">
-              <TopBar title="Create Meal" />{' '}
-              <main
+              
+              <DrawerNav/> <main id="contents"
                 style={{
                   flexGrow: 1,
                 }}
-              >
+              ><TopBar title="Create Meal" />{' '}
                 <CreateMeal />
               </main>
             </Route>
             <Route exact path="/create-food">
-              <TopBar title="Create Food Item" />{' '}
-              <main
+
+              <DrawerNav/> <main id="contents"
                 style={{
                   flexGrow: 1,
                 }}
-              >
+              >              <TopBar title="Create Food Item" />{' '}
                 <CreateFoodItem />
               </main>
             </Route>
             <Route exact path="/meals">
-              <TopBar title="Meals and Menu" />{' '}
-              <main
+
+              <DrawerNav/> <main id="contents"
                 style={{
                   flexGrow: 1,
                 }}
-              >
+              >              <TopBar title="Meals and Menu" />{' '}
                 <Meals />
               </main>
             </Route>
             <Route exact path="/FoodItems">
-              <TopBar title="Meals and Menu" />{' '}
-              <main
+
+              <DrawerNav/> <main id="contents"
                 style={{
                   flexGrow: 1,
                 }}
-              >
+              >              <TopBar title="Meals and Menu" />{' '}
                 <FoodItems />
               </main>
             </Route>
             <Route exact path="/customers">
-              <TopBar title="Customers" />
-              <main
+
+              <DrawerNav/> <main id="contents"
                 style={{
                   flexGrow: 1,
                 }}
-              >
+              >              <TopBar title="Customers" />
                 <Customers />
               </main>
             </Route>
-            <Route exact path="/notifications">
-              <TopBar title="Orders" />
-              <main
-                style={{
-                  flexGrow: 1,
-                }}
-              >
-                <OrderPage />
-              </main>
-            </Route>
+ 
           </Switch>
-        </DrawerNav>
+   
       </Router>
     </div>
   );
