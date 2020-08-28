@@ -3,7 +3,7 @@ body {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-background-color: #f7f7fd !important;
+  background-color: #f7f7fd !important;
 }
 a {
   color: inherit;
@@ -61,7 +61,6 @@ a {
   width: 95%;
   padding: 10px 5px;
   position: relative;
-
 }
 .collapse-sm {
   max-width: 240px;
@@ -107,7 +106,15 @@ main {
   text-align: center;
   margin: 10px;
 }
-
+.h-80 {
+  height: 80%;
+}
+.ml {
+  display: flex;
+}
+.center {
+  align-items: center;
+}
 .loader-svg {
   position: absolute;
   top: 0;
@@ -136,7 +143,7 @@ main {
 }
 .side-nav {
   float: left;
-  height: 100%;
+  height: 100vh;
   width: 290px;
   background-color: #fff;
 

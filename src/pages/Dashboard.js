@@ -12,13 +12,12 @@ import { Avatar } from '@material-ui/core';
 const Dashboard = () => {
   let [isLoading, setLoading] = useState(true);
   const dispatch = useDispatch();
-
   const [orders, setOrders] = useState([]);
   const { customers, foods } = useSelector((state) => {
     return {
       token: state.auth.token,
       customers: state.customer.customers || [],
-      meals: state.food.meals || [],
+
       foods: state.food.foods || [],
     };
   });
@@ -85,7 +84,7 @@ const Dashboard = () => {
             justifyContent: 'space-between',
           }}
         >
-          <Col md={3} xs={12} className="p-3 mb-4 bg-light ">
+          <Col md={6} lg={3} xs={12} className="p-3 mb-4 bg-light ">
             <div className="flex-row">
               <section>
                 <Avatar
@@ -114,7 +113,7 @@ const Dashboard = () => {
             </Link>
           </Col>
 
-          <Col md={3} xs={12} className="p-3 mb-4 bg-light ">
+          <Col md={6} lg={3} xs={12} className="p-3 mb-4 bg-light ">
             <div className="flex-row">
               <section>
                 <Avatar
@@ -143,7 +142,7 @@ const Dashboard = () => {
             </Link>
           </Col>
 
-          <Col md={3} xs={12} className="p-3 mb-4 bg-light ">
+          <Col md={6} lg={3} xs={12} className="p-3 mb-4 bg-light ">
             <div className="flex-row">
               <section>
                 <Avatar

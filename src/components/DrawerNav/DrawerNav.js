@@ -1,36 +1,55 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Typography from '../Typography/Typography';
-import { useDispatch } from 'react-redux';
+import Button from '../Button/Button';
+import { useDispatch, useSelector } from 'react-redux';
 import { Nav, Container, Row, Col, Image } from 'react-bootstrap';
+import {
+  FiHome as HomeIcon,
+  FiUsers as UserIcon,
+  FiFileText as PaperIcon,
+  FiShoppingBag as ShoppingBag,
+  FiDatabase as Database,
+} from 'react-icons/fi';
+
 import avatar from '../../assets/avatar.png';
 let links = [
   {
     url: '/',
     name: 'Home',
+    icon: <HomeIcon />,
   },
   {
     url: '/FoodItems',
     name: 'Food Items',
+    icon: <PaperIcon />,
   },
   {
     url: '/meals',
     name: 'Meals',
+    icon: <Database />,
   },
   {
     url: '/orders',
     name: 'Orders',
+    icon: <ShoppingBag />,
   },
   {
     url: '/customers',
     name: 'Customers',
+    icon: <UserIcon />,
   },
 ];
 
 const DrawerNav = ({ children }) => {
   const location = useLocation();
   const dispatch = useDispatch();
-
+  const { email, name } = useSelector((state) => {
+    return {
+      name: state.auth.user.name,
+      email: state.auth.user.email_address,
+    };
+  });
   const logOut = () => {
     dispatch({
       type: 'LOGOUT_USER',
@@ -62,32 +81,42 @@ const DrawerNav = ({ children }) => {
                   fontSize: '18px',
                 }}
               >
-                User name
+                {name}
               </Typography>
             </Row>
             <Row>
-              <Typography>user@mail</Typography>
+              <Typography>{email}</Typography>
             </Row>
           </Col>
         </Row>
       </Container>
       <hr />
-      <Nav className="flex-column">
+      <Nav className="flex-column h-80">
         {links.map((link, i) => (
           <Link
             to={link.url}
             className={
-              'nav-link ' + (location.pathname === link.url ? 'active' : '')
+              'nav-link ml flex-row center ' +
+              (location.pathname === link.url ? 'active' : '')
             }
             key={'link' + i}
           >
+            <span
+              style={{
+                marginRight: '15px',
+              }}
+            >
+              {link.icon}
+            </span>
             <Typography>{link.name}</Typography>
           </Link>
         ))}
-        <Nav.Link href="#" onClick={logOut}>
-          <Typography>Log Out</Typography>
-        </Nav.Link>
+        <br />
+        <br />
       </Nav>
+      <Button color="clear" onClick={logOut}>
+        <Typography>Log Out</Typography>
+      </Button>
     </aside>
   );
 };
