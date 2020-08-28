@@ -20,13 +20,21 @@ const TopBar = ({ title, btn, window }) => {
       expand="lg"
       sticky="top"
       style={{
-        backgroundColor: '#fff',
+        backgroundColor: 'transparent',
         alignItems: 'center',
       }}
       className="col-12"
     >
       <div style={{ flexGrow: 1, padding: '.5em .5em .5em 1em' }}>
-        <Typography title>{title}</Typography>
+        <Typography
+          title
+          style={{
+            fontWeight: '600',
+            fontSize: '1.5em',
+          }}
+        >
+          {title}
+        </Typography>
       </div>
 
       <IconButton
