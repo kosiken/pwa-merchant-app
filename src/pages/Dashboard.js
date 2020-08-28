@@ -84,7 +84,7 @@ const Dashboard = () => {
             justifyContent: 'space-between',
           }}
         >
-          <Col md={6} lg={3} xs={12} className="p-3 mb-4 shadow ">
+          <Col md={6} lg={3} xs={12} className="p-3 mb-4 shadowf ">
             <div className="flex-row">
               <section>
                 <Avatar
@@ -113,7 +113,7 @@ const Dashboard = () => {
             </Link>
           </Col>
 
-          <Col md={6} lg={3} xs={12} className="p-3 mb-4 shadow ">
+          <Col md={6} lg={3} xs={12} className="p-3 mb-4 shadowf ">
             <div className="flex-row">
               <section>
                 <Avatar
@@ -142,7 +142,7 @@ const Dashboard = () => {
             </Link>
           </Col>
 
-          <Col md={6} lg={3} xs={12} className="p-3 mb-4 shadow ">
+          <Col md={6} lg={3} xs={12} className="p-3 mb-4 shadowf ">
             <div className="flex-row">
               <section>
                 <Avatar
