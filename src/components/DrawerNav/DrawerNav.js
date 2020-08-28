@@ -108,14 +108,20 @@ const DrawerNav = ({ children }) => {
             >
               {link.icon}
             </span>
-            <Typography>{link.name}</Typography>
+            <Typography inline>{link.name}</Typography>
           </Link>
         ))}
         <br />
         <br />
       </Nav>
-      <Button color="clear" onClick={logOut}>
-        <Typography>Log Out</Typography>
+      <Button
+        full
+        style={{
+          margin: '0 auto',
+        }}
+        onClick={logOut}
+      >
+        Log Out
       </Button>
     </aside>
   );
