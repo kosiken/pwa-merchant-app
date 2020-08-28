@@ -111,9 +111,8 @@ const DrawerNav = ({ children }) => {
             <Typography inline>{link.name}</Typography>
           </Link>
         ))}
-        <br />
-        <br />
       </Nav>
+      <hr />
       <Button
         full
         style={{
