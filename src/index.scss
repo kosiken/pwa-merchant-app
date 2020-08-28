@@ -175,7 +175,9 @@ main {
   -moz-transform: translateX(-260px);
   transform: translateX(-260px);
 }
-
+.shadow {
+  box-shadow: 0 2px 4px 0 rgba(14, 30, 37, 0.12);
+}
 .customers {
   border-left: 1px solid rgba(0, 0, 0, 0.12);
   background-color: #fff;
