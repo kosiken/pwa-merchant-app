@@ -42,7 +42,7 @@ let links = [
 ];
 
 const DrawerNav = ({ children }) => {
-  const location = useLocation();
+  const {pathname} = useLocation();
   const dispatch = useDispatch();
   const { email, name } = useSelector((state) => {
     return {
@@ -55,6 +55,7 @@ const DrawerNav = ({ children }) => {
       type: 'LOGOUT_USER',
     });
   };
+
   return (
     <aside className="side-nav hide" id="drawer">
       <Container
@@ -97,7 +98,7 @@ const DrawerNav = ({ children }) => {
             to={link.url}
             className={
               'nav-link ml flex-row center ' +
-              (location.pathname === link.url ? 'active' : '')
+              (pathname === link.url ? 'active' : '')
             }
             key={'link' + i}
           >
