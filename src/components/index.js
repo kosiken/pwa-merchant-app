@@ -34,5 +34,6 @@ export {
   Calender,
   ComboBox0,
   FoodListItem,
-  DrawerNav,Meal
+  DrawerNav,
+  Meal,
 };

@@ -14,7 +14,7 @@ import {
 } from '../components';
 
 import api from '../api';
- 
+
 import { FiSearch as SearchIcon, FiX as CloseIcon } from 'react-icons/fi';
 import { v4 as uuid } from 'uuid';
 import useSearch from '../hooks/useSearch';
@@ -178,58 +178,55 @@ const Customers = () => {
           onSubmit={handleSubmit(handleSubmitCallback)}
           id="five-form"
         >
-        <Container>
-          <Typography
-            inline
-            style={{
-              margin: '0 0 1em 1em',
-              display: 'block',
-            }}
-          >
-            Add Customers
-          </Typography>
-          <Input
-            type="text"
-            name="full_name"
-            label="Customer Name"
-            ref={register({
-              required: {
-                value: true,
-                message: 'Customer name is required',
-              },
-            })}
-            error={errors.full_name}
+          <Container>
+            <Typography
+              inline
+              style={{
+                margin: '0 0 1em 1em',
+                display: 'block',
+              }}
+            >
+              Add Customers
+            </Typography>
+            <Input
+              type="text"
+              name="full_name"
+              label="Customer Name"
+              ref={register({
+                required: {
+                  value: true,
+                  message: 'Customer name is required',
+                },
+              })}
+              error={errors.full_name}
+            />
 
-          />
+            <Input
+              type="tel"
+              name="phone_number"
+              label="Customer Phone Number"
+              ref={register({
+                required: {
+                  value: true,
+                  message: 'Customer Phone Number is required',
+                },
 
-          <Input
-            type="tel"
-            name="phone_number"
-            label="Customer Phone Number"
-            ref={register({
-              required: {
-                value: true,
-                message: 'Customer Phone Number is required',
-              },
+                min: {
+                  value: 10,
+                  message: 'Invalid Phone Number',
+                },
+              })}
+              error={errors.phone_number}
+            />
+            <ComboBox2 onChange={changeCurrentAddress} />
 
-              min: {
-                value: 10,
-                message: 'Invalid Phone Number',
-              },
-            })}
-            error={errors.phone_number}
-        
-          />
-          <ComboBox2 onChange={changeCurrentAddress} />
-  
-
-          <Button
-            loading={isLoading}
-            full
-            onClick={handleSubmit(handleSubmitCallback)}
-          >
-            Add Customer
-          </Button>
+            <Button
+              loading={isLoading}
+              full
+              onClick={handleSubmit(handleSubmitCallback)}
+            >
+              Add Customer
+            </Button>
           </Container>
         </form>
         <Modal

@@ -36,21 +36,28 @@ const Meal = ({ meal, onEdit, index }) => {
   });
   return (
     <div className={styles['meal'] + ' shadowf'}>
-    
-    <section className="flex-row mb-3" style={{
-    marginBottom: '5px',
-    display: 'flex',
-    justifyContent: 'space-between'
-    
-    }} >
-      <Typography inline>{meal.name}</Typography>
-      <Typography inline variant="gray">{meal.price}</Typography>
-    </section>
-    
-            <section className="flex-row mb-3" style={{ position: 'relative' ,
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'}}>
+      <section
+        className="flex-row mb-3"
+        style={{
+          marginBottom: '5px',
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Typography inline>{meal.name}</Typography>
+        <Typography inline variant="gray">
+          {meal.price}
+        </Typography>
+      </section>
+      <section
+        className="flex-row mb-3"
+        style={{
+          position: 'relative',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <span className={classes}>
           {meal.is_available ? 'Available' : 'Unavailable'}{' '}
         </span>
@@ -59,7 +66,6 @@ const Meal = ({ meal, onEdit, index }) => {
             position: 'absolute',
             right: '40px',
           }}
-         
         >
           <EditIcon />
         </IconButton>
@@ -73,7 +79,11 @@ const Meal = ({ meal, onEdit, index }) => {
         >
           <DeleteIcon />
         </IconButton>
-      </section>  <Accordion TransitionProps={{ unmountOnExit: true }} style={{boxShadow: 'none'}}>
+      </section>{' '}
+      <Accordion
+        TransitionProps={{ unmountOnExit: true }}
+        style={{ boxShadow: 'none' }}
+      >
         <AccordionSummary
           expandIcon={<ExpandIcon />}
           aria-controls="panel1a-content"
@@ -84,29 +94,31 @@ const Meal = ({ meal, onEdit, index }) => {
 
         <AccordionDetails>
           <Table striped responsive>
-              <TableHead>
+            <TableHead>
               <TableRow>
-    
                 <TableCell align="left">
-                  <Typography inline bold>Food</Typography>
+                  <Typography inline bold>
+                    Food
+                  </Typography>
                 </TableCell>
                 <TableCell align="left">
-                  <Typography inline bold>Price</Typography>
+                  <Typography inline bold>
+                    Price
+                  </Typography>
                 </TableCell>
               </TableRow>
             </TableHead>
-           <TableBody>
+            <TableBody>
               {meal.FoodItems.map((food_item) => {
                 if (!food_item) return false;
                 return (
-                <TableRow key={'food_item'+food_item.id}>
+                  <TableRow key={'food_item' + food_item.id}>
                     <TableCell align="left">
                       <Typography inline>{food_item.name}</Typography>
                     </TableCell>
-                        <TableCell align="left">
+                    <TableCell align="left">
                       <Typography inline>{food_item.price}</Typography>
                     </TableCell>
-            
                   </TableRow>
                 );
               })}

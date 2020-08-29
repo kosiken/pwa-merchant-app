@@ -1,7 +1,5 @@
-
 import React, { useState, useEffect, useRef } from 'react';
-import _ from 'lodash';
-import { useForm } from 'react-hook-form';
+
 import { Button, Toast, Typography, Meal, Input, Loader } from '../components';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -10,23 +8,22 @@ import useSearch from '../hooks/useSearch';
 
 const Meals = () => {
   let [loading, setLoad] = useState(true);
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { meals } = useSelector((state) => {
     return {
-      meals:  (state.food.meals) || [],
+      meals: state.food.meals || [],
     };
   });
-   let ref = useRef(null);
-    let items = useSearch(ref, meals, function (e, l) {
+  let ref = useRef(null);
+  let items = useSearch(ref, meals, function (e, l) {
     return new RegExp(e.toLowerCase()).test(l.name.toLowerCase());
   });
   useEffect(() => {
     (async () => {
-    try {
-    
-            if (!meals.length) {
+      try {
+        if (!meals.length) {
           let _meals = await api.getMeals();
-            console.log(_meals);
+          console.log(_meals);
           if (_meals.length)
             _meals = _meals.map((m) => {
               return {
@@ -35,18 +32,15 @@ const Meals = () => {
               };
             });
 
-   
-          dispatch({ type: 'GET_FOODS', foods: _meals
-        })
+          dispatch({ type: 'GET_FOODS', foods: _meals });
         }
-             setLoad(false);
+        setLoad(false);
       } catch (error) {
         console.log(error);
         setLoad(false);
       }
-    
-    
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -65,7 +59,7 @@ const Meals = () => {
         </Link>
       </Toast>
       <br />
-       <Input
+      <Input
         name="search"
         type="search"
         style={{ margin: '0 auto' }}
@@ -73,16 +67,10 @@ const Meals = () => {
         ref={ref}
       />
 
-
       {loading && <Loader />}
       <div className="container">
         {items.map((meal, i) => (
-          <Meal
-            meal={meal}
-            key={'food-item' + i}
-        
-            index={i}
-          />
+          <Meal meal={meal} key={'food-item' + i} index={i} />
         ))}
       </div>
     </div>

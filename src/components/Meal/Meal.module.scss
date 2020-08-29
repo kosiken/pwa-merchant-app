@@ -2,9 +2,10 @@
 
 .meal {
   margin-bottom: 12px;
-  padding: 1em;background-color: #fff;
-  
-    .available {
+  padding: 1em;
+  background-color: #fff;
+
+  .available {
     color: green;
     &::after {
       content: '';
