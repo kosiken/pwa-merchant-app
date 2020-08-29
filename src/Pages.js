@@ -10,6 +10,7 @@ import Meals from './pages/Meals';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import CreateMeal from './pages/CreateMeal';
+import EditMeal from './pages/EditMeal';
 import FoodItems from './pages/FoodItems';
 import CreateFoodItem from './pages/CreateFoodItem';
 import Orders from './pages/Orders';
@@ -68,6 +69,19 @@ const Auththenticated = () => {
               }}
             >
               <TopBar title="Create Meal" /> <CreateMeal />
+            </main>
+          </Route>
+
+          <Route exact path="/edit-meal/:id">
+            <DrawerNav />{' '}
+            <main
+              id="contents"
+              style={{
+                flexGrow: 1,
+              }}
+            >
+              <TopBar title="Edit Meal" />
+              <EditMeal />
             </main>
           </Route>
           <Route exact path="/create-food">

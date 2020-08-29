@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
 import api from '../api';
@@ -18,22 +18,24 @@ import { v4 as uuid } from 'uuid';
 // import { Link } from "react-router-dom";
 import { FiPlus as PlusIcon, FiX as CloseIcon } from 'react-icons/fi';
 
-const CreateMeal = () => {
-  const { token, _foods } = useSelector((state) => {
+const EditMeal = () => {
+  const { _foods, _meals } = useSelector((state) => {
     return {
       token: state.auth.token,
-      _foods: state.food.foods || [],
+     
+      _meals: state.food.meals || [],
     };
   });
   const dispatch = useDispatch();
   let [foods, setFoods] = useState([]);
-
+  const { id } = useParams();
   let [currentFood, setCurrentFood] = useState('');
   // eslint-disable-next-line no-unused-vars
   let [loading, setLoad] = useState(true);
   let [quantity, setQuantity] = useState('');
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
+  // eslint-disable-next-line no-unused-vars
   let [isLoading, setLoading] = useState(false);
 
   const [open, setOpen] = useState(false);
@@ -41,18 +43,28 @@ const CreateMeal = () => {
     setKey(enqueueSnackbar(m));
   }
 
+  const [meal, setMeal] = useState({
+    name: 'Loading...',
+    price: '0.00',
+    quantity: '0',
+    is_available: true,
+    est_preparation_time: 'Loading...',
+    type_of_meal: 'single',
+  });
+
   let formRef = useRef(null);
   let quantityRef = useRef(null);
   const { register, handleSubmit, errors } = useForm();
   const handleSubmitCallback = (s) => {
-    setLoading(true);
-
-    api
-      .createMeal(
-        {
+    handleOpen('Unresolved error for meal update');
+    return;
+    /* api
+      .editModel(
+       {
           ...s,
 
           food_items: foods,
+          model: 'Meal'
         },
         token
       )
@@ -64,6 +76,7 @@ const CreateMeal = () => {
         setLoading(false);
         handleOpen(err.data.error);
       });
+  */
   };
 
   const changeCurrentFood = (e) => {
@@ -92,7 +105,29 @@ const CreateMeal = () => {
   useEffect(() => {
     (async () => {
       try {
-        if (!_foods.length) {
+        if (_meals.length) {
+          let m = _meals.find((m) => m.id === parseInt(id));
+          if (m) {
+            setMeal(m);
+            for (let entry of [
+              'name',
+              'price',
+              'quantity',
+              'est_preparation_time',
+            ]) {
+              let node = document.getElementById(entry);
+              if (node) node.value = m[entry];
+            }
+            setFoods(
+              m.FoodItems.map((foodItem) => {
+                return {
+                  ...foodItem,
+                  quantity: foodItem.FoodMeals.quantity || 1,
+                };
+              })
+            );
+          }
+        } else if (!_foods.length) {
           let food = await api.getFoods();
           let meals = await api.getMeals();
           if (meals.length)
@@ -102,8 +137,32 @@ const CreateMeal = () => {
                 type: 'meal',
               };
             });
+          let m = meals.find((m) => m.id === parseInt(id));
+          if (m) {
+            setMeal(m);
+            for (let entry of [
+              'name',
+              'price',
+              'quantity',
+              'est_preparation_time',
+            ]) {
+              let node = document.getElementById(entry);
+              if (node) node.value = m[entry];
+            }
+            setFoods(
+              m.FoodItems.map((foodItem) => {
+                return {
+                  ...foodItem,
+                  quantity: foodItem.FoodMeals.quantity || 1,
+                };
+              })
+            );
+          } else {
+            window.location.pathname = '/error';
+          }
           dispatch({ type: 'GET_FOODS', foods: food.concat(meals) });
         }
+
         setLoad(false);
       } catch (error) {
         console.log(error);
@@ -146,16 +205,11 @@ const CreateMeal = () => {
         ref={formRef}
       >
         <Input
-          ref={register({
-            required: {
-              value: true,
-              message: 'Meal name is required',
-            },
-          })}
+          ref={register()}
           error={errors.name}
           type="text"
-          name="name"
           label="Name"
+          name="name"
           style={{ margin: '0 auto' }}
         />
         <Input
@@ -164,10 +218,6 @@ const CreateMeal = () => {
           label="Price"
           style={{ margin: '0 auto' }}
           ref={register({
-            required: {
-              value: true,
-              message: 'Price is required',
-            },
             pattern: {
               value: /^[+-]?([0-9]*[.])?[0-9]+$/,
               message: 'Invalid price',
@@ -177,19 +227,14 @@ const CreateMeal = () => {
         />
         <Input
           type="text"
-          name="est_preparation_time"
           label="Estimated Preparation Time"
+          name="est_preparation_time"
           style={{ margin: '0 auto' }}
-          ref={register({
-            required: {
-              value: true,
-              message: 'Price is required',
-            },
-          })}
-          error={errors.price}
+          ref={register({})}
         />
         <Input
           select
+          defaultValue={meal.type_of_meal}
           options={[
             {
               value: 'single',
@@ -208,14 +253,10 @@ const CreateMeal = () => {
         <Input
           type="number"
           name="quantity"
-          onChange={changeQuantity}
           label="Quantity"
+          onChange={changeQuantity}
           style={{ margin: '0 auto' }}
           ref={register({
-            required: {
-              value: true,
-              message: 'Quantity is required',
-            },
             pattern: {
               value: /^[+-]?([0-9]*[.])?[0-9]+$/,
               message: 'Invalid Quantity',
@@ -223,7 +264,12 @@ const CreateMeal = () => {
           })}
         />
         <div style={{ margin: '20px' }}>
-          <Checkbox name="is_available" label="Available?" ref={register()} />
+          <Checkbox
+            name="is_available"
+            label="Available?"
+            checked={meal.is_available}
+            ref={register()}
+          />
         </div>
 
         <div style={{ margin: '1em 0 0' }}>
@@ -292,7 +338,7 @@ const CreateMeal = () => {
         ))}
 
         <Button full loading={isLoading}>
-          Create Meal
+          Confirm
         </Button>
       </form>
       <Typography style={{ textAlign: 'center' }}>
@@ -312,4 +358,4 @@ const CreateMeal = () => {
   );
 };
 
-export default CreateMeal;
+export default EditMeal;

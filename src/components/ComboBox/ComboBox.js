@@ -25,7 +25,7 @@ function Foodselect({ Foods, theRef, onChange, loading }) {
         {Foods.map((l) => (
           <div
             focusable
-            className={styles['location-list-item']}
+            className={styles['location-list-item'] + ' mb-1'}
             key={uuid()}
             onClick={() => {
               theRef.current.value = l.name;
@@ -51,7 +51,9 @@ function Foodselect({ Foods, theRef, onChange, loading }) {
       <div className={styles['location-list']}>
         <div focusable>
           {' '}
-          <Typography inline>{theRef.current.value} not found </Typography>{' '}
+          <Typography inline>
+            {theRef.current.value} No items found{' '}
+          </Typography>{' '}
         </div>
       </div>
     );

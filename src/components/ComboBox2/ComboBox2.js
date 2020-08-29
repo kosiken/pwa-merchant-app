@@ -103,11 +103,11 @@ function ComboBox2({ onChange }) {
   let { locations, isSearching } = useLocations(debouncedSearchTerm);
 
   return (
-    <div className="locations-div">
+    <div className="locations-div add-div">
       <Input
         type="text"
         name="location"
-        label="Location"
+        label="Customer Address"
         multiline
         ref={ref}
         onChange={(e) => setSearchTerm(e.target.value)}

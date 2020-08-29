@@ -22,8 +22,16 @@ import { v4 as uuid } from 'uuid';
 // import { Link } from "react-router-dom";
 import { FiPlus as PlusIcon, FiX as CloseIcon } from 'react-icons/fi';
 
+const Address = [
+  {
+    id: 3,
+    full_address:
+      '129 Ago Palace Way Milaco Plaza, Oshodi-Isolo, Lagos, Nigeria',
+  },
+];
+
 const CreateOrder = () => {
-  let [tab, setTab] = useState('New');
+  let [tab, setTab] = useState('New Customer');
 
   let [foodItems, setFoodItems] = useState([]);
 
@@ -100,7 +108,11 @@ const CreateOrder = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
+  useEffect(() => {
+    setCustomer(null);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab]);
   useEffect(() => {
     console.log('ere');
     (async () => {
@@ -122,6 +134,7 @@ const CreateOrder = () => {
         let customers;
         if (!vendorCustomers.length) {
           customers = await api.getCustomers();
+          customers.forEach((i) => (i.Addresses = Address));
           dispatch({
             type: 'GET_CUSTOMERS',
             customers,
@@ -158,7 +171,11 @@ const CreateOrder = () => {
           <Button color="clear"> Back</Button>
         </Link>
       </Toast>
-      <SwitchBox options={['Existing', 'New']} value={tab} onChange={setTab} />
+      <SwitchBox
+        options={['Existing Customer', 'New Customer']}
+        value={tab}
+        onChange={setTab}
+      />
       <form
         autoComplete="off"
         className="f-form"
@@ -169,15 +186,42 @@ const CreateOrder = () => {
         ref={formRef}
       >
         <div className="container">
-          {tab === 'Existing' && (
-            <ComboBox0
-              items={vendorCustomers}
-              loading={loading}
-              onChange={setCustomer}
-            />
+          {tab === 'Existing Customer' && (
+            <>
+              <ComboBox0
+                items={vendorCustomers}
+                loading={loading}
+                onChange={setCustomer}
+              />
+              <Input
+                select
+                options={
+                  customer
+                    ? [
+                        { value: 0, text: 'New Address? fill it in below' },
+                      ].concat(
+                        customer.Addresses.map((address) => {
+                          return {
+                            value: address.id,
+                            text: address.full_address,
+                          };
+                        })
+                      )
+                    : [
+                        {
+                          value: 0,
+                          text: 'No Customer selected',
+                        },
+                      ]
+                }
+                ref={register()}
+                name="type_of_meal"
+                label="Select Existing Address"
+              />
+            </>
           )}
 
-          {tab === 'New' && (
+          {tab === 'New Customer' && (
             <>
               <Input
                 type="text"
@@ -211,10 +255,9 @@ const CreateOrder = () => {
               />
             </>
           )}
-
-          {tab === 'New' && (
+          <ComboBox2 onChange={changeCurrentAddress} />
+          {tab === 'New Customer' && (
             <div>
-              <ComboBox2 onChange={changeCurrentAddress} />
               <Checkbox
                 label="Save this customer for next time"
                 style={{ margin: '0 0 1em' }}
@@ -287,7 +330,13 @@ const CreateOrder = () => {
             </section>
           ))}
 
-          <Button full loading={submitting}>
+          <Button
+            full
+            loading={submitting}
+            style={{
+              margin: '0',
+            }}
+          >
             Create Order
           </Button>
         </div>

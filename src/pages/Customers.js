@@ -224,6 +224,9 @@ const Customers = () => {
               loading={isLoading}
               full
               onClick={handleSubmit(handleSubmitCallback)}
+              style={{
+                margin: '0',
+              }}
             >
               Add Customer
             </Button>

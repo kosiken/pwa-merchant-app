@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import Typography from '../Typography/Typography';
 
@@ -61,14 +62,18 @@ const Meal = ({ meal, onEdit, index }) => {
         <span className={classes}>
           {meal.is_available ? 'Available' : 'Unavailable'}{' '}
         </span>
+
         <IconButton
           style={{
             position: 'absolute',
             right: '40px',
           }}
         >
-          <EditIcon />
+          <Link to={'/edit-meal/' + meal.id}>
+            <EditIcon />
+          </Link>
         </IconButton>
+
         <IconButton
           style={{
             position: 'absolute',

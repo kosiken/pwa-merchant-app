@@ -10,13 +10,16 @@
   width: 60%;
   max-height: 150px;
   overflow-y: scroll;
-  //&:
+  bottom: 50px;
+  width: 100%;
+  min-width: 250px;
+  z-index: 9999;
 }
 
 .location-list-item {
   cursor: pointer;
   padding: 10px 0;
-
+  bottom: 204px;
   &:hover {
     background-color: #e5e5e5;
   }
