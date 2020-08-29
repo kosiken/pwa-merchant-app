@@ -1,0 +1,30 @@
+@import '../styles/colors.scss';
+
+.meal {
+  margin-bottom: 12px;
+  padding: 1em;
+  background-color: #fff;
+
+  .available {
+    color: green;
+    &::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-color: greenyellow;
+      display: inline-block;
+      border-radius: 50%;
+    }
+  }
+  .unavailable {
+    color: $primary;
+    &::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-color: $primary;
+      display: inline-block;
+      border-radius: 50%;
+    }
+  }
+}

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-//
+import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
-
+import { Modal, Container } from 'react-bootstrap';
 import {
   CustomerListItem,
   Typography,
@@ -10,30 +10,46 @@ import {
   Button,
   Loader,
   IconButton,
+  ComboBox2,
 } from '../components';
-import Backdrop from '@material-ui/core/Backdrop';
+
 import api from '../api';
-import { FiPlus as PlusIcon } from 'react-icons/fi';
+
 import { FiSearch as SearchIcon, FiX as CloseIcon } from 'react-icons/fi';
 import { v4 as uuid } from 'uuid';
 import useSearch from '../hooks/useSearch';
 
 const Customers = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const [customers, setCustomers] = useState([]);
+  let [setCurrentLocation] = useState(null);
   const { register, handleSubmit, errors } = useForm();
   let [isLoading, setLoading] = useState(false);
   let [isLoading2, setLoading2] = useState(false);
   const [key, setKey] = useState('');
+  const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(true);
   const [open, setOpen] = useState(false);
   const [openb, setOpenb] = useState(false);
   const [search, setSearch] = useState(false);
-
-  let ref = useRef(null);
-  let items = useSearch(ref, customers, function (e, l) {
-    return new RegExp(e.toLowerCase()).test(l.full_name.toLowerCase());
+  const { customers } = useSelector((state) => {
+    return {
+      customers: state.customer.customers || [],
+    };
   });
+  let ref = useRef(null);
+  useEffect(() => {
+    if (!search && !!ref.current) ref.current.value = '';
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search, ref]);
+  let items = useSearch(
+    ref,
+    customers,
+    function (e, l) {
+      return new RegExp(e.toLowerCase()).test(l.full_name.toLowerCase());
+    },
+    true,
+    search
+  );
   let [editing, setEditing] = useState({
     full_name: '',
     phone_number: '',
@@ -52,7 +68,9 @@ const Customers = () => {
   const handleToggle = () => {
     setOpenb(!openb);
   };
-
+  const changeCurrentAddress = (e) => {
+    setCurrentLocation(e.target.value);
+  };
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
@@ -75,21 +93,32 @@ const Customers = () => {
   useEffect(() => {
     (async () => {
       try {
-        let __customers = await api.getCustomers();
-        setCustomers(__customers);
+        let _customers;
+        if (!customers.length) {
+          _customers = await api.getCustomers();
+          dispatch({
+            type: 'GET_CUSTOMERS',
+            customers: _customers,
+          });
+        }
         setLoaded(false);
       } catch (error) {
         console.log(error);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const handleSubmitCallback = (s) => {
     setLoading(true);
 
     api
       .createCustomer(s)
       .then((user) => {
-        setCustomers(customers.concat([user]));
+        dispatch({
+          type: 'ADD_CUSTOMER',
+          customer: user,
+        });
         setLoading(false);
         document.getElementById('five-form').reset();
       })
@@ -120,7 +149,10 @@ const Customers = () => {
           phone_number: '',
           email_address: '',
         });
-        setCustomers(customers);
+        dispatch({
+          type: 'GET_CUSTOMERS',
+          customers: customers,
+        });
         setLoading2(false);
         document.getElementById('theForm').reset();
         handleClose();
@@ -146,86 +178,7 @@ const Customers = () => {
           onSubmit={handleSubmit(handleSubmitCallback)}
           id="five-form"
         >
-          <Typography
-            inline
-            style={{
-              margin: '0 0 1em 1em',
-              display: 'block',
-            }}
-          >
-            Add Customers
-          </Typography>
-          <Input
-            type="text"
-            name="full_name"
-            label="Customer Name"
-            ref={register({
-              required: {
-                value: true,
-                message: 'Customer name is required',
-              },
-            })}
-            error={errors.full_name}
-            style={{ margin: '0 auto' }}
-          />
-          <Input
-            type="email"
-            name="email_address"
-            label="Email Address"
-            style={{ margin: '0 auto' }}
-            ref={register({
-              pattern: {
-                value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
-                message: 'Invalid Email Address',
-              },
-            })}
-            error={errors.email_address}
-          />
-          <Input
-            type="tel"
-            name="phone_number"
-            label="Customer Phone Number"
-            ref={register({
-              required: {
-                value: true,
-                message: 'Customer Phone Number is required',
-              },
-
-              min: {
-                value: 10,
-                message: 'Invalid Phone Number',
-              },
-            })}
-            error={errors.phone_number}
-            style={{ margin: '0 auto' }}
-          />
-
-          <Button color="clear">
-            <PlusIcon /> Add address from map{' '}
-          </Button>
-
-          <Button
-            loading={isLoading}
-            full
-            onClick={handleSubmit(handleSubmitCallback)}
-          >
-            Add Item
-          </Button>
-        </form>
-        <Backdrop
-          open={openb}
-          style={{
-            zIndex: '999',
-          }}
-        >
-          <form
-            className="f-form"
-            style={{
-              marginTop: '1.5em',
-            }}
-            onSubmit={handleSubmitCallback2}
-            id="theForm"
-          >
+          <Container>
             <Typography
               inline
               style={{
@@ -233,46 +186,107 @@ const Customers = () => {
                 display: 'block',
               }}
             >
-              Edit Customer
+              Add Customers
             </Typography>
             <Input
               type="text"
-              name="full_name2"
-              label={editing.full_name}
-              style={{ margin: '0 auto' }}
+              name="full_name"
+              label="Customer Name"
+              ref={register({
+                required: {
+                  value: true,
+                  message: 'Customer name is required',
+                },
+              })}
+              error={errors.full_name}
             />
-            <Input
-              type="email"
-              name="email_address2"
-              label={editing.email_address}
-              style={{ margin: '0 auto' }}
-            />
+
             <Input
               type="tel"
-              name="phone_number2"
-              label={editing.phone_number}
-              style={{ margin: '0 auto' }}
+              name="phone_number"
+              label="Customer Phone Number"
+              ref={register({
+                required: {
+                  value: true,
+                  message: 'Customer Phone Number is required',
+                },
+
+                min: {
+                  value: 10,
+                  message: 'Invalid Phone Number',
+                },
+              })}
+              error={errors.phone_number}
             />
+            <ComboBox2 onChange={changeCurrentAddress} />
 
-            <Button loading={isLoading2} full>
-              Confirm
+            <Button
+              loading={isLoading}
+              full
+              onClick={handleSubmit(handleSubmitCallback)}
+              style={{
+                margin: '0',
+              }}
+            >
+              Add Customer
             </Button>
-          </form>
+          </Container>
+        </form>
+        <Modal
+          show={openb}
+          onHide={handleClose}
+          size="md"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Body>
+            <form
+              className="f-form"
+              style={{
+                marginTop: '1.5em',
+              }}
+              onSubmit={handleSubmitCallback2}
+              id="theForm"
+            >
+              <Typography
+                inline
+                style={{
+                  margin: '0 0 1em 1em',
+                  display: 'block',
+                }}
+              >
+                Edit Customer
+              </Typography>
+              <Input
+                type="text"
+                name="full_name2"
+                label={editing.full_name}
+                style={{ margin: '0 auto' }}
+              />
+              <Input
+                type="email"
+                name="email_address2"
+                label={editing.email_address}
+                style={{ margin: '0 auto' }}
+              />
+              <Input
+                type="tel"
+                name="phone_number2"
+                label={editing.phone_number}
+                style={{ margin: '0 auto' }}
+              />
 
-          <Button
-            color="clear"
-            onClick={handleClose}
-            style={{
-              position: 'fixed',
-              bottom: '0',
-              color: 'white',
-              fontSize: '1.2em',
-            }}
-          >
-            Close
-          </Button>
-        </Backdrop>{' '}
-        */}
+              <Button loading={isLoading2} full>
+                Confirm
+              </Button>
+            </form>{' '}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button color="clear" onClick={handleClose}>
+              Close
+            </Button>{' '}
+          </Modal.Footer>
+        </Modal>
       </div>
 
       <div className="customers">

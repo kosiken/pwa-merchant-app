@@ -8,11 +8,15 @@ const Button = ({
   onClick,
   color = 'primary',
   loading,
+  className,
   ...otherProps
 }) => {
-  const classes = classNames(styles['f-btn'], styles[color], {
-    [styles['full']]: full,
-  });
+  const classes =
+    classNames(styles['f-btn'], styles[color], {
+      [styles['full']]: full,
+    }) +
+    ' ' +
+    className;
 
   if (loading) {
     return (

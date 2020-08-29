@@ -8,15 +8,19 @@ function IconButton({
   active,
   disabled,
   variant,
+  className,
   ...otherProps
 }) {
   const clicked = () => {
     if (!disabled && onClick) onClick();
   };
-  const classes = classNames(styles.IconButton, styles[variant], {
-    [styles.active]: active,
-    [styles.disabled]: disabled,
-  });
+  const classes =
+    classNames(styles.IconButton, styles[variant], {
+      [styles.active]: active,
+      [styles.disabled]: disabled,
+    }) +
+    ' ' +
+    className;
 
   return (
     <span className={classes} onClick={clicked} {...otherProps}>

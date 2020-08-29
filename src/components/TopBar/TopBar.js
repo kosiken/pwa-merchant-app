@@ -1,77 +1,64 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import {  useLocation } from 'react-router-dom';
 import { Navbar } from 'react-bootstrap';
-//import { Link } from "react-router-dom";
-
-import logo from '../../assets/logo-variant.png';
+import IconButton from '../IconButton/IconButton';
+import Typography from '../Typography/Typography';
+import { FiMenu as MenuIcon } from 'react-icons/fi';
+import './TopBar.scss';
 
 const TopBar = ({ title, btn, window }) => {
-  const location = useLocation();
-  const dispatch = useDispatch();
-
-  const logOut = () => {
-    dispatch({ type: 'LOGOUT_USER' });
-  };
-
-  let links = [
-    {
-      url: '/',
-      name: 'Home',
-    },
-    {
-      url: '/notifications',
-      name: 'Notifications',
-    },
-
-    {
-      url: '/customers',
-      name: 'Customers',
-    },
-
-    {
-      url: '/FoodItems',
-      name: 'Food Items',
-    },
-  ];
-
+  const [drawer, setDrawer] = React.useState(false);
+const {pathname} = useLocation();
+  React.useEffect(() => {
+    if (!document.getElementById('drawer')) return;
+    if (!drawer) document.getElementById('drawer').classList.add('hide');
+    else document.getElementById('drawer').classList.remove('hide');
+  }, [drawer]);
+    React.useEffect(() => {
+  console.log('here')
+    document.getElementById('drawer').classList.add('hide');
+   if(drawer) setDrawer(!drawer);
+       // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
   return (
     <Navbar
       expand="lg"
       sticky="top"
       style={{
-        backgroundColor: '#ffdc4a',
+        backgroundColor: 'transparent',
+        alignItems: 'center',
       }}
+      className="col-12"
     >
-      <Navbar.Brand>
-        <Link className="rest" to="/">
-          <img
-            alt=""
-            src={logo}
-            width="50"
-            height="50"
-            className="d-inline-block align-top"
-          />{' '}
-        </Link>
-      </Navbar.Brand>
+      <div style={{ flexGrow: 1, padding: '.5em .5em .5em 1em' }}>
+        <Typography
+          title
+          style={{
+            fontWeight: '600',
+            fontSize: '1.5em',
+          }}
+        >
+          {title}
+        </Typography>
+      </div>
 
-      <Navbar.Toggle />
-      <Navbar.Collapse className="justify-content-end">
-        {links.map((link, i) => (
-          <Link
-            to={link.url}
-            key={'link' + i}
-            className={
-              'nav-link ' + (location.pathname === link.url ? 'active' : '')
-            }
-          >
-            {link.name}
-          </Link>
-        ))}
-        <Link to="#" className="nav-link" onClick={logOut}>
-          Log Out
-        </Link>
-      </Navbar.Collapse>
+      <IconButton
+        className="navbar-toggler"
+        onClick={() => {
+          setDrawer(!drawer);
+        }}
+        style={{ border: 'none' }}
+      >
+        <MenuIcon />
+      </IconButton>
+      {drawer && (
+        <div
+          onClick={() => {
+            setDrawer(!drawer);
+          }}
+          className="backdrop"
+        />
+      )}
     </Navbar>
   );
 };

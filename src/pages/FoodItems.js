@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
 import _ from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import {
   Input,
@@ -12,16 +13,21 @@ import {
   Loader,
 } from '../components';
 import api from '../api';
-import Backdrop from '@material-ui/core/Backdrop';
-//import { TopBar, SwitchBox, Input, Button, IconButton, Checkbox } from '../components'
+
+import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import useSearch from '../hooks/useSearch';
 
 const FoodItems = () => {
   // const { foodItems } = useSelector((state) => state.customer);
+  const [b] = useState('l');
   // const dispatch = useDispatch();
-  const [foodItems, setFoodItems] = useState([]);
+  const { foodItems } = useSelector((state) => {
+    return {
+      foodItems: state.food.foods || [],
+    };
+  });
   const { enqueueSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
   const { register, handleSubmit, errors } = useForm();
@@ -29,6 +35,7 @@ const FoodItems = () => {
     name: '',
     price: '',
   });
+  const dispatch = useDispatch();
   const [openb, setOpenb] = useState(false);
   let [isLoading, setLoading] = useState(false);
   let [isLoading2, setLoading2] = useState(false);
@@ -44,17 +51,31 @@ const FoodItems = () => {
     setOpenb(false);
   };
   useEffect(() => {
+    console.log('ere');
     (async () => {
       try {
-        let __foodItems = await api.getFoods();
-        setFoodItems(__foodItems);
+        let meals;
+        if (!foodItems.length) {
+          meals = await api.getMeals();
+          if (meals.length)
+            meals = meals.map((m) => {
+              return {
+                ...m,
+                type: 'meal',
+              };
+            });
+
+          let foods = await api.getFoods();
+          dispatch({ type: 'GET_FOODS', foods: foods.concat(meals) });
+        }
         setLoad(false);
         // dispatch({ type: 'GET_CUSTOMERS', __customers });
       } catch (error) {
         console.log(error);
       }
     })();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [b]);
   const editFood = (food) => {
     setEditing(food);
     setOpenb(true);
@@ -76,7 +97,7 @@ const FoodItems = () => {
           name: '',
           price: '',
         });
-        setFoodItems(foodItems);
+        dispatch({ type: 'GET_FOODS', foods: foodItems });
         setLoading2(false);
         document.getElementById('theForm').reset();
         handleClose();
@@ -111,66 +132,67 @@ const FoodItems = () => {
         ref={ref}
       />
 
-      <Backdrop
-        open={openb}
-        style={{
-          zIndex: '999',
-        }}
+      <Modal
+        show={openb}
+        onHide={handleClose}
+        size="md"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
       >
-        <form
-          className="f-form"
-          style={{
-            marginTop: '1.5em',
-          }}
-          onSubmit={handleSubmit(handleSubmitCallback)}
-          id="theForm"
-        >
-          <Typography
-            inline
+        {' '}
+        <Modal.Body>
+          <form
+            className="f-form"
             style={{
-              margin: '0 0 1em 1em',
-              display: 'block',
+              marginTop: '1.5em',
             }}
+            onSubmit={handleSubmit(handleSubmitCallback)}
+            id="theForm"
           >
-            Edit Customer
-          </Typography>
-          <Input
-            type="text"
-            name="name"
-            label={editing.name}
-            ref={register({})}
-            style={{ margin: '0 auto' }}
-          />
-          <Input
-            type="number"
-            name="price"
-            label={editing.price}
-            style={{ margin: '0 auto' }}
-            ref={register({})}
-            error={errors.email_address}
-          />
+            <Typography
+              inline
+              style={{
+                margin: '0 0 1em 1em',
+                display: 'block',
+              }}
+            >
+              Edit Customer
+            </Typography>
+            <Input
+              type="text"
+              name="name"
+              label={editing.name}
+              ref={register({})}
+              style={{ margin: '0 auto' }}
+            />
+            <Input
+              type="number"
+              name="price"
+              label={editing.price}
+              style={{ margin: '0 auto' }}
+              ref={register({})}
+              error={errors.email_address}
+            />
 
-          <div style={{ margin: '20px' }}>
-            <Checkbox name="is_available" label="Available?" ref={register()} />
-          </div>
-          <Button loading={isLoading2} full>
-            Confirm
-          </Button>
-        </form>
-
-        <Button
-          color="clear"
-          onClick={handleClose}
-          style={{
-            position: 'fixed',
-            bottom: '0',
-            color: 'white',
-            fontSize: '1.2em',
-          }}
-        >
-          Close
-        </Button>
-      </Backdrop>
+            <div style={{ margin: '20px' }}>
+              <Checkbox
+                name="is_available"
+                label="Available?"
+                checked={editing.is_available}
+                ref={register()}
+              />
+            </div>
+            <Button loading={isLoading2} full>
+              Confirm
+            </Button>
+          </form>{' '}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button color="clear" onClick={handleClose}>
+            Close
+          </Button>{' '}
+        </Modal.Footer>
+      </Modal>
       {loading && <Loader />}
       <div className="container food-items">
         {items.map((foodItem, i) => (

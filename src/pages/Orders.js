@@ -39,7 +39,7 @@ const Orders = () => {
     console.log(orders.map((order) => order.status));
     if (current) setItems(orders.filter((order) => order.status === current));
   }, [current, orders]);
-  //  foo
+
   return (
     <div>
       <Toast
@@ -77,7 +77,6 @@ const Orders = () => {
       <div
         className="container"
         style={{
-          backgroundColor: '#fff',
           padding: '5px 0',
           minHeight: '80vh',
         }}

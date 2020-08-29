@@ -1,23 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
-/**
- * Debounce the change of given value
- *
- * @param value value changes will only be returned after timeout
- * @param timeout timeout in ms passed to setTimeout()
- */
-const useDebounce = (value, timeout) => {
-  const [state, setState] = useState(false);
+// Our hook
+export default function useDebounce(value, delay) {
+  // State and setters for debounced value
+  const [debouncedValue, setDebouncedValue] = useState(value);
 
-  useEffect(() => {
-    if (value) setState(true);
-    const handler = setTimeout(() => setState(false), timeout);
+  useEffect(
+    () => {
+      // Set debouncedValue to value (passed in) after the specified delay
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
 
-    return () => clearTimeout(handler);
+      return () => {
+        clearTimeout(handler);
+      };
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+    [value]
+  );
 
-  return state;
-};
-
-export default useDebounce;
+  return debouncedValue;
+}

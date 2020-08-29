@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import Typography from '../Typography/Typography';
-import Divider from '@material-ui/core/Divider';
+
 import IconButton from '../IconButton/IconButton';
 import Button from '../Button/Button';
 
@@ -9,9 +9,6 @@ import { FiEdit as EditIcon } from 'react-icons/fi';
 import Dialog from '@material-ui/core/Dialog';
 import { RiDeleteBin6Line as DeleteIcon } from 'react-icons/ri';
 import styles from './FoodListItem.module.scss';
-import meat from '../../assets/meat.png';
-import bread from '../../assets/bread.png';
-import hamburger from '../../assets/hamburger.png';
 
 const FoodListItem = ({ food_item, onEdit, index }) => {
   const [open, setOpen] = React.useState(false);
@@ -30,10 +27,9 @@ const FoodListItem = ({ food_item, onEdit, index }) => {
   });
   return (
     <div className={[styles['food-list-item']]}>
-      <img src={[meat, hamburger, bread][index % 3]} alt={food_item.name} />
-
+      {/* <img src={[meat, hamburger, bread][index % 3]} alt={food_item.name} />
+       */}
       <div className={styles['header']}>
-        <Divider />
         <Typography>{food_item.name}</Typography>
         <Typography inline variant="gray">
           {food_item.price}

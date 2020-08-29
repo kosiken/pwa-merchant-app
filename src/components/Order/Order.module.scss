@@ -1,12 +1,13 @@
 @import '../styles/colors.scss';
 
 .order-item {
-  margin: 5px;
+  margin: 5px 5px 1em;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
-  padding: 10px;
+  box-shadow: 0 2px 4px 0 rgba(14, 30, 37, 0.12);
+  padding: 1em 1.2em;
   &:hover {
     background-color: rgba(153, 23, 23, 0.1);
   }

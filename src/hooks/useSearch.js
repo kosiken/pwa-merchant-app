@@ -1,21 +1,22 @@
 import { useState, useEffect, useCallback } from 'react';
 
-function useSearch(ref, itemArray, func) {
+function useSearch(ref, itemArray, func, clear, isSearching) {
   //console.log(foodsArray);
   const [items, setItems] = useState([]);
+
   const changeItems = useCallback(() => {
+    if (clear && !isSearching) setItems(itemArray);
     setItems(
       itemArray.filter((item) => {
         return func(ref.current.value, item);
       })
     );
-  }, [itemArray, func, ref]);
+  }, [itemArray, func, ref, clear, isSearching]);
   useEffect(() => {
     setItems(itemArray);
     const node = ref.current;
     if (node) {
       node.addEventListener('input', changeItems);
-      // node.addEventListener('blur', handleBlur);
 
       return () => {
         node.removeEventListener('input', changeItems);
@@ -23,7 +24,7 @@ function useSearch(ref, itemArray, func) {
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ref, itemArray]);
+  }, [ref, itemArray, clear, isSearching]);
 
   return items;
 }

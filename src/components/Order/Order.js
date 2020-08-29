@@ -77,7 +77,7 @@ const Order = ({ order }) => {
                   <TableRow key={'food' + i}>
                     <TableCell>
                       {' '}
-                      <Typography inline>{item.quantity}</Typography>
+                      <Typography inline>{item.OrderFoods.quantity}</Typography>
                     </TableCell>
                     <TableCell align="left">
                       <Typography inline>{item.name}</Typography>
@@ -139,8 +139,7 @@ const Order = ({ order }) => {
               inline
               style={{ display: 'block', margin: '5px 0 5px 1em' }}
             >
-              Most alerts don't need titles. They summarize a decision in a
-              sentence or two by eithe
+              {order.Address.full_address || ` No Address`}
             </Typography>
 
             <Typography bold small>

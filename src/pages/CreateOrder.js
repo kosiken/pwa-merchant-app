@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
@@ -21,54 +22,62 @@ import { v4 as uuid } from 'uuid';
 // import { Link } from "react-router-dom";
 import { FiPlus as PlusIcon, FiX as CloseIcon } from 'react-icons/fi';
 
+const Address = [
+  {
+    id: 3,
+    full_address:
+      '129 Ago Palace Way Milaco Plaza, Oshodi-Isolo, Lagos, Nigeria',
+  },
+];
+
 const CreateOrder = () => {
-  let [tab, setTab] = useState('New');
-  let [foods, setFoods] = useState([]);
+  let [tab, setTab] = useState('New Customer');
+
   let [foodItems, setFoodItems] = useState([]);
-  let [locations, setLocations] = useState([
-    {
-      name_of_area: 'Ikeja',
-      state: 'Lagos',
-      latitude: 15,
-      longitude: 20,
-      full_address: '10 Frank Estate, Ajah, Ikeja Lagos',
-      plus_code: '+234',
-      google_map_link: 'https://goo.gl/465767899',
-      id: 1,
-    },
-  ]);
+
+  const [loading, setLoading] = useState(true);
   let [currentFood, setCurrentFood] = useState('');
-  // eslint-disable-next-line no-unused-vars
+  const [submitting, setSubmiting] = useState(false);
   let [currentLocation, setCurrentLocation] = useState(null);
   let [quantity, setQuantity] = useState('');
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
-  const [customers, setCustomers] = useState([]);
+
   let [customer, setCustomer] = useState(null);
   const [open, setOpen] = useState(false);
-
+  const dispatch = useDispatch();
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
-  const { token } = useSelector((state) => state.auth);
+  const { token, vendorCustomers, vMeals, vFoods } = useSelector((state) => {
+    return {
+      token: state.auth.token,
+      vendorCustomers: state.customer.customers || [],
+      vMeals: state.food.meals || [],
+      vFoods: state.food.foods || [],
+    };
+  });
   let formRef = useRef(null);
   let quantityRef = useRef(null);
   const { register, handleSubmit, errors, getValues } = useForm();
   const handleSubmitCallback = (s) => {
+    setSubmiting(true);
     api
       .createOrder(
         {
           full_name: getValues('name'),
           phone_number: customer ? customer.phone_number : getValues('phone'),
-          delivery_address: 'Lion',
-          food_items: foods,
+          delivery_address: currentLocation,
+          food_items: foodItems,
         },
         token
       )
       .then((result) => {
+        setSubmiting(false);
         handleOpen('Order Created');
       })
       .catch((err) => {
+        setSubmiting(false);
         handleOpen(err.data.error);
       });
   };
@@ -99,32 +108,56 @@ const CreateOrder = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
-
   useEffect(() => {
+    setCustomer(null);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab]);
+  useEffect(() => {
+    console.log('ere');
     (async () => {
       try {
-        let meals = await api.getMeals();
-        let food = await api.getFoods();
-        let __customers = await api.getCustomers();
-        setCustomers(__customers);
-        setFoodItems(food.concat(meals));
+        let meals;
+        if (!vFoods.length) {
+          meals = await api.getMeals();
+          if (meals.length)
+            meals = meals.map((m) => {
+              return {
+                ...m,
+                type: 'meal',
+              };
+            });
 
-        api.getAddresses().then(setLocations).catch(console.log);
+          let foods = await api.getFoods();
+          dispatch({ type: 'GET_FOODS', foods: foods.concat(meals) });
+        }
+        let customers;
+        if (!vendorCustomers.length) {
+          customers = await api.getCustomers();
+          customers.forEach((i) => (i.Addresses = Address));
+          dispatch({
+            type: 'GET_CUSTOMERS',
+            customers,
+          });
+        }
+        setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     })();
     //  foodRef.current.value = '';
     quantityRef.current.value = '';
-  }, [foods]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const addFood = (e) => {
-    console.log(foods);
-    setFoods(foods.concat([{ ...currentFood, quantity }]));
+    console.log(foodItems);
+    setFoodItems(foodItems.concat([{ ...currentFood, quantity }]));
   };
   const removeFood = (food) => {
-    console.log(foods.filter((f) => f !== food));
-    setFoods(foods.filter((f) => f.name !== food));
+    console.log(foodItems.filter((f) => f !== food));
+    setFoodItems(foodItems.filter((f) => f.name !== food));
   };
   return (
     <div style={{ minHeight: '100vh' }}>
@@ -138,7 +171,11 @@ const CreateOrder = () => {
           <Button color="clear"> Back</Button>
         </Link>
       </Toast>
-      <SwitchBox options={['Existing', 'New']} value={tab} onChange={setTab} />
+      <SwitchBox
+        options={['Existing Customer', 'New Customer']}
+        value={tab}
+        onChange={setTab}
+      />
       <form
         autoComplete="off"
         className="f-form"
@@ -149,11 +186,42 @@ const CreateOrder = () => {
         ref={formRef}
       >
         <div className="container">
-          {tab === 'Existing' && (
-            <ComboBox0 items={customers} onChange={setCustomer} />
+          {tab === 'Existing Customer' && (
+            <>
+              <ComboBox0
+                items={vendorCustomers}
+                loading={loading}
+                onChange={setCustomer}
+              />
+              <Input
+                select
+                options={
+                  customer
+                    ? [
+                        { value: 0, text: 'New Address? fill it in below' },
+                      ].concat(
+                        customer.Addresses.map((address) => {
+                          return {
+                            value: address.id,
+                            text: address.full_address,
+                          };
+                        })
+                      )
+                    : [
+                        {
+                          value: 0,
+                          text: 'No Customer selected',
+                        },
+                      ]
+                }
+                ref={register()}
+                name="type_of_meal"
+                label="Select Existing Address"
+              />
+            </>
           )}
 
-          {tab === 'New' && (
+          {tab === 'New Customer' && (
             <>
               <Input
                 type="text"
@@ -187,17 +255,23 @@ const CreateOrder = () => {
               />
             </>
           )}
-          <ComboBox2 items={locations} onChange={changeCurrentAddress} />
-          {tab === 'New' && (
-            <Checkbox
-              label="Save this customer for next time"
-              style={{ margin: '0 0 1em' }}
-            />
+          <ComboBox2 onChange={changeCurrentAddress} />
+          {tab === 'New Customer' && (
+            <div>
+              <Checkbox
+                label="Save this customer for next time"
+                style={{ margin: '0 0 1em' }}
+              />
+            </div>
           )}
 
           <div style={{ margin: '1em 0 0' }}>
             <section style={{ width: '60%', display: 'inline-block' }}>
-              <ComboBox items={foodItems} onChange={changeCurrentFood} />
+              <ComboBox
+                items={vFoods.concat(vMeals)}
+                loading={loading}
+                onChange={changeCurrentFood}
+              />
             </section>
             <section
               style={{
@@ -233,7 +307,7 @@ const CreateOrder = () => {
             </IconButton>
           </div>
 
-          {foods.map((food) => (
+          {foodItems.map((food) => (
             <section
               style={{
                 justifyContent: 'space-between',
@@ -256,7 +330,15 @@ const CreateOrder = () => {
             </section>
           ))}
 
-          <Button full>Create Order</Button>
+          <Button
+            full
+            loading={submitting}
+            style={{
+              margin: '0',
+            }}
+          >
+            Create Order
+          </Button>
         </div>
       </form>
       <Typography style={{ textAlign: 'center' }}>
