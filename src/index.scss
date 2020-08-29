@@ -106,9 +106,7 @@ main {
   text-align: center;
   margin: 10px;
 }
-.h-80 {
-  height: 70%;
-}
+
 .ml {
   display: flex;
   margin-bottom: 1em;
@@ -158,7 +156,7 @@ main {
   position: fixed;
   top: 0;
   left: 0;
-  overflow: auto;
+  overflow: auto;  overflow-x: hidden;
   z-index: 9999;
   border-right: 1px solid rgba(0, 0, 0, 0.12);
 }
@@ -178,10 +176,7 @@ main {
 .shadowf {
   box-shadow: 0 2px 4px 0 rgba(14, 30, 37, 0.12);
 }
-.customers {
-  border-left: 1px solid rgba(0, 0, 0, 0.12);
-  background-color: #fff;
-}
+
 .disp {
   position: absolute !important;
   z-index: 9999;

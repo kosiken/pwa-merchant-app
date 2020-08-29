@@ -1,25 +1,52 @@
-/* eslint-disable no-unused-vars */
+
 import React, { useState, useEffect, useRef } from 'react';
 import _ from 'lodash';
 import { useForm } from 'react-hook-form';
-import { Button, Toast, Typography } from '../components';
-
-//import { TopBar, SwitchBox, Input, Button, IconButton, Checkbox } from '../components'
+import { Button, Toast, Typography, Meal, Input, Loader } from '../components';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import api from '../api';
+import useSearch from '../hooks/useSearch';
 
 const Meals = () => {
-  // const { foodItems } = useSelector((state) => state.customer);
-  // const dispatch = useDispatch();
-  // const [foodItems, setMeals] = useState([]);
-
-  // const { register, handleSubmit, errors } = useForm();
-
-  // let [isLoading, setLoading] = useState(false);
-  // let [isLoading2, setLoading2] = useState(false);
-  // let [loading, setLoad] = useState(true);
-
+  let [loading, setLoad] = useState(true);
+   const dispatch = useDispatch();
+  const { meals } = useSelector((state) => {
+    return {
+      meals:  (state.food.meals) || [],
+    };
+  });
+   let ref = useRef(null);
+    let items = useSearch(ref, meals, function (e, l) {
+    return new RegExp(e.toLowerCase()).test(l.name.toLowerCase());
+  });
   useEffect(() => {
-    (async () => {})();
+    (async () => {
+    try {
+    
+            if (!meals.length) {
+          let _meals = await api.getMeals();
+            console.log(_meals);
+          if (_meals.length)
+            _meals = _meals.map((m) => {
+              return {
+                ...m,
+                type: 'meal',
+              };
+            });
+
+   
+          dispatch({ type: 'GET_FOODS', foods: _meals
+        })
+        }
+             setLoad(false);
+      } catch (error) {
+        console.log(error);
+        setLoad(false);
+      }
+    
+    
+    })();
   }, []);
 
   return (
@@ -38,26 +65,26 @@ const Meals = () => {
         </Link>
       </Toast>
       <br />
-      {/* <Input
+       <Input
         name="search"
         type="search"
         style={{ margin: '0 auto' }}
-        label="Search Food Items"
+        label="Search Meals"
         ref={ref}
       />
 
 
       {loading && <Loader />}
-      <div className="container food-items">
-        {items.map((foodItem, i) => (
-          <FoodListItem
-            food_item={foodItem}
+      <div className="container">
+        {items.map((meal, i) => (
+          <Meal
+            meal={meal}
             key={'food-item' + i}
-            onEdit={editFood}
+        
             index={i}
           />
         ))}
-      </div>*/}
+      </div>
     </div>
   );
 };

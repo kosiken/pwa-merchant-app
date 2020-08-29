@@ -18,7 +18,7 @@ const Dashboard = () => {
       token: state.auth.token,
       customers: state.customer.customers || [],
 
-      foods: state.food.foods || [],
+      foods: state.food.foods.concat(state.food.meals) || [],
     };
   });
   useEffect(() => {
