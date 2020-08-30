@@ -1,12 +1,11 @@
 @import '../styles/colors.scss';
 
 .toast {
-  padding: 15px;
-  box-shadow: 0 2px 4px 0 rgba(14, 30, 37, 0.12);
-  margin: 16px;
+  padding: 5vh 15px;
 }
 .primary {
-  background-color: rgba($color: $primary, $alpha: 0.21);
+  background-color: transparent;
+  padding: 0 15px;
 }
 
 .secondary {
@@ -14,5 +13,5 @@
 }
 
 .info {
-  background-color: #fff;
+  background-color: $info;
 }

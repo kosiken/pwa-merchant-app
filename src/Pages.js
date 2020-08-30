@@ -55,7 +55,6 @@ const Auththenticated = () => {
                 flexGrow: 1,
               }}
             >
-              {' '}
               <TopBar title="Create Order" />
               <CreateOrder />
             </main>

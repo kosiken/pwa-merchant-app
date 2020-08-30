@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api';
 import { isEmpty } from 'lodash';
-import { Button, Typography, Toast, Order, Loader } from '../components';
+import {
+  Button,
+  Typography,
+  Toast,
+  Order,
+  Loader,
+  ErrorComponent,
+} from '../components';
 import { FiFileText as PaperIcon } from 'react-icons/fi';
 
 const Orders = () => {
@@ -19,8 +26,10 @@ const Orders = () => {
   let [current, setCurrent] = useState('');
   let [orders, setOrders] = useState([]);
   let [items, setItems] = useState([]);
-
-  useEffect(() => {
+  let [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const init = () => {
+    setError(false);
     (async () => {
       try {
         let result = await api.getOrders();
@@ -29,10 +38,14 @@ const Orders = () => {
         setItems(result);
         setLoading(false);
       } catch (error) {
-        console.log(error);
         setLoading(false);
+        setErrorMessage(error.data.error);
+        setError(true);
       }
     })();
+  };
+  useEffect(() => {
+    init();
   }, []);
 
   useEffect(() => {
@@ -88,7 +101,11 @@ const Orders = () => {
             {items.map((order, i) => (
               <Order key={'order' + i} order={order} />
             ))}
-
+            {error && (
+              <ErrorComponent message={errorMessage}>
+                <Button onClick={init}> Retry </Button>
+              </ErrorComponent>
+            )}
             {!isLoading && isEmpty(items) && (
               <>
                 <Typography
