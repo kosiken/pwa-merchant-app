@@ -20,7 +20,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 
-const Meal = ({ meal, onEdit, index }) => {
+const Meal = ({ meal, onEdit, onDelete, index }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -134,6 +134,10 @@ const Meal = ({ meal, onEdit, index }) => {
       <Dialog
         open={open}
         onClose={handleClose}
+        onClick={() => {
+          // onDelete({ ...meal, to_be_deleted: true });
+          handleClose();
+        }}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >

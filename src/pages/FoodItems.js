@@ -37,6 +37,8 @@ const FoodItems = () => {
   });
   const dispatch = useDispatch();
   const [openb, setOpenb] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+
   let [isLoading, setLoading] = useState(false);
   let [isLoading2, setLoading2] = useState(false);
   let [loading, setLoad] = useState(true);
@@ -104,6 +106,32 @@ const FoodItems = () => {
         handleOpen('Update Complete');
       })
       .catch((err) => {
+        handleOpen(err.data.error);
+      });
+  };
+
+  const deleteFood = (item) => {
+    setLoading2(true);
+    api
+      .editModel({ ...item, model: 'FoodItem' })
+      .then((result) => {
+        let index = foodItems.findIndex(
+          (foodItem) => foodItem.id === result.id
+        );
+        foodItems[index] = result;
+        setEditing({
+          name: '',
+          price: '',
+        });
+        dispatch({ type: 'GET_FOODS', foods: foodItems });
+        setLoading2(false);
+
+        setDeleteModal(false);
+
+        handleOpen('Update Complete');
+      })
+      .catch((err) => {
+        console.log(err);
         handleOpen(err.data.error);
       });
   };
@@ -195,14 +223,18 @@ const FoodItems = () => {
       </Modal>
       {loading && <Loader />}
       <div className="container food-items">
-        {items.map((foodItem, i) => (
-          <FoodListItem
-            food_item={foodItem}
-            key={'food-item' + i}
-            onEdit={editFood}
-            index={i}
-          />
-        ))}
+        {items
+          .filter((item) => !item.to_be_deleted)
+          .map((foodItem, i) => (
+            <FoodListItem
+              food_item={foodItem}
+              key={'food-item' + i}
+              onEdit={editFood}
+              onDelete={deleteFood}
+              deleteModal={deleteModal}
+              index={i}
+            />
+          ))}
       </div>
     </div>
   );

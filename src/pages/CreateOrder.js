@@ -21,14 +21,9 @@ import { v4 as uuid } from 'uuid';
 
 // import { Link } from "react-router-dom";
 import { FiPlus as PlusIcon, FiX as CloseIcon } from 'react-icons/fi';
+import { add } from 'lodash';
 
-const Address = [
-  {
-    id: 3,
-    full_address:
-      '129 Ago Palace Way Milaco Plaza, Oshodi-Isolo, Lagos, Nigeria',
-  },
-];
+const Address = [];
 
 const CreateOrder = () => {
   let [tab, setTab] = useState('New Customer');
@@ -39,6 +34,7 @@ const CreateOrder = () => {
   let [currentFood, setCurrentFood] = useState('');
   const [submitting, setSubmiting] = useState(false);
   let [currentLocation, setCurrentLocation] = useState(null);
+  let [chosenLocation, setChosenLocation] = useState(0);
   let [quantity, setQuantity] = useState('');
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
@@ -61,17 +57,22 @@ const CreateOrder = () => {
   let quantityRef = useRef(null);
   const { register, handleSubmit, errors, getValues } = useForm();
   const handleSubmitCallback = (s) => {
+    let body = {
+      full_name: getValues('name'),
+      phone_number: customer ? customer.phone_number : getValues('phone'),
+      food_items: foodItems,
+    };
+
+    if (chosenLocation == 0 || tab === 'New Customer') {
+      body = { ...body, delivery_address: currentLocation };
+    } else {
+      body = { ...body, delivery_address_id: s.type_of_address };
+    }
+
     setSubmiting(true);
+
     api
-      .createOrder(
-        {
-          full_name: getValues('name'),
-          phone_number: customer ? customer.phone_number : getValues('phone'),
-          delivery_address: currentLocation,
-          food_items: foodItems,
-        },
-        token
-      )
+      .createOrder(body, token)
       .then((result) => {
         setSubmiting(false);
         handleOpen('Order Created');
@@ -134,7 +135,7 @@ const CreateOrder = () => {
         let customers;
         if (!vendorCustomers.length) {
           customers = await api.getCustomers();
-          customers.forEach((i) => (i.Addresses = Address));
+          // customers.forEach((i) => (i.Addresses = Address));
           dispatch({
             type: 'GET_CUSTOMERS',
             customers,
@@ -159,6 +160,7 @@ const CreateOrder = () => {
     console.log(foodItems.filter((f) => f !== food));
     setFoodItems(foodItems.filter((f) => f.name !== food));
   };
+
   return (
     <div style={{ minHeight: '100vh' }}>
       <Toast
@@ -200,12 +202,13 @@ const CreateOrder = () => {
                     ? [
                         { value: 0, text: 'New Address? fill it in below' },
                       ].concat(
-                        customer.Addresses.map((address) => {
-                          return {
-                            value: address.id,
-                            text: address.full_address,
-                          };
-                        })
+                        customer.Addresses &&
+                          customer.Addresses.map((address) => {
+                            return {
+                              value: address.id,
+                              text: address.full_address,
+                            };
+                          })
                       )
                     : [
                         {
@@ -215,8 +218,9 @@ const CreateOrder = () => {
                       ]
                 }
                 ref={register()}
-                name="type_of_meal"
+                name="type_of_address"
                 label="Select Existing Address"
+                onChange={(e) => setChosenLocation(e.target.value)}
               />
             </>
           )}
@@ -255,7 +259,10 @@ const CreateOrder = () => {
               />
             </>
           )}
-          <ComboBox2 onChange={changeCurrentAddress} />
+          {((tab === 'Existing Customer' && chosenLocation == 0) ||
+            tab === 'New Customer') && (
+            <ComboBox2 onChange={changeCurrentAddress} />
+          )}
           {tab === 'New Customer' && (
             <div>
               <Checkbox
