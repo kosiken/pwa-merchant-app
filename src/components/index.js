@@ -8,6 +8,7 @@ import TopBar from './TopBar/TopBar';
 import Checkbox from './Checkbox/Checkbox';
 import CustomerListItem from './CustomerListItem/CustomerListItem';
 import Loader from './Loader/Loader';
+import ErrorComponent from './Error/Error';
 import Order from './Order/Order';
 import ComboBox from './ComboBox/ComboBox';
 import ComboBox2 from './ComboBox2/ComboBox2';
@@ -36,4 +37,5 @@ export {
   FoodListItem,
   DrawerNav,
   Meal,
+  ErrorComponent,
 };

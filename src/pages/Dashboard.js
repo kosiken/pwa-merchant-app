@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
-import { Loader, Order, Typography, Button, Toast } from '../components';
+import {
+  Loader,
+  Order,
+  Typography,
+  Button,
+  ErrorComponent,
+} from '../components';
 
 import api from '../api';
 import { FiLayers, FiUsers, FiClipboard } from 'react-icons/fi';
@@ -12,6 +18,8 @@ import { Avatar } from '@material-ui/core';
 const Dashboard = () => {
   let [isLoading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  let [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [orders, setOrders] = useState([]);
   const { customers, foods } = useSelector((state) => {
     return {
@@ -21,7 +29,9 @@ const Dashboard = () => {
       foods: state.food.foods.concat(state.food.meals) || [],
     };
   });
-  useEffect(() => {
+
+  const init = () => {
+    setError(false);
     (async () => {
       try {
         let __orders = await api.getOrders();
@@ -50,44 +60,30 @@ const Dashboard = () => {
         }
         setLoading(false);
       } catch (error) {
-        console.log(error);
         setLoading(false);
+        setErrorMessage(error.data.error);
+        setError(true);
       }
-    })(); // eslint-disable-next-line react-hooks/exhaustive-deps
+    })();
+  };
+  useEffect(() => {
+    init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div style={{ minHeight: '100vh' }}>
-      <Toast color="info">
-        <Typography className="mb-2">
-          I couldn't think of welcome message. The server program uses event
-          driven programming model in its operation. Server events are triggered
-          by requests from the microcontroller and the client applications
-        </Typography>
-
-        <div
-          style={{
-            textAlign: 'right',
-          }}
-        >
-          <Link to="/faq">
-            <Button color="clear"> More Info</Button>
-          </Link>
-        </div>
-      </Toast>
-
       <Container>
-        <hr />
         <Row
           style={{
             margin: '1em 0 0',
-            justifyContent: 'space-between',
           }}
         >
-          <Col md={6} lg={3} xs={12} className="p-3 mb-4 shadowf bg-light ">
+          <Col md={4} xs={12} className="p-3 mb-3 shadowf bg-light ">
             <div className="flex-row">
               <section>
                 <Avatar
+                  className="mb-3"
                   style={{
                     backgroundColor: 'rgb(255, 220, 74)',
                   }}
@@ -99,7 +95,7 @@ const Dashboard = () => {
               <section>
                 <Typography title>Orders</Typography>
 
-                <Typography>
+                <Typography small>
                   You have
                   {' ' +
                     orders.length.toString() +
@@ -113,10 +109,11 @@ const Dashboard = () => {
             </Link>
           </Col>
 
-          <Col md={6} lg={3} xs={12} className="p-3 mb-4 shadowf bg-light ">
+          <Col md={4} xs={12} className="p-3 mb-3 shadowf bg-light ">
             <div className="flex-row">
               <section>
                 <Avatar
+                  className="mb-3"
                   style={{
                     backgroundColor: '#f7a171',
                   }}
@@ -128,7 +125,7 @@ const Dashboard = () => {
               <section>
                 <Typography title>Food Items</Typography>
 
-                <Typography>
+                <Typography small>
                   You have
                   {' ' +
                     foods.length.toString() +
@@ -142,10 +139,11 @@ const Dashboard = () => {
             </Link>
           </Col>
 
-          <Col md={6} lg={3} xs={12} className="p-3 mb-4 shadowf bg-light">
+          <Col md={4} xs={12} className="p-3 mb-3 shadowf bg-light">
             <div className="flex-row">
               <section>
                 <Avatar
+                  className="mb-3"
                   style={{
                     backgroundColor: 'red',
                   }}
@@ -157,7 +155,7 @@ const Dashboard = () => {
               <section>
                 <Typography title>Saved Customers</Typography>
 
-                <Typography>
+                <Typography small>
                   You have
                   {' ' +
                     customers.length.toString() +
@@ -174,10 +172,12 @@ const Dashboard = () => {
           </Col>
         </Row>
 
-        <hr />
-
         <Typography title>Recent Orders</Typography>
-
+        {error && (
+          <ErrorComponent message={errorMessage}>
+            <Button onClick={init}> Retry </Button>
+          </ErrorComponent>
+        )}
         {isLoading && <Loader />}
 
         {orders

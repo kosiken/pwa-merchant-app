@@ -126,7 +126,7 @@ const CreateMeal = () => {
   return (
     <div style={{ minHeight: '100vh' }}>
       <Toast
-        color="info"
+        color="primary"
         style={{
           marginBottom: '1em',
         }}

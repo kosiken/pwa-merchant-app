@@ -27,8 +27,10 @@
     background-color: transparent;
     color: $primary;
     box-shadow: none;
+
     &:hover {
       color: darken($color: $primary, $amount: 20%);
+      background-color: transparent !important;
     }
   }
   &.full {

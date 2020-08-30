@@ -11,6 +11,7 @@ import {
   Loader,
   IconButton,
   ComboBox2,
+  ErrorComponent,
 } from '../components';
 
 import api from '../api';
@@ -21,6 +22,8 @@ import useSearch from '../hooks/useSearch';
 
 const Customers = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  let [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [currentLocation, setCurrentLocation] = useState(null);
   const { register, handleSubmit, errors } = useForm();
   const [isLoading, setLoading] = useState(false);
@@ -74,6 +77,27 @@ const Customers = () => {
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
+
+  const init = () => {
+    setError(false);
+    (async () => {
+      try {
+        let _customers;
+        if (!customers.length) {
+          _customers = await api.getCustomers();
+          dispatch({
+            type: 'GET_CUSTOMERS',
+            customers: _customers,
+          });
+        }
+        setLoaded(false);
+      } catch (error) {
+        setLoaded(false);
+        setErrorMessage(error.data.error);
+        setError(true);
+      }
+    })();
+  };
   useEffect(() => {
     const handleClose = () => {
       setOpen(false);
@@ -91,21 +115,8 @@ const Customers = () => {
   }, [open]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        let _customers;
-        if (!customers.length) {
-          _customers = await api.getCustomers();
-          dispatch({
-            type: 'GET_CUSTOMERS',
-            customers: _customers,
-          });
-        }
-        setLoaded(false);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    init();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -337,6 +348,11 @@ const Customers = () => {
             onEdit={editCustomer}
           />
         ))}
+        {error && (
+          <ErrorComponent message={errorMessage}>
+            <Button onClick={init}> Retry </Button>
+          </ErrorComponent>
+        )}
         {loaded && <Loader />}
       </div>
     </div>

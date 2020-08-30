@@ -31,6 +31,7 @@
     -->
     <title>500chow</title>
   </head>
+
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
@@ -51,17 +52,8 @@
     <div id="map"></div>
     <script>
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          ({ coords: { latitude, longitude } }) => {
-            const location = new google.maps.LatLng(latitude, longitude);
-
-            window.FiveService = new window.google.maps.places.PlacesService(
-              document.getElementById('map'),
-              {
-                center: location,
-              }
-            );
-          }
+        window.FiveService = new window.google.maps.places.PlacesService(
+          document.getElementById('map')
         );
       } else {
         alert('Geolocation is not supported by this browser.');

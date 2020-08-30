@@ -35,7 +35,7 @@ const CreateFoodItem = () => {
   return (
     <div style={{ minHeight: '100vh' }}>
       <Toast
-        color="info"
+        color="primary"
         style={{
           display: 'flex',
           justifyContent: 'space-between',

@@ -11,6 +11,7 @@ import {
   Typography,
   FoodListItem,
   Loader,
+  ErrorComponent,
 } from '../components';
 import api from '../api';
 
@@ -38,7 +39,8 @@ const FoodItems = () => {
   const dispatch = useDispatch();
   const [openb, setOpenb] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-
+  let [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   let [isLoading, setLoading] = useState(false);
   let [isLoading2, setLoading2] = useState(false);
   let [loading, setLoad] = useState(true);
@@ -52,8 +54,9 @@ const FoodItems = () => {
   const handleClose = () => {
     setOpenb(false);
   };
-  useEffect(() => {
-    console.log('ere');
+
+  const init = () => {
+    setError(false);
     (async () => {
       try {
         let meals;
@@ -70,12 +73,21 @@ const FoodItems = () => {
           let foods = await api.getFoods();
           dispatch({ type: 'GET_FOODS', foods: foods.concat(meals) });
         }
+
         setLoad(false);
+
         // dispatch({ type: 'GET_CUSTOMERS', __customers });
       } catch (error) {
-        console.log(error);
+        setErrorMessage(error.data.error);
+        setError(true);
       }
     })();
+  };
+  useEffect(() => {
+    console.log('ere');
+
+    init();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [b]);
   const editFood = (food) => {
@@ -148,7 +160,7 @@ const FoodItems = () => {
       >
         <Typography inline>This is where all foods are shown</Typography>
         <Link to="/create-food">
-          <Button color="clear"> Create new</Button>
+          <Button color="clear"> Create</Button>
         </Link>
       </Toast>
       <br />
@@ -221,6 +233,11 @@ const FoodItems = () => {
           </Button>{' '}
         </Modal.Footer>
       </Modal>
+      {error && (
+        <ErrorComponent message={errorMessage}>
+          <Button onClick={init}> Retry </Button>
+        </ErrorComponent>
+      )}
       {loading && <Loader />}
       <div className="container food-items">
         {items

@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { Button, Toast, Typography, Meal, Input, Loader } from '../components';
+import {
+  Button,
+  Toast,
+  Typography,
+  Meal,
+  Input,
+  Loader,
+  ErrorComponent,
+} from '../components';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import api from '../api';
@@ -9,6 +17,8 @@ import useSearch from '../hooks/useSearch';
 const Meals = () => {
   let [loading, setLoad] = useState(true);
   const dispatch = useDispatch();
+  let [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const { meals } = useSelector((state) => {
     return {
       meals: state.food.meals || [],
@@ -18,7 +28,9 @@ const Meals = () => {
   let items = useSearch(ref, meals, function (e, l) {
     return new RegExp(e.toLowerCase()).test(l.name.toLowerCase());
   });
-  useEffect(() => {
+
+  const init = () => {
+    setError(false);
     (async () => {
       try {
         if (!meals.length) {
@@ -36,10 +48,15 @@ const Meals = () => {
         }
         setLoad(false);
       } catch (error) {
-        console.log(error);
         setLoad(false);
+        setErrorMessage(error.data.error);
+        setError(true);
       }
     })();
+  };
+
+  useEffect(() => {
+    init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -66,7 +83,11 @@ const Meals = () => {
         label="Search Meals"
         ref={ref}
       />
-
+      {error && (
+        <ErrorComponent message={errorMessage}>
+          <Button onClick={init}> Retry </Button>
+        </ErrorComponent>
+      )}
       {loading && <Loader />}
       <div className="container">
         {items.map((meal, i) => (

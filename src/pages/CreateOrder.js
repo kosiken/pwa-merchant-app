@@ -21,9 +21,6 @@ import { v4 as uuid } from 'uuid';
 
 // import { Link } from "react-router-dom";
 import { FiPlus as PlusIcon, FiX as CloseIcon } from 'react-icons/fi';
-import { add } from 'lodash';
-
-const Address = [];
 
 const CreateOrder = () => {
   let [tab, setTab] = useState('New Customer');
@@ -63,7 +60,7 @@ const CreateOrder = () => {
       food_items: foodItems,
     };
 
-    if (chosenLocation == 0 || tab === 'New Customer') {
+    if (chosenLocation === 0 || tab === 'New Customer') {
       body = { ...body, delivery_address: currentLocation };
     } else {
       body = { ...body, delivery_address_id: s.type_of_address };
@@ -164,7 +161,7 @@ const CreateOrder = () => {
   return (
     <div style={{ minHeight: '100vh' }}>
       <Toast
-        color="info"
+        color="primary"
         style={{
           marginBottom: '1em',
         }}
@@ -259,7 +256,7 @@ const CreateOrder = () => {
               />
             </>
           )}
-          {((tab === 'Existing Customer' && chosenLocation == 0) ||
+          {((tab === 'Existing Customer' && chosenLocation === 0) ||
             tab === 'New Customer') && (
             <ComboBox2 onChange={changeCurrentAddress} />
           )}

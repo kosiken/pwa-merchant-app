@@ -22,7 +22,7 @@ const EditMeal = () => {
   const { _foods, _meals } = useSelector((state) => {
     return {
       token: state.auth.token,
-     
+
       _meals: state.food.meals || [],
     };
   });
