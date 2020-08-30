@@ -10,7 +10,7 @@ import Dialog from '@material-ui/core/Dialog';
 import { RiDeleteBin6Line as DeleteIcon } from 'react-icons/ri';
 import styles from './FoodListItem.module.scss';
 
-const FoodListItem = ({ food_item, onEdit, index }) => {
+const FoodListItem = ({ food_item, onEdit, onDelete, deleteModal, index }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -20,6 +20,10 @@ const FoodListItem = ({ food_item, onEdit, index }) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  React.useEffect(() => {
+    if (deleteModal) setOpen(deleteModal);
+  }, [deleteModal]);
 
   const classes = classNames({
     [styles.available]: food_item.is_available,
@@ -87,6 +91,10 @@ const FoodListItem = ({ food_item, onEdit, index }) => {
           </Typography>
 
           <Button
+            onClick={() => {
+              onDelete({ ...food_item, to_be_deleted: true });
+              handleClose();
+            }}
             color="clear"
             full
             style={{

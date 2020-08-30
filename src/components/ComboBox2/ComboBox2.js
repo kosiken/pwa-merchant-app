@@ -20,11 +20,15 @@ function useLocations(value) {
 
         let request = {
           query: value,
-          fields: ['name', 'formatted_address', 'geometry'],
+          fields: ['name', 'formatted_address', 'geometry', 'plus_code', 'url'],
+          region: '.ng',
+          locationBias: {
+            radius: 100,
+            center: { lat: 6.465422, lng: 3.406448 },
+          },
         };
 
         window.FiveService.textSearch(request, function (results, status) {
-          console.log(status);
           if (status === 'ZERO_RESULTS') setLocations([]);
           if (status === 'OK') {
             if (results instanceof Array)
@@ -33,7 +37,10 @@ function useLocations(value) {
                   return {
                     latitude: result.geometry.location.lat(),
                     longitude: result.geometry.location.lng(),
-                    full_address: result.formatted_address,
+                    full_address: `${result.name} ${result.formatted_address}`,
+                    plus_code:
+                      result.plus_code && result.plus_code.compound_code,
+                    google_map_link: `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${result.place_id}`,
                   };
                 })
               );
@@ -108,6 +115,7 @@ function ComboBox2({ onChange }) {
         type="text"
         name="location"
         label="Customer Address"
+        autocomplete="disabled"
         multiline
         ref={ref}
         onChange={(e) => setSearchTerm(e.target.value)}

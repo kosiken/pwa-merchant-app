@@ -21,10 +21,10 @@ import useSearch from '../hooks/useSearch';
 
 const Customers = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  let [setCurrentLocation] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState(null);
   const { register, handleSubmit, errors } = useForm();
-  let [isLoading, setLoading] = useState(false);
-  let [isLoading2, setLoading2] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [isLoading2, setLoading2] = useState(false);
   const [key, setKey] = useState('');
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(true);
@@ -113,20 +113,22 @@ const Customers = () => {
     setLoading(true);
 
     api
-      .createCustomer(s)
+      .createCustomer({
+        ...s,
+        address: currentLocation,
+      })
       .then((user) => {
         dispatch({
           type: 'ADD_CUSTOMER',
           customer: user,
         });
-        setLoading(false);
         document.getElementById('five-form').reset();
       })
-
       .catch((err) => {
         console.log(err);
         handleOpen(err.data.error);
       });
+    setLoading(false);
   };
 
   const handleSubmitCallback2 = (s) => {
