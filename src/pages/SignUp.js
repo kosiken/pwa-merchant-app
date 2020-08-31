@@ -150,7 +150,7 @@ const SignUp = () => {
             </Typography>
           </Link>
           <Button full loading={isLoading}>
-            'Sign Up'
+            Sign Up
           </Button>
         </div>
       </form>
