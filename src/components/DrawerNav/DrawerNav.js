@@ -74,7 +74,7 @@ const DrawerNav = ({ children }) => {
               roundedCircle
             />
           </Col>
-          <Col xs={8} md={8}>
+          <Col xs={8} md={8} className="p-0">
             <Row>
               <Typography
                 title
@@ -86,7 +86,7 @@ const DrawerNav = ({ children }) => {
               </Typography>
             </Row>
             <Row>
-              <Typography>{email}</Typography>
+              <Typography small>{email}</Typography>
             </Row>
           </Col>
         </Row>
