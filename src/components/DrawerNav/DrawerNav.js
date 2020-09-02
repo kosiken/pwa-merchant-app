@@ -9,7 +9,7 @@ import {
   FiUsers as UserIcon,
   FiFileText as PaperIcon,
   FiShoppingBag as ShoppingBag,
-  FiDatabase as Database,
+  // FiDatabase as Database,
 } from 'react-icons/fi';
 
 import avatar from '../../assets/avatar.png';
@@ -24,11 +24,11 @@ let links = [
     name: 'Food Items',
     icon: <PaperIcon />,
   },
-  {
-    url: '/meals',
-    name: 'Meals',
-    icon: <Database />,
-  },
+  // {
+  //   url: '/meals',
+  //   name: 'Meals',
+  //   icon: <Database />,
+  // },
   {
     url: '/orders',
     name: 'Orders',
