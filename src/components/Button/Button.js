@@ -8,7 +8,7 @@ const Button = ({
   onClick,
   color = 'primary',
   loading,
-  className,
+  className = '',
   ...otherProps
 }) => {
   const classes =

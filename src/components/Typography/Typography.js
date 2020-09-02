@@ -10,12 +10,19 @@ function Typography(props) {
     bold,
     children,
     variant,
+    className = '',
     ...otherProps
   } = props;
-  const classes2 = classNames(styles.typography, styles.title, styles[variant]);
-  const classes = classNames(styles.typography, styles[variant], {
-    [styles.bold]: bold,
-  });
+  const classes2 =
+    classNames(styles.typography, styles.title, styles[variant]) +
+    ' ' +
+    className;
+  const classes =
+    classNames(styles.typography, styles[variant], {
+      [styles.bold]: bold,
+    }) +
+    ' ' +
+    className;
   if (title) {
     return (
       <h4 className={classes2} {...otherProps}>

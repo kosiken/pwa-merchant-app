@@ -59,116 +59,110 @@ const SignUp = () => {
         onSubmit={handleSubmit(submit)}
         autoComplete={'false'}
       >
-        <div className="container">
-          <div className="brand-div" style={{ textAlign: 'center' }}>
-            {' '}
-            <img alt="" src={logo} width="60" height="60" />
-          </div>
-          <Input
-            type="text"
-            name="name"
-            label="Name"
-            style={{ margin: '0 auto' }}
-            ref={register({
-              required: {
-                value: true,
-                message: 'You need to enter this value',
-              },
-            })}
-            error={errors.name}
-          />
+        <Typography
+          title
+          variant="secondary"
+          className="mb-4"
+          style={{
+            fontSize: '2em',
+            fontWeight: '700',
+          }}
+        >
+          Sign Up
+        </Typography>
 
-          <Input
-            type="email"
-            name="email"
-            label="Email Address"
-            style={{ margin: '0 auto' }}
-            ref={register({
-              required: {
-                value: true,
-                message: 'You need to enter this value',
-              },
-              pattern: {
-                value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
-                message: 'Invalid Email Address',
-              },
-            })}
-            error={errors.email}
-          />
+        <Input
+          type="text"
+          name="name"
+          label="Name"
+          style={{ margin: '0 auto' }}
+          ref={register({
+            required: {
+              value: true,
+              message: 'You need to enter this value',
+            },
+          })}
+          error={errors.name}
+        />
 
-          <Input
-            label="Phone Number"
-            name={'phone'}
-            variant="outlined"
-            style={{ margin: '0 auto' }}
-            type="tel"
-            ref={register({
-              required: {
-                value: true,
-                message: 'Phone Number is required',
-              },
+        <Input
+          type="email"
+          name="email"
+          label="Email Address"
+          style={{ margin: '0 auto' }}
+          ref={register({
+            required: {
+              value: true,
+              message: 'You need to enter this value',
+            },
+            pattern: {
+              value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
+              message: 'Invalid Email Address',
+            },
+          })}
+          error={errors.email}
+        />
 
-              min: {
-                value: 10,
-                message: 'Invalid Phone Number',
-              },
-            })}
-            error={errors.phone}
-          />
-          <Input
-            type="password"
-            name="password"
-            label="Password"
-            style={{ margin: '0 auto' }}
-            ref={register({
-              required: {
-                value: true,
-                message: 'Password is required',
-              },
-            })}
-          />
-          <Input
-            label="Confirm Password"
-            type="password"
-            name="password2"
-            ref={register()}
-            style={{ margin: '0 auto' }}
-            error={
-              getValues('password') !== getValues('password2')
-                ? { message: "Passwords don't match" }
-                : {}
-            }
-          />
-          <Link to="/">
-            <Typography
-              style={{
-                color: '#5d97c6',
-              }}
-            >
-              {' '}
-              Login{' '}
-            </Typography>
-          </Link>
-          <Button full loading={isLoading}>
-            Sign Up
-          </Button>
-        </div>
-      </form>
-      <div>
-        <Typography style={{ textAlign: 'center' }}>
-          Made with{' '}
-          <span role="img" aria-label="love">
-            ❤️{' '}
-          </span>
-          <span
+        <Input
+          label="Phone Number"
+          name={'phone'}
+          variant="outlined"
+          style={{ margin: '0 auto' }}
+          type="tel"
+          ref={register({
+            required: {
+              value: true,
+              message: 'Phone Number is required',
+            },
+
+            min: {
+              value: 10,
+              message: 'Invalid Phone Number',
+            },
+          })}
+          error={errors.phone}
+        />
+        <Input
+          type="password"
+          name="password"
+          label="Password"
+          style={{ margin: '0 auto' }}
+          ref={register({
+            required: {
+              value: true,
+              message: 'Password is required',
+            },
+          })}
+        />
+        <Input
+          label="Confirm Password"
+          type="password"
+          name="password2"
+          ref={register()}
+          style={{ margin: '0 auto' }}
+          error={
+            getValues('password') !== getValues('password2')
+              ? { message: "Passwords don't match" }
+              : {}
+          }
+        />
+        <Link to="/">
+          <Typography
             style={{
-              color: '#f0324b',
+              color: '#5d97c6',
+              width: '93%',
+              margin: '0 auto 1em',
             }}
           >
-            500Chow
-          </span>
-        </Typography>
-      </div>{' '}
+            {' '}
+            Login{' '}
+          </Typography>
+        </Link>
+        <Button full loading={isLoading}>
+          Sign Up
+        </Button>
+      </form>
+      <div></div>{' '}
     </div>
   );
 };

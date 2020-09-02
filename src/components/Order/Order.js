@@ -4,13 +4,8 @@ import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import Button from '../Button/Button';
 import Typography from '../Typography/Typography';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
 
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-
+import { Table } from 'react-bootstrap';
 import Dialog from '@material-ui/core/Dialog';
 import styles from './Order.module.scss';
 import moment from 'moment';
@@ -53,58 +48,54 @@ const Order = ({ order }) => {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <Table
-            style={{
-              backgroundColor: '#fff',
-            }}
-          >
-            <TableHead>
-              <TableRow>
-                <TableCell>
+          <Table striped responsive>
+            <thead>
+              <tr>
+                <th>
                   <Typography inline>Quantity</Typography>
-                </TableCell>
-                <TableCell align="left">
+                </th>
+                <th>
                   <Typography inline>Food</Typography>
-                </TableCell>
-                <TableCell align="left">
+                </th>
+                <th>
                   <Typography inline>Price</Typography>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
               {!_.isEmpty(order.FoodItems) &&
                 order.FoodItems.map((item, i) => (
-                  <TableRow key={'food' + i}>
-                    <TableCell>
+                  <tr key={'food' + i}>
+                    <td>
                       {' '}
                       <Typography inline>{item.OrderFoods.quantity}</Typography>
-                    </TableCell>
-                    <TableCell align="left">
+                    </td>
+                    <td>
                       <Typography inline>{item.name}</Typography>
-                    </TableCell>
+                    </td>
 
-                    <TableCell align="left">
+                    <td>
                       <Typography inline>{item.price}</Typography>
-                    </TableCell>
-                  </TableRow>
+                    </td>
+                  </tr>
                 ))}
               {!_.isEmpty(order.Meals) &&
                 order.Meals.map((item, i) => (
-                  <TableRow key={'food' + i}>
-                    <TableCell>
+                  <tr key={'food' + i}>
+                    <td>
                       {' '}
                       <Typography inline>{item.quantity}</Typography>
-                    </TableCell>
-                    <TableCell align="left">
+                    </td>
+                    <td>
                       <Typography inline>{item.name}</Typography>
-                    </TableCell>
+                    </td>
 
-                    <TableCell align="left">
+                    <td>
                       <Typography inline>{item.price}</Typography>
-                    </TableCell>
-                  </TableRow>
+                    </td>
+                  </tr>
                 ))}
-            </TableBody>
+            </tbody>
           </Table>
           <section className={styles['order-section']}>
             <Typography small bold>
