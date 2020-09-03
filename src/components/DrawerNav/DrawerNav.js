@@ -64,8 +64,7 @@ const DrawerNav = ({ children }) => {
           marginTop: '1em',
         }}
       >
-        <Row>
-          <Col xs={3} md={4}>
+        <div className="mb-2">
             <Image
               src={avatar}
               style={{
@@ -73,9 +72,10 @@ const DrawerNav = ({ children }) => {
               }}
               roundedCircle
             />
-          </Col>
-          <Col xs={8} md={8} className="p-0">
-            <Row>
+      
+        
+        </div>
+           <Row className="m-0">
               <Typography
                 title
                 style={{
@@ -85,13 +85,12 @@ const DrawerNav = ({ children }) => {
                 {name}
               </Typography>
             </Row>
-            <Row>
+            <Row className="m-0">
               <Typography small>{email}</Typography>
             </Row>
-          </Col>
-        </Row>
+ 
       </Container>
-      <hr />
+  
       <Nav className="flex-column h-80">
         {links.map((link, i) => (
           <Link
@@ -113,7 +112,7 @@ const DrawerNav = ({ children }) => {
           </Link>
         ))}
       </Nav>
-      <hr />
+
       <Button
         full
         style={{

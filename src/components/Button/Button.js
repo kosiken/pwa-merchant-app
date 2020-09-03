@@ -1,4 +1,5 @@
 import React from 'react';
+import Typography from '../Typography/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import styles from './Button.module.scss';
 import classNames from 'classnames';
@@ -28,7 +29,7 @@ const Button = ({
 
   return (
     <button className={classes} onClick={onClick} {...otherProps}>
-      {children}
+    <Typography inline>{children}</Typography>  
     </button>
   );
 };

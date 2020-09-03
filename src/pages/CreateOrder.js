@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-
+import { Modal, Container } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
@@ -16,6 +16,7 @@ import {
   ComboBox2,
   ComboBox0,
   Toast,
+  Loader
 } from '../components';
 import { v4 as uuid } from 'uuid';
 
@@ -26,7 +27,9 @@ const CreateOrder = () => {
   let [tab, setTab] = useState('New Customer');
 
   let [foodItems, setFoodItems] = useState([]);
+  const [show, setShow] = useState(false);
 
+  const handleShow = () => setShow(true);
   const [loading, setLoading] = useState(true);
   let [currentFood, setCurrentFood] = useState('');
   const [submitting, setSubmiting] = useState(false);
@@ -72,7 +75,7 @@ const CreateOrder = () => {
       .createOrder(body, token)
       .then((result) => {
         setSubmiting(false);
-        handleOpen('Order Created');
+        handleShow();
       })
       .catch((err) => {
         setSubmiting(false);
@@ -112,7 +115,6 @@ const CreateOrder = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab]);
   useEffect(() => {
-    console.log('ere');
     (async () => {
       try {
         let meals;
@@ -160,16 +162,27 @@ const CreateOrder = () => {
 
   return (
     <div style={{ minHeight: '100vh' }}>
+          
+      <Loader backdrop open={submitting} >
+      <Typography> Creating order</Typography>
+      </Loader>
       <Toast
         color="primary"
-        style={{
-          marginBottom: '1em',
-        }}
-      >
+      style={{
+    display: 'flex',
+justifyContent: 'space-between'
+    }}
+      >      <Typography
+          title
+   
+        >
+          Create Order
+        </Typography>
         <Link to="/">
           <Button color="clear"> Back</Button>
         </Link>
       </Toast>
+      <hr/>
       <SwitchBox
         options={['Existing Customer', 'New Customer']}
         value={tab}
@@ -358,6 +371,20 @@ const CreateOrder = () => {
           500Chow
         </span>
       </Typography>
+      <Modal show={show}>
+        <Modal.Header>
+          <Typography title>Order Created</Typography>
+           </Modal.Header>
+<Modal.Body>
+          <Typography >The order was successfully created</Typography>
+        </Modal.Body>
+        <Modal.Footer>
+          <Link to="/orders">
+            <Button>Continue</Button>
+          </Link>
+        </Modal.Footer>
+      </Modal>
+
     </div>
   );
 };

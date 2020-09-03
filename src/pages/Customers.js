@@ -11,7 +11,7 @@ import {
   Loader,
   IconButton,
   ComboBox2,
-  ErrorComponent,
+  ErrorComponent, 
 } from '../components';
 
 import api from '../api';
@@ -180,8 +180,12 @@ const Customers = () => {
   };
 
   return (
+  <>
+
     <div style={{ minHeight: '100vh' }} className="customerPage">
+
       <div>
+       
         <form
           className="f-form "
           style={{
@@ -302,7 +306,7 @@ const Customers = () => {
         </Modal>
       </div>
 
-      <div className="customers">
+      <div className="customers" >
         <section
           style={{
             display: 'flex',
@@ -356,6 +360,7 @@ const Customers = () => {
         {loaded && <Loader />}
       </div>
     </div>
+    </>
   );
 };
 

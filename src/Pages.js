@@ -32,7 +32,7 @@ const Auththenticated = () => {
               }}
             >
               {' '}
-              <TopBar title="500 Chow" />
+              <TopBar title="500 Dash" />
               <Dashboard />
             </main>
           </Route>
@@ -45,7 +45,7 @@ const Auththenticated = () => {
               }}
             >
               {' '}
-              <TopBar title="Create Order" />
+              <TopBar title="Orders" />
               <Orders />
             </main>
           </Route>

@@ -33,10 +33,7 @@ const TopBar = ({ title, btn, window }) => {
       <div style={{ flexGrow: 1, padding: '.5em .5em .5em 1em' }}>
         <Typography
           title
-          style={{
-            fontWeight: '600',
-            fontSize: '1.5em',
-          }}
+   
         >
           {title}
         </Typography>
