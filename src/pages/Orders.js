@@ -2,20 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api';
 import { isEmpty } from 'lodash';
-import {Table} from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import {
   Button,
   Typography,
   Toast,
   Order,
-  Loader,
   ErrorComponent,
 } from '../components';
 import { FiFileText as PaperIcon } from 'react-icons/fi';
 
 const Orders = () => {
   const statuses = [
-  'All',
+    'All',
     'Processing',
     'Submitted',
     'Accepted',
@@ -52,26 +51,26 @@ const Orders = () => {
 
   useEffect(() => {
     console.log(orders.map((order) => order.status));
-    if(current === 'All') setItems(orders);
-   else if (current) setItems(orders.filter((order) => order.status === current));
-   else console.log('Unknown status');
+    if (current === 'All') setItems(orders);
+    else if (current)
+      setItems(orders.filter((order) => order.status === current));
+    else console.log('Unknown status');
   }, [current, orders]);
 
   return (
     <div>
       <Toast
         color="primary"
-    style={{
-    display: 'flex',
-justifyContent: 'space-between'
-    }}
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+        }}
       >
-
         <Link to="/create-order">
           <Button color="clear"> Create Order</Button>
         </Link>
       </Toast>
-    
+
       <div className="container">
         <div className="filters">
           {statuses.map((status, i) => (
@@ -80,7 +79,7 @@ justifyContent: 'space-between'
                 color: current === status ? '#f0324b' : '#888',
                 cursor: 'pointer',
                 padding: '0 0 2px',
-                borderBottom: current === status ? '2px solid #f0324b' : 'none' 
+                borderBottom: current === status ? '2px solid #f0324b' : 'none',
               }}
               inline
               key={'filter' + i}
@@ -92,7 +91,6 @@ justifyContent: 'space-between'
             </Typography>
           ))}
         </div>
-        
       </div>
       <div
         className="container"
@@ -104,23 +102,27 @@ justifyContent: 'space-between'
         {' '}
         <div className="container">
           <div className="orders-list">
-            {isLoading && <Loader />}
-              <Table borderless hover >
-   <thead>
-        <tr>
-         
-          <th>Customer</th>
-    
-          <th>Total</th>
-          <th>Status</th>
-          <th>View</th>
-        </tr>
-      </thead>
-   <tbody>
+            <Table borderless hover>
+              <thead>
+                <tr>
+                  <th>Customer</th>
 
-            {items.map((order, i) => (
-              <Order key={'order' + i} order={order} />
-            ))}</tbody>  </Table>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>View</th>
+                </tr>
+              </thead>
+              <tbody>
+                {isLoading &&
+                  [1, 2, 3].map((order) => (
+                    <Order loader key={'loader' + order} />
+                  ))}
+
+                {items.map((order, i) => (
+                  <Order key={'order' + i} order={order} />
+                ))}
+              </tbody>{' '}
+            </Table>
             {error && (
               <ErrorComponent message={errorMessage}>
                 <Button onClick={init}> Retry </Button>

@@ -32,7 +32,11 @@ function CustomerSelect({ items, onChange, theRef, loading }) {
             }}
           >
             {' '}
-            <Typography inline> {l.full_name} </Typography>{' '}
+            <Typography inline> {l.full_name} </Typography>
+            <Typography className="ml-2" small variant="gray">
+              {' '}
+              {l.phone_number}{' '}
+            </Typography>
           </div>
         ))}
       </div>
@@ -46,15 +50,22 @@ function ComboBox({ items, onChange, loading }) {
 
   let show = useFocus(ref);
 
-  let customers = useSearch(ref, items, (currentValue, customer) =>
-    new RegExp(currentValue.toLowerCase()).test(
-      customer.full_name.toLowerCase()
-    )
-  );
+  let customers = useSearch(ref, items, (currentValue, customer) => {
+    let regexp = new RegExp(currentValue.toLowerCase());
+    return (
+      regexp.test(customer.full_name.toLowerCase()) ||
+      regexp.test(customer.phone_number)
+    );
+  });
 
   return (
     <div className="add-div">
-      <Input type="search" name="customer" label="Customer name" ref={ref} />
+      <Input
+        type="search"
+        name="customer"
+        label="Customer name or phone numbe"
+        ref={ref}
+      />
       {show && (
         <CustomerSelect
           items={customers}

@@ -78,7 +78,7 @@ const FoodItems = () => {
 
         // dispatch({ type: 'GET_CUSTOMERS', __customers });
       } catch (error) {
-       setLoad(false);
+        setLoad(false);
         setErrorMessage(error.data.error);
         setError(true);
       }

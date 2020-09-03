@@ -248,3 +248,27 @@ main {
     grid-template-columns: auto auto auto;
   }
 }
+
+.placeload-background {
+  height: 10px;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: auto;
+  background-size: 1000px 104px;
+
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}

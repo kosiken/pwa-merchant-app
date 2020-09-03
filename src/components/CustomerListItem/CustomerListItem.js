@@ -9,7 +9,7 @@ import { RiDeleteBin6Line as DeleteIcon } from 'react-icons/ri';
 import styles from './CustomerListItem.module.scss';
 import Dialog from '@material-ui/core/Dialog';
 
-const CustomerListItem = ({ customer, onEdit }) => {
+const CustomerListItem = ({ customer, onEdit, loader }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -19,6 +19,27 @@ const CustomerListItem = ({ customer, onEdit }) => {
   const handleClose = () => {
     setOpen(false);
   };
+  if (loader) {
+    return (
+      <div className={[styles['customer-list-item']]}>
+        <div className={styles['header']}>
+          <Avatar>
+            <UserIcon />
+          </Avatar>
+          <section className={styles['customer-info']}>
+            <div
+              className="placeload-background mb-3"
+              style={{ minWidth: '200px', width: '80%' }}
+            />
+            <div
+              className="placeload-background"
+              style={{ minWidth: '90px', width: '80%' }}
+            />
+          </section>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={[styles['customer-list-item']]}>

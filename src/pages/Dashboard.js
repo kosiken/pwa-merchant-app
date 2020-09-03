@@ -3,17 +3,18 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
 import { Container, Card, Row } from 'react-bootstrap';
-import {
-  Loader,
-  Order,
-  Typography,
-  Button,
-  ErrorComponent,
-} from '../components';
+import { Order, Typography, Button, ErrorComponent } from '../components';
 
 import api from '../api';
 
 const Entries = [
+  {
+    name: 'Food Items',
+    summary: `You add food items to 500 dash and make them available to 
+  be selected when creating orders`,
+    create: '/create-food',
+    all: '/FoodItems',
+  },
   {
     name: 'Customers',
     summary: `You can save customers on 500 dash and easily select them
@@ -21,19 +22,12 @@ const Entries = [
     create: '/customers',
     all: '/customers',
   },
+
   {
-    name: 'Food Items',
-    summary: `You add food items to 500 dash and make them available to 
-    be selected when creating orders`,
-    create: '/create-food',
-    all: '/FoodItems',
-  },
-    {
-    name: 'Meals',
-    summary: `You add food items to 500 dash and make them available to 
-    be selected when creating orders`,
-    create: '/create-food',
-    all: '/FoodItems',
+    name: 'Orders',
+    summary: `You create orders for us to deliver to customers on your behalf`,
+    create: '/create-order',
+    all: '/orders',
   },
 ];
 
@@ -66,58 +60,50 @@ const Dashboard = () => {
 
   return (
     <div style={{ minHeight: '100vh' }}>
-    
       <Container>
-        <Row   style={{
-        gridColumnGap: '1em',
-        gridRowGap: '1em',
-        marginLeft: '0',
-        marginRight: '0',
-        marginBottom: '2em'
-        }}>
+        <Row
+          style={{
+            gridColumnGap: '1em',
+            gridRowGap: '1em',
+            marginLeft: '0',
+            marginRight: '0',
+            marginBottom: '2em',
+          }}
+        >
           {Entries.map((entry, index) => {
             return (
-              <Card key={'entry' + index} style={{ width: '20rem', margin: '0 auto' }}>
+              <Card
+                key={'entry' + index}
+                style={{ width: '20rem', margin: '0 auto' }}
+              >
                 <Card.Body>
                   <Card.Title>
                     <Typography inline>{entry.name}</Typography>
                   </Card.Title>
 
                   <Typography>{entry.summary}</Typography>
-            
                 </Card.Body>
-                      <div style={{display: 'flex', justifyContent: 'flex-end', padding: '15px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    padding: '15px',
+                  }}
+                >
                   <Link to={entry.all}>
                     <Button color="clear"> See all</Button>
                   </Link>
                   <Link to={entry.create}>
-                    <Button  > Create new</Button>
+                    <Button> Create new</Button>
                   </Link>
-                  </div>
+                </div>
               </Card>
             );
           })}
         </Row>
-        <div>
-                <Link to="/create-order">
-          <Button
-            color="clear"
-            style={{
-              float: 'right',
-            }}
-          >
-            Create Order
-          </Button>
-        </Link>
- 
-        </div>
-         <Typography
-          title
-   
-        >
-        Recent Orders
-        </Typography>
-        <Table borderless hover>
+
+        <Typography title>Recent Orders</Typography>
+        <Table borderless>
           <thead>
             <tr>
               <th>Customer</th>
@@ -128,7 +114,9 @@ const Dashboard = () => {
             </tr>
           </thead>
           <tbody>
-      
+            {isLoading &&
+              [1, 2, 3].map((order) => <Order loader key={'loader' + order} />)}
+
             {orders
               .filter((v) => v.status === 'Created')
               .map((order, i) => (
@@ -136,13 +124,11 @@ const Dashboard = () => {
               ))}
           </tbody>{' '}
         </Table>
-          {error && (
+        {error && (
           <ErrorComponent message={errorMessage}>
             <Button onClick={init}> Retry </Button>
           </ErrorComponent>
         )}
-        {isLoading && <Loader />}
-
       </Container>
     </div>
   );

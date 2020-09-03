@@ -29,7 +29,7 @@ const Button = ({
 
   return (
     <button className={classes} onClick={onClick} {...otherProps}>
-    <Typography inline>{children}</Typography>  
+      <Typography inline>{children}</Typography>
     </button>
   );
 };

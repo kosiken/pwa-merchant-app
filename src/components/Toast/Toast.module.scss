@@ -1,7 +1,7 @@
 @import '../styles/colors.scss';
 
 .toast {
-  padding:15px;
+  padding: 15px;
 }
 .primary {
   background-color: transparent;
@@ -9,15 +9,14 @@
 }
 
 .secondary {
-background-color: #cce5ff;
-border-color: #b8daff;
-
+  background-color: #cce5ff;
+  border-color: #b8daff;
 }
 .main {
   background-color: rgba($color: $primary, $alpha: 0.21);
   color: $primary;
 }
 .info {
-  background-color:  rgba($color: $info, $alpha: 0.21);
+  background-color: rgba($color: $info, $alpha: 0.21);
   color: darken($info, 20%);
 }

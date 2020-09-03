@@ -17,12 +17,12 @@ function useLocations(value) {
     if (value) {
       setIsSearching(true);
       try {
-       
         if (!window.FiveService) {
-        setIsSearching(false);
-        setHasError(true)
-        return};
-setHasError(false)
+          setIsSearching(false);
+          setHasError(true);
+          return;
+        }
+        setHasError(false);
         let request = {
           query: value,
           fields: ['name', 'formatted_address', 'geometry', 'plus_code', 'url'],
@@ -61,14 +61,25 @@ setHasError(false)
   return { locations, isSearching, hasError };
 }
 
-function Locationselect({ Locations, theRef, onChange, isSearching, hasError }) {
+function Locationselect({
+  Locations,
+  theRef,
+  onChange,
+  isSearching,
+  hasError,
+}) {
   if (hasError) {
     return (
       <div className={styles['location-list']}>
         <div focusable>
-       <Typography style={{
-       color:"#f0324b"
-       }}> Unable to load Places API</Typography>
+          <Typography
+            style={{
+              color: '#f0324b',
+            }}
+          >
+            {' '}
+            Unable to load Places API
+          </Typography>
         </div>
       </div>
     );

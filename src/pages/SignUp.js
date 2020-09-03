@@ -6,7 +6,6 @@ import { useSnackbar } from 'notistack';
 
 import { useForm } from 'react-hook-form';
 import api from '../api';
-import logo from '../assets/logo-variant.png';
 
 const SignUp = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();

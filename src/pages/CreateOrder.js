@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Modal, Container } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
@@ -16,7 +16,7 @@ import {
   ComboBox2,
   ComboBox0,
   Toast,
-  Loader
+  Loader,
 } from '../components';
 import { v4 as uuid } from 'uuid';
 
@@ -162,27 +162,21 @@ const CreateOrder = () => {
 
   return (
     <div style={{ minHeight: '100vh' }}>
-          
-      <Loader backdrop open={submitting} >
-      <Typography> Creating order</Typography>
+      <Loader backdrop open={submitting}>
+        <Typography> Creating order</Typography>
       </Loader>
       <Toast
         color="primary"
-      style={{
-    display: 'flex',
-justifyContent: 'space-between'
-    }}
-      >      <Typography
-          title
-   
-        >
-          Create Order
-        </Typography>
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
         <Link to="/">
           <Button color="clear"> Back</Button>
         </Link>
       </Toast>
-      <hr/>
+
       <SwitchBox
         options={['Existing Customer', 'New Customer']}
         value={tab}
@@ -374,9 +368,9 @@ justifyContent: 'space-between'
       <Modal show={show}>
         <Modal.Header>
           <Typography title>Order Created</Typography>
-           </Modal.Header>
-<Modal.Body>
-          <Typography >The order was successfully created</Typography>
+        </Modal.Header>
+        <Modal.Body>
+          <Typography>The order was successfully created</Typography>
         </Modal.Body>
         <Modal.Footer>
           <Link to="/orders">
@@ -384,7 +378,6 @@ justifyContent: 'space-between'
           </Link>
         </Modal.Footer>
       </Modal>
-
     </div>
   );
 };
