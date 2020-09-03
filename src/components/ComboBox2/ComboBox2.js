@@ -12,12 +12,17 @@ import useDebounce from '../../hooks/useDebounce';
 function useLocations(value) {
   const [locations, setLocations] = React.useState([]);
   const [isSearching, setIsSearching] = React.useState(false);
+  const [hasError, setHasError] = React.useState(false);
   React.useEffect(() => {
     if (value) {
       setIsSearching(true);
       try {
-        if (!window.FiveService) return;
-
+        if (!window.FiveService) {
+          setIsSearching(false);
+          setHasError(true);
+          return;
+        }
+        setHasError(false);
         let request = {
           query: value,
           fields: ['name', 'formatted_address', 'geometry', 'plus_code', 'url'],
@@ -53,10 +58,33 @@ function useLocations(value) {
     }
   }, [value]);
 
-  return { locations, isSearching };
+  return { locations, isSearching, hasError };
 }
 
-function Locationselect({ Locations, theRef, onChange, isSearching }) {
+function Locationselect({
+  Locations,
+  theRef,
+  onChange,
+  isSearching,
+  hasError,
+}) {
+  if (hasError) {
+    return (
+      <div className={styles['location-list']}>
+        <div focusable>
+          <Typography
+            style={{
+              color: '#f0324b',
+            }}
+          >
+            {' '}
+            Unable to load Places API
+          </Typography>
+        </div>
+      </div>
+    );
+  }
+
   if (isSearching) {
     return (
       <div className={styles['location-list']}>
@@ -107,7 +135,7 @@ function ComboBox2({ onChange }) {
   const [searchTerm, setSearchTerm] = React.useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   let show = useFocus(ref);
-  let { locations, isSearching } = useLocations(debouncedSearchTerm);
+  let { locations, isSearching, hasError } = useLocations(debouncedSearchTerm);
 
   return (
     <div className="locations-div add-div">
@@ -126,6 +154,7 @@ function ComboBox2({ onChange }) {
           isSearching={isSearching}
           onChange={onChange}
           theRef={ref}
+          hasError={hasError}
         />
       )}{' '}
     </div>

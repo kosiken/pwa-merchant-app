@@ -3,14 +3,11 @@ body {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f7f7fd !important;
 }
 a {
   color: inherit;
-  &:hover {
-    background-color: #e9e8e6;
-  }
 }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -22,27 +19,6 @@ code {
   height: 100vh;
   width: 100vw;
   background-color: rgba(#000000, 0.4);
-}
-table {
-  /* margin: 14px auto;
-	padding: 7vh 0;
-	border-collapse: collapse; */
-
-  padding: 0.5vh 0.5vh;
-  border-collapse: collapse;
-  display: inline-block;
-  border-color: transparent;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: #f0324b1c;
-}
-
-td {
-  margin: 10px;
-
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 a {
@@ -147,7 +123,7 @@ main {
 .side-nav {
   float: left;
   height: 100vh;
-  width: 260px;
+  width: 280px;
   background-color: #fff;
 
   -webkit-transform: translateX(0);
@@ -165,17 +141,17 @@ main {
   border-right: 1px solid rgba(0, 0, 0, 0.12);
 }
 .show-side-nav {
-  -webkit-transform: translateX(-260px);
-  -moz-transform: translateX(-260px);
-  transform: translateX(-260px);
+  -webkit-transform: translateX(-280px);
+  -moz-transform: translateX(-280px);
+  transform: translateX(-280px);
 }
 .customerPage {
   display: block;
 }
 .hide {
-  -webkit-transform: translateX(-260px);
-  -moz-transform: translateX(-260px);
-  transform: translateX(-260px);
+  -webkit-transform: translateX(-280px);
+  -moz-transform: translateX(-280px);
+  transform: translateX(-280px);
 }
 .shadowf {
   box-shadow: 0 2px 4px 0 rgba(14, 30, 37, 0.12);
@@ -250,7 +226,7 @@ main {
     transform: translateX(0);
   }
   #contents {
-    margin-left: 260px;
+    margin-left: 280px;
   }
   .side-nav {
     z-index: 99;
@@ -270,5 +246,29 @@ main {
     //margin: 1.5em 0;
 
     grid-template-columns: auto auto auto;
+  }
+}
+
+.placeload-background {
+  height: 10px;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: auto;
+  background-size: 1000px 104px;
+
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
   }
 }

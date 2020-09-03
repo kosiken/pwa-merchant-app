@@ -3,13 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { Nav, Container, Row, Col, Image } from 'react-bootstrap';
+import { Nav, Container, Row, Image } from 'react-bootstrap';
 import {
   FiHome as HomeIcon,
   FiUsers as UserIcon,
   FiFileText as PaperIcon,
   FiShoppingBag as ShoppingBag,
-  FiDatabase as Database,
+  // FiDatabase as Database,
 } from 'react-icons/fi';
 
 import avatar from '../../assets/avatar.png';
@@ -24,11 +24,11 @@ let links = [
     name: 'Food Items',
     icon: <PaperIcon />,
   },
-  {
-    url: '/meals',
-    name: 'Meals',
-    icon: <Database />,
-  },
+  // {
+  //   url: '/meals',
+  //   name: 'Meals',
+  //   icon: <Database />,
+  // },
   {
     url: '/orders',
     name: 'Orders',
@@ -64,34 +64,33 @@ const DrawerNav = ({ children }) => {
           marginTop: '1em',
         }}
       >
-        <Row>
-          <Col xs={3} md={4}>
-            <Image
-              src={avatar}
-              style={{
-                width: '50px',
-              }}
-              roundedCircle
-            />
-          </Col>
-          <Col xs={8} md={8} className="p-0">
-            <Row>
-              <Typography
-                title
-                style={{
-                  fontSize: '18px',
-                }}
-              >
-                {name}
-              </Typography>
-            </Row>
-            <Row>
-              <Typography small>{email}</Typography>
-            </Row>
-          </Col>
+        <div className="mb-2">
+          <Image
+            src={avatar}
+            style={{
+              width: '50px',
+            }}
+            roundedCircle
+          />
+        </div>
+        <Row className="m-0 pl-2">
+          <Typography
+            title
+            style={{
+              fontSize: '18px',
+            }}
+          >
+            {name}
+          </Typography>
         </Row>
+        <Row className="m-0 pl-2">
+          <Typography small>{email}</Typography>
+        </Row>
+        <Button color="clear" onClick={logOut}>
+          Log Out
+        </Button>
       </Container>
-      <hr />
+      <br />
       <Nav className="flex-column h-80">
         {links.map((link, i) => (
           <Link
@@ -113,16 +112,6 @@ const DrawerNav = ({ children }) => {
           </Link>
         ))}
       </Nav>
-      <hr />
-      <Button
-        full
-        style={{
-          margin: '0 auto',
-        }}
-        onClick={logOut}
-      >
-        Log Out
-      </Button>
     </aside>
   );
 };

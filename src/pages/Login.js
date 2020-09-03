@@ -6,7 +6,7 @@ import { useSnackbar } from 'notistack';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useForm } from 'react-hook-form';
 import api from '../api';
-import logo from '../assets/logo-variant.png';
+
 const Login = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
@@ -58,71 +58,74 @@ const Login = () => {
   };
   return (
     <div className="flex central">
-      <form className="f-form" onSubmit={handleSubmit(submit)}>
-        <div className="container">
-          <div className="brand-div" style={{ textAlign: 'center' }}>
-            {' '}
-            <img alt="" src={logo} width="60" height="60" />
-          </div>
-          <Input
-            type="text"
-            name="username"
-            label="Email or Phone"
-            style={{ margin: '0 auto' }}
-            ref={register({
-              required: {
-                value: true,
-                message: 'You need to enter this value',
-              },
-            })}
-            error={errors.username}
-          />
-          <Input
-            type="password"
-            name="password"
-            label="Password"
-            style={{ margin: '0 auto' }}
-            ref={register({
-              required: {
-                value: true,
-                message: 'Password is required',
-              },
-            })}
-          />
+      <form className="f-form" onSubmit={handleSubmit(submit)} id="f-main">
+        <Typography
+          title
+          variant="secondary"
+          className="mb-4"
+          style={{
+            fontSize: '2em',
+            fontWeight: '700',
+          }}
+        >
+          Login
+        </Typography>
 
-          <Link to="/recovery">
-            <Typography variant="primary"> Forgot Password? </Typography>
-          </Link>
+        <Input
+          type="text"
+          name="username"
+          label="Email or Phone"
+          style={{ margin: '0 auto' }}
+          ref={register({
+            required: {
+              value: true,
+              message: 'You need to enter this value',
+            },
+          })}
+          error={errors.username}
+        />
+        <Input
+          type="password"
+          name="password"
+          label="Password"
+          style={{ margin: '0 auto' }}
+          ref={register({
+            required: {
+              value: true,
+              message: 'Password is required',
+            },
+          })}
+        />
 
-          <Link to="/signup">
-            <Typography
-              style={{
-                color: '#5d97c6',
-              }}
-            >
-              Sign Up
-            </Typography>
-          </Link>
-          <Button full disabled={isLoading}>
-            {renderLoading('Login')}
-          </Button>
-        </div>
-      </form>
-      <div>
-        <Typography style={{ textAlign: 'center' }}>
-          Made with{' '}
-          <span role="img" aria-label="love">
-            ❤️{' '}
-          </span>
-          <span
+        <Link to="/recovery">
+          <Typography
+            variant="primary"
             style={{
-              color: '#f0324b',
+              width: '93%',
+              margin: '0 auto 1em',
             }}
           >
-            500Chow
-          </span>
-        </Typography>
-      </div>{' '}
+            {' '}
+            Forgot Password?{' '}
+          </Typography>
+        </Link>
+
+        <Link to="/signup">
+          <Typography
+            style={{
+              color: '#5d97c6',
+              width: '93%',
+              margin: '0 auto 1em',
+            }}
+          >
+            Sign Up
+          </Typography>
+        </Link>
+        <Button full disabled={isLoading}>
+          {renderLoading('Login')}
+        </Button>
+      </form>
+      <div></div>{' '}
     </div>
   );
 };

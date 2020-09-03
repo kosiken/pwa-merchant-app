@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api';
 import { isEmpty } from 'lodash';
+import { Table } from 'react-bootstrap';
 import {
   Button,
   Typography,
   Toast,
   Order,
-  Loader,
   ErrorComponent,
 } from '../components';
 import { FiFileText as PaperIcon } from 'react-icons/fi';
 
 const Orders = () => {
   const statuses = [
+    'All',
     'Processing',
     'Submitted',
     'Accepted',
@@ -23,7 +24,7 @@ const Orders = () => {
   ];
   // eslint-disable-next-line no-unused-vars
   let [isLoading, setLoading] = useState(true);
-  let [current, setCurrent] = useState('');
+  let [current, setCurrent] = useState('All');
   let [orders, setOrders] = useState([]);
   let [items, setItems] = useState([]);
   let [error, setError] = useState(false);
@@ -50,24 +51,26 @@ const Orders = () => {
 
   useEffect(() => {
     console.log(orders.map((order) => order.status));
-    if (current) setItems(orders.filter((order) => order.status === current));
+    if (current === 'All') setItems(orders);
+    else if (current)
+      setItems(orders.filter((order) => order.status === current));
+    else console.log('Unknown status');
   }, [current, orders]);
 
   return (
     <div>
       <Toast
-        color="info"
+        color="primary"
         style={{
           display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          justifyContent: 'flex-end',
         }}
       >
-        <Typography inline>This is where all orders are shown</Typography>
         <Link to="/create-order">
           <Button color="clear"> Create Order</Button>
         </Link>
       </Toast>
+
       <div className="container">
         <div className="filters">
           {statuses.map((status, i) => (
@@ -75,6 +78,8 @@ const Orders = () => {
               style={{
                 color: current === status ? '#f0324b' : '#888',
                 cursor: 'pointer',
+                padding: '0 0 2px',
+                borderBottom: current === status ? '2px solid #f0324b' : 'none',
               }}
               inline
               key={'filter' + i}
@@ -85,7 +90,7 @@ const Orders = () => {
               {status}
             </Typography>
           ))}
-        </div>{' '}
+        </div>
       </div>
       <div
         className="container"
@@ -97,16 +102,33 @@ const Orders = () => {
         {' '}
         <div className="container">
           <div className="orders-list">
-            {isLoading && <Loader />}
-            {items.map((order, i) => (
-              <Order key={'order' + i} order={order} />
-            ))}
+            <Table borderless hover>
+              <thead>
+                <tr>
+                  <th>Customer</th>
+
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>View</th>
+                </tr>
+              </thead>
+              <tbody>
+                {isLoading &&
+                  [1, 2, 3].map((order) => (
+                    <Order loader key={'loader' + order} />
+                  ))}
+
+                {items.map((order, i) => (
+                  <Order key={'order' + i} order={order} />
+                ))}
+              </tbody>{' '}
+            </Table>
             {error && (
               <ErrorComponent message={errorMessage}>
                 <Button onClick={init}> Retry </Button>
               </ErrorComponent>
             )}
-            {!isLoading && isEmpty(items) && (
+            {!error && !isLoading && isEmpty(items) && (
               <>
                 <Typography
                   title
