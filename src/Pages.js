@@ -16,6 +16,7 @@ import EditMeal from './pages/EditMeal';
 import FoodItems from './pages/FoodItems';
 import CreateFoodItem from './pages/CreateFoodItem';
 import Orders from './pages/Orders';
+import OrderPage from './pages/OrderPage';
 import logo from './assets/logo-variant.png';
 
 const Auththenticated = () => {
@@ -133,6 +134,20 @@ const Auththenticated = () => {
               {' '}
               <TopBar title="Customers" />
               <Customers />
+            </main>
+          </Route>
+
+          <Route exact path="/order/:id">
+            <DrawerNav />{' '}
+            <main
+              id="contents"
+              style={{
+                flexGrow: 1,
+              }}
+            >
+              {' '}
+              <TopBar title="Order" />
+              <OrderPage />
             </main>
           </Route>
         </Switch>
