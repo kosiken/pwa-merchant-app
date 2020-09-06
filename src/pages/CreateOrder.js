@@ -28,8 +28,12 @@ const CreateOrder = () => {
 
   let [foodItems, setFoodItems] = useState([]);
   const [show, setShow] = useState(false);
+  const [entry, setEntry] = useState(0);
+  const handleShow = (id) => {
+    setEntry(id);
 
-  const handleShow = () => setShow(true);
+    setShow(true);
+  };
   const [loading, setLoading] = useState(true);
   let [currentFood, setCurrentFood] = useState('');
   const [submitting, setSubmiting] = useState(false);
@@ -75,7 +79,7 @@ const CreateOrder = () => {
       .createOrder(body, token)
       .then((result) => {
         setSubmiting(false);
-        handleShow();
+        handleShow(result.id);
       })
       .catch((err) => {
         setSubmiting(false);
@@ -372,7 +376,14 @@ const CreateOrder = () => {
         <Modal.Body>
           <Typography>The order was successfully created</Typography>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer
+          style={{
+            borderTop: 'none',
+          }}
+        >
+          <Link to={'/order/' + entry}>
+            <Button color="clear"> View </Button>{' '}
+          </Link>{' '}
           <Link to="/orders">
             <Button>Continue</Button>
           </Link>

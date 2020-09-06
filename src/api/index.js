@@ -133,6 +133,31 @@ class FiveApi {
     }
   }
 
+  async getOrder(id) {
+    try {
+      let resp = await Server.get('/vendors/order/' + id);
+
+      if (goodResponse(resp)) {
+        return resp.data;
+      } else {
+        throw new FiveChowError(resp);
+      }
+    } catch (err) {
+      console.log(err);
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
+    }
+  }
+
   async getAddresses() {
     try {
       let resp = await Server.get('/address');
