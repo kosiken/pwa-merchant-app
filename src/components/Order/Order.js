@@ -1,12 +1,21 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Table, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import Typography from '../Typography/Typography';
-
+import Button from '../Button/Button';
 import styles from './Order.module.scss';
+// const Statuses = [
+//   'Created',
+//   'Processing',
+//   'Accepted',
+//   'Submitted',
 
+//   'Shipped',
+//   'Delivered',
+//   'Cancelled',
+// ];
 const Order = ({ order, loader, page }) => {
   if (loader) {
     return (
@@ -53,64 +62,91 @@ const Order = ({ order, loader, page }) => {
           maxWidth: '600px',
         }}
       >
-        <Typography className="m-0" bold>
-          Customer Name
-        </Typography>
-        <Typography variant="gray">{order.VendorCustomer.full_name}</Typography>
-        <Typography className="m-0" bold>
-          Accepted at
-        </Typography>
-        <Typography variant="gray">
-          {moment(order.accepted_at).format('MMMM Do YYYY, h:mm a')}
-        </Typography>
-        <Typography className="m-0" bold>
-          Delivery Address
-        </Typography>
-        <Typography variant="gray">{order.Address.full_address}</Typography>
-        <Typography className="m-0" bold>
-          Total
-        </Typography>{' '}
-        <Typography variant="gray">{order.total_order_price || 0.0}</Typography>
-        <Typography bold className="m-0">
-          {' '}
-          Status{' '}
-        </Typography>
-        <span
-          className={classes + ' mb-2'}
-          style={{
-            display: 'block',
-          }}
-        >
-          {status}
-        </span>
-        <Typography title>Food Items</Typography>
-        <Table striped responsive>
-          <thead>
-            <tr>
-              <th>Quantity</th>
-              <th>Order Name</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {order.FoodItems.map((food) => {
-              if (!food) return false;
-              return (
-                <tr key={'food' + food.id}>
-                  <td>{food.OrderFoods.quantity}</td>
-                  <td
-                    style={{
-                      minWidth: '160px',
-                    }}
+        {' '}
+        <div>
+          <div>
+            <Typography title>Food Items</Typography>
+            <ul className={styles['order-list']}>
+              {order.FoodItems.map((food) => {
+                if (!food) return false;
+                return (
+                  <li
+                    key={'food' + food.id}
+                    className={styles['order-list-item']}
                   >
-                    {food.name}
-                  </td>
-                  <td>{food.price}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
+                    <div className={styles['order-list-item-quantity']}>
+                      <Typography inline>
+                        {food.OrderFoods.quantity + 'x'}
+                      </Typography>
+                    </div>
+                    <div
+                      className={styles['order-list-item-name']}
+                      style={{
+                        minWidth: '160px',
+                      }}
+                    >
+                      <Typography inline> {food.name}</Typography>
+                    </div>
+                    <div className={styles['order-list-item-price']}>
+                      <Typography inline variant="info">
+                        {' '}
+                        {food.price}
+                      </Typography>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className={'flex  mt-4'}>
+              <Typography className="m-0" bold>
+                Total
+              </Typography>{' '}
+              <section className={styles['order-section']}>
+                <Typography variant="secondary" title bold>
+                  {order.total_order_price || 0.0}
+                </Typography>
+              </section>
+            </div>{' '}
+            <hr />
+            <Typography title className="mb-2">
+              Order Details
+            </Typography>
+            <Typography bold>Customer Name</Typography>
+            <Typography>{order.VendorCustomer.full_name}</Typography>
+          </div>
+          <div>
+            <Typography bold>Accepted at</Typography>
+
+            <Typography>
+              {moment(order.accepted_at).format('MMMM Do YYYY, h:mm a')}
+            </Typography>
+          </div>
+          <div>
+            <Typography bold>Delivery Address</Typography>
+
+            <Typography>{order.Address.full_address}</Typography>
+          </div>
+          <Typography bold> Status </Typography>
+          <span
+            className={classes + ' mb-4'}
+            style={{
+              display: 'block',
+            }}
+          >
+            {status}
+          </span>
+          <hr />
+          <Button
+            color="clear"
+            style={{
+              float: 'right',
+            }}
+          >
+            Edit
+          </Button>
+          <br /> <br />
+          <Button full>Delete</Button> <br />
+        </div>
       </Container>
     );
   return (

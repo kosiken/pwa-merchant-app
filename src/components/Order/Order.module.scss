@@ -1,37 +1,11 @@
 @import '../styles/colors.scss';
 
-.order-item {
-  margin: 5px 5px 1em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #fff;
-  box-shadow: 0 2px 4px 0 rgba(14, 30, 37, 0.12);
-  padding: 1em 1.2em;
-  &:hover {
-    background-color: rgba(153, 23, 23, 0.1);
-  }
-  .header {
-    display: flex;
-    padding: 10px 10px 0;
-    align-items: center;
-  }
-}
-
 .status {
   color: white;
   padding: 2px 6px;
   border-radius: 5px;
   font-size: 13px;
   font-weight: bold;
-}
-
-.avatar {
-  font-size: 1.5em;
-  background-color: $info;
-  padding: 7px 10px;
-  border-radius: 50%;
-  color: #f0324b;
 }
 
 .processing {
@@ -55,16 +29,33 @@
 }
 
 .order-section {
-  display: block;
-  padding: 5px;
+  padding-left: 5px;
+  flex-grow: 1;
+  text-align: right;
 }
 
-@media (min-width: 1200px) {
-  .order-section {
-    margin: 10px;
-    justify-content: space-between;
-    display: grid;
-    grid-template-columns: 15% auto;
-    grid-row-gap: 10px;
+.order-list {
+  list-style-type: none;
+  padding-inline-start: 0;
+}
+.order-list-item {
+  display: flex;
+  align-items: center;
+  padding: 1em 0;
+  background: white;
+
+  &:last-of-type {
+    border-bottom: none;
   }
+}
+.order-list-item-name {
+  flex: 4;
+  padding: 0 5px;
+}
+.order-list-item-quantity {
+  flex: 1;
+}
+.order-list-item-price {
+  flex: 1;
+  text-align: right;
 }
