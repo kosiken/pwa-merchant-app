@@ -61,60 +61,56 @@ const CreateOrder = () => {
   let quantityRef = useRef(null);
   const { register, handleSubmit, errors, getValues } = useForm();
   const handleSubmitCallback = (s) => {
-      setSubmiting(true);
-  
+    setSubmiting(true);
 
+    let food_items = foodItems;
+    if (foodItems.some((food) => food.is_new === true)) {
+      let newItems = foodItems.filter((food) => food.is_new === true);
+      let oldItems = foodItems.filter((food) => !food.is_new);
 
+      api
+        .createFoods(newItems)
+        .then((resp) => {
+          console.log(resp);
+          newItems = resp.map((newItem, index) => {
+            return {
+              ...newItem,
+              quantity: newItems[index].quantity,
+            };
+          });
 
-      let food_items = foodItems;
-if(foodItems.some(food=> food.is_new === true)){
-let newItems = foodItems.filter(food => food.is_new === true);
-let oldItems = foodItems.filter(food => !food.is_new);
-
-
-
-api.createFoods(newItems).then(
-resp=> {
-console.log(resp)
-newItems = resp.map((newItem, index)=>{
-return {
-...newItem,
-quantity: newItems[index].quantity
-
-}
-})
-
-        let body = {
-      full_name: getValues('name'),
-      phone_number: customer ? customer.phone_number : getValues('phone'),
-      food_items: oldItems.concat( newItems),
-    };
-        if (chosenLocation === 0 || tab === 'New Customer') {
-      body = { ...body, delivery_address: currentLocation };
-    } else {
-      body = { ...body, delivery_address_id: s.type_of_address };
+          let body = {
+            full_name: getValues('name'),
+            phone_number: customer ? customer.phone_number : getValues('phone'),
+            food_items: oldItems.concat(newItems),
+          };
+          if (chosenLocation === 0 || tab === 'New Customer') {
+            body = { ...body, delivery_address: currentLocation };
+          } else {
+            body = { ...body, delivery_address_id: s.type_of_address };
+          }
+          api
+            .createOrder(body, token)
+            .then((result) => {
+              setSubmiting(false);
+              handleShow(result.id);
+            })
+            .catch((err) => {
+              setSubmiting(false);
+              handleOpen(err.data.error);
+            });
+        })
+        .catch((err) => {
+          setSubmiting(false);
+          handleOpen(err.message || err.data.error);
+        });
+      return;
     }
- api
-      .createOrder(body, token)
-      .then((result) => {
-        setSubmiting(false);
-        handleShow(result.id);
-      })
-      .catch((err) => {
-        setSubmiting(false);
-        handleOpen(err.data.error);
-      });
-}).catch((err) => {
-        setSubmiting(false);
-        handleOpen(err.message||err.data.error);
-      });
-return;
-}
 
-        let body = {
+    let body = {
       full_name: getValues('name'),
       phone_number: customer ? customer.phone_number : getValues('phone'),
-      food_items
+      food_items,
     };
     if (chosenLocation === 0 || tab === 'New Customer') {
       body = { ...body, delivery_address: currentLocation };
@@ -202,11 +198,12 @@ return;
   }, []);
 
   const addFood = (e) => {
-if(!currentFood) {
-return;
-}
+    if (!currentFood) {
+      return;
+    }
     setFoodItems(foodItems.concat([{ ...currentFood, quantity }]));
- setCurrentFood(null); };
+    setCurrentFood(null);
+  };
   const removeFood = (food) => {
     console.log(foodItems.filter((f) => f !== food));
     setFoodItems(foodItems.filter((f) => f.name !== food));

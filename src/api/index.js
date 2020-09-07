@@ -2,7 +2,6 @@ import axios from 'axios';
 import Server from './beta';
 
 function goodResponse(resp) {
-
   let val = resp.status === 200 || resp.status === 201;
   return val;
 }
@@ -256,16 +255,16 @@ class FiveApi {
       }
     }
   }
-    async createFoods(foods) {
+  async createFoods(foods) {
     try {
-      let requests =foods.map(food => Server.post('/vendors/food_item/', food));
-let resp = await axios.all(requests);
-      
-        return resp.map(res=> res.data);
+      let requests = foods.map((food) =>
+        Server.post('/vendors/food_item/', food)
+      );
+      let resp = await axios.all(requests);
 
-    
+      return resp.map((res) => res.data);
     } catch (err) {
-    console.log(err)
+      console.log(err);
       if (err.response) {
         throw new FiveChowError(err.response);
       } else {

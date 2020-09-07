@@ -8,16 +8,13 @@ function useSearch(ref, itemArray, func, clear, isSearching) {
     if (clear && !isSearching) setItems(itemArray);
     setItems(
       itemArray.filter((item) => {
-      let _items;
-      try{
-       _items= func(ref.current.value, item);
+        let _items;
+        try {
+          _items = func(ref.current.value, item);
+        } catch (err) {
+          _items = itemArray;
         }
-        catch(err){
-        _items= itemArray
-        }
-       return _items
-       
-        
+        return _items;
       })
     );
   }, [itemArray, func, ref, clear, isSearching]);
