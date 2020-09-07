@@ -30,7 +30,7 @@ const TopBar = ({ title, btn, window }) => {
       }}
       className="col-12"
     >
-      <div style={{ flexGrow: 1, padding: '.5em .5em .5em 1em' }}>
+      <div style={{ flexGrow: 1, padding: '.5em 0' }}>
         <Typography title>{title}</Typography>
       </div>
 

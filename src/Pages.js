@@ -146,7 +146,7 @@ const Auththenticated = () => {
               }}
             >
               {' '}
-              <TopBar title="Order" />
+              <TopBar title="Order Summary" />
               <OrderPage />
             </main>
           </Route>

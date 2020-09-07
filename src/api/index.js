@@ -254,6 +254,29 @@ class FiveApi {
       }
     }
   }
+  async createFoods(foods) {
+    try {
+      let requests = foods.map((food) =>
+        Server.post('/vendors/food_item/', food)
+      );
+      let resp = await axios.all(requests);
+
+      return resp.map((res) => res.data);
+    } catch (err) {
+      console.log(err);
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
+    }
+  }
 
   async createOrder(order) {
     try {

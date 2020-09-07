@@ -30,6 +30,7 @@ const Orders = () => {
   let [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const init = () => {
+    setLoading(true);
     setError(false);
     (async () => {
       try {
