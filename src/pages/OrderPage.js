@@ -18,6 +18,8 @@ const OrderPage = () => {
   let [isLoading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const init = async () => {
+    setLoading(true);
+    setError(false);
     try {
       let resp = await api.getOrder(id);
       setOrder(resp[0]);
