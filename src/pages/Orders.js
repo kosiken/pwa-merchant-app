@@ -103,7 +103,7 @@ const Orders = () => {
         {' '}
         <div className="container">
           <div className="orders-list">
-            <Table borderless hover>
+            <Table responsive borderless hover>
               <thead>
                 <tr>
                   <th>Customer</th>

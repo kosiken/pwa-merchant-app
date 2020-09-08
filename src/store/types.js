@@ -6,3 +6,4 @@ export const ADD_FOOD = 'ADD_FOOD';
 export const GET_CUSTOMERS = 'GET_CUSTOMERS';
 export const ADD_CUSTOMER = 'ADD_CUSTOMER';
 export const GET_MEALS = 'GET_MEALS';
+export const ADD_FOODS = 'ADD_FOODS';

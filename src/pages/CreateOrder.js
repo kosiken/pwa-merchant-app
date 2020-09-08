@@ -78,7 +78,7 @@ const CreateOrder = () => {
               quantity: newItems[index].quantity,
             };
           });
-
+          dispatch({ type: 'ADD_FOODS', foods: resp });
           let body = {
             full_name: getValues('name'),
             phone_number: customer ? customer.phone_number : getValues('phone'),

@@ -103,7 +103,7 @@ const Dashboard = () => {
         </Row>
 
         <Typography title>Recent Orders</Typography>
-        <Table borderless>
+        <Table borderless hover responsive>
           <thead>
             <tr>
               <th>Customer</th>
