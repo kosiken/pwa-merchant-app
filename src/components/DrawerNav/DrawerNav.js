@@ -40,7 +40,7 @@ let links = [
   },
 ];
 
-const DrawerNav = ({ children }) => {
+const DrawerNav = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const { email, name } = useSelector((state) => {
