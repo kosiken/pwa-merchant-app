@@ -1,4 +1,4 @@
-import { GET_FOODS, ADD_FOOD, GET_MEALS } from '../types';
+import { GET_FOODS, ADD_FOOD, GET_MEALS, ADD_FOODS } from '../types';
 
 const initialState = {
   foods: [],
@@ -26,6 +26,13 @@ export default function (state = initialState, action) {
     case ADD_FOOD:
       returnValue = {
         foods: state.foods.concat([action.food]),
+      };
+
+      break;
+
+    case ADD_FOODS:
+      returnValue = {
+        foods: state.foods.concat(action.foods),
       };
 
       break;
