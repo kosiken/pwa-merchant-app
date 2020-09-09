@@ -36,9 +36,6 @@ const SignUp = () => {
         }
       },
       function (depsNotFound) {
-        // foo.js & bar.js may have downloaded
-        // but ['thunk'] dependency was never found
-        // so lazy load it now
         console.log(depsNotFound);
       }
     );
