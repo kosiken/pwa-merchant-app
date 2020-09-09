@@ -111,22 +111,31 @@ const Order = ({ order, loader, page }) => {
             <Typography title className="mb-2">
               Order Details
             </Typography>
-            <Typography bold>Customer Name</Typography>
+            <Typography variant="success" bold>
+              Customer Name
+            </Typography>
             <Typography>{order.VendorCustomer.full_name}</Typography>
           </div>
           <div>
-            <Typography bold>Accepted at</Typography>
+            <Typography variant="success" bold>
+              Accepted at
+            </Typography>
 
             <Typography>
               {moment(order.accepted_at).format('MMMM Do YYYY, h:mm a')}
             </Typography>
           </div>
           <div>
-            <Typography bold>Delivery Address</Typography>
+            <Typography variant="success" bold>
+              Delivery Address
+            </Typography>
 
             <Typography>{order.Address.full_address}</Typography>
           </div>
-          <Typography bold> Status </Typography>
+          <Typography variant="success" bold>
+            {' '}
+            Status{' '}
+          </Typography>
           <span
             className={classes + ' mb-4'}
             style={{

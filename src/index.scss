@@ -34,10 +34,10 @@ a {
   display: block;
   flex-shrink: 0;
   margin: 0 auto;
-  min-height: 0;
+  min-width: 310px;
   transition: 0.2s;
   max-width: 500px;
-
+  width: 85%;
   padding: 10px 5px;
   position: relative;
 }
@@ -230,6 +230,9 @@ main {
   }
   .side-nav {
     z-index: 99;
+    .nav {
+      margin-top: 80px;
+    }
   }
 }
 

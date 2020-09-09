@@ -1,14 +1,37 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { Navbar } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { Navbar, Dropdown } from 'react-bootstrap';
 import IconButton from '../IconButton/IconButton';
+import Button from '../Button/Button';
 import Typography from '../Typography/Typography';
-import { FiMenu as MenuIcon } from 'react-icons/fi';
+import { FiMenu as MenuIcon, FiMoreVertical as MoreIcon } from 'react-icons/fi';
 import './TopBar.scss';
+
+const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+  <span
+    style={{ border: 'none', color: '#fff', fontSize: '1.2em' }}
+    ref={ref}
+    onClick={(e) => {
+      e.preventDefault();
+      onClick(e);
+    }}
+  >
+    {children}
+  </span>
+));
 
 const TopBar = ({ title, btn, window }) => {
   const [drawer, setDrawer] = React.useState(false);
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
+
+  const logOut = () => {
+    dispatch({
+      type: 'LOGOUT_USER',
+    });
+  };
+
   React.useEffect(() => {
     if (!document.getElementById('drawer')) return;
     if (!drawer) document.getElementById('drawer').classList.add('hide');
@@ -25,24 +48,47 @@ const TopBar = ({ title, btn, window }) => {
       expand="lg"
       sticky="top"
       style={{
-        backgroundColor: 'transparent',
+        backgroundColor: '#011627',
         alignItems: 'center',
       }}
-      className="col-12"
+      className="col-12 mb-4"
     >
-      <div style={{ flexGrow: 1, padding: '.5em 0' }}>
-        <Typography title>{title}</Typography>
-      </div>
-
       <IconButton
         className="navbar-toggler"
         onClick={() => {
           setDrawer(!drawer);
         }}
-        style={{ border: 'none' }}
+        style={{ border: 'none', color: '#fff' }}
       >
         <MenuIcon />
       </IconButton>
+      <div style={{ flexGrow: 1, padding: '.5em 0' }}>
+        <Typography
+          title
+          style={{
+            color: '#ffdc4a',
+            lineHeight: '1.2em',
+            fontWeight: '600',
+          }}
+        >
+          500 Dash
+        </Typography>
+      </div>
+
+      <Dropdown>
+        <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+          <MoreIcon />
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu style={{ left: '-150px' }}>
+          <Dropdown.Item eventKey="1">
+            <Button onClick={logOut} color="clear">
+              Logout
+            </Button>
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+
       {drawer && (
         <div
           onClick={() => {

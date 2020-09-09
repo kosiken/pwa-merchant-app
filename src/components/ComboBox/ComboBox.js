@@ -80,7 +80,7 @@ function Foodselect({ Foods, theRef, onChange, loading }) {
         <div focusable className={styles['location-list-item'] + ' mb-1'}>
           {' '}
           <Typography inline>{theRef.current.value}</Typography>
-          <Typography inline onClick={addNewFood} variant="success">
+          <Typography inline onClick={addNewFood} variant="primary">
             New
           </Typography>
         </div>

@@ -25,6 +25,7 @@ const Auththenticated = () => {
       <Router>
         <Switch>
           <Route exact path="/">
+            <TopBar title="500 Dash" />
             <DrawerNav />{' '}
             <main
               id="contents"
@@ -32,58 +33,48 @@ const Auththenticated = () => {
                 flexGrow: 1,
               }}
             >
-              {' '}
-              <TopBar title="500 Dash" />
               <Dashboard />
             </main>
           </Route>
           <Route exact path="/orders">
-            <DrawerNav />{' '}
+            <TopBar title="Orders" /> <DrawerNav />
             <main
               id="contents"
               style={{
                 flexGrow: 1,
               }}
             >
-              {' '}
-              <TopBar title="Orders" />
               <Orders />
             </main>
           </Route>
-
           <Route exact path="/create-order">
-            <DrawerNav />{' '}
+            <TopBar title="Create Order" /> <DrawerNav />{' '}
             <main
               id="contents"
               style={{
                 flexGrow: 1,
               }}
             >
-              <TopBar title="Create Order" />
               <CreateOrder />
             </main>
           </Route>
           <Route exact path="/create-meal">
-            <DrawerNav />{' '}
+            <TopBar title="Create Meal" /> <CreateMeal /> <DrawerNav />{' '}
             <main
               id="contents"
               style={{
                 flexGrow: 1,
               }}
-            >
-              <TopBar title="Create Meal" /> <CreateMeal />
-            </main>
+            ></main>
           </Route>
-
           <Route exact path="/edit-meal/:id">
-            <DrawerNav />{' '}
+            <TopBar title="Edit Meal" /> <DrawerNav />{' '}
             <main
               id="contents"
               style={{
                 flexGrow: 1,
               }}
             >
-              <TopBar title="Edit Meal" />
               <EditMeal />
             </main>
           </Route>
@@ -100,7 +91,7 @@ const Auththenticated = () => {
             </main>
           </Route>
           <Route exact path="/meals">
-            <DrawerNav />{' '}
+            <TopBar title="Meals and Menu" /> <DrawerNav />{' '}
             <main
               id="contents"
               style={{
@@ -108,11 +99,11 @@ const Auththenticated = () => {
               }}
             >
               {' '}
-              <TopBar title="Meals and Menu" /> <Meals />
+              <Meals />
             </main>
           </Route>
           <Route exact path="/FoodItems">
-            <DrawerNav />{' '}
+            <TopBar title="Meals and Menu" /> <DrawerNav />{' '}
             <main
               id="contents"
               style={{
@@ -120,11 +111,11 @@ const Auththenticated = () => {
               }}
             >
               {' '}
-              <TopBar title="Meals and Menu" /> <FoodItems />
+              <FoodItems />
             </main>
           </Route>
           <Route exact path="/customers">
-            <DrawerNav />{' '}
+            <TopBar title="Customers" /> <DrawerNav />{' '}
             <main
               id="contents"
               style={{
@@ -132,13 +123,11 @@ const Auththenticated = () => {
               }}
             >
               {' '}
-              <TopBar title="Customers" />
               <Customers />
             </main>
           </Route>
-
           <Route exact path="/order/:id">
-            <DrawerNav />{' '}
+            <TopBar title="Order Summary" /> <DrawerNav />{' '}
             <main
               id="contents"
               style={{
@@ -146,10 +135,42 @@ const Auththenticated = () => {
               }}
             >
               {' '}
-              <TopBar title="Order Summary" />
               <OrderPage />
             </main>
           </Route>
+          <Route path="*" exact={true}>
+            <Container className="flex central" style={{ textAlign: 'center' }}>
+              <div>
+                <Image
+                  src={logo}
+                  style={{
+                    width: '80px',
+                  }}
+                />
+                <Typography
+                  title
+                  className="mt-4 mb-4"
+                  style={{
+                    color: '#ffdc4a',
+                    fontSize: '2em',
+                  }}
+                >
+                  500 dash
+                </Typography>
+              </div>
+
+              <Typography color="primary" title>
+                We can't find that page
+              </Typography>
+
+              <Link to="/">
+                <Button color="clear">
+                  {' '}
+                  <HomeIcon /> Home
+                </Button>{' '}
+              </Link>
+            </Container>
+          </Route>{' '}
         </Switch>
       </Router>
     </div>
@@ -260,46 +281,7 @@ const UnAuththenticated = () => {
               <SignUp />
             </Route>{' '}
             <Route path="*" exact={true}>
-              <div className="flex central">
-                <Container style={{ textAlign: 'center' }}>
-                  <div>
-                    <Image
-                      src={logo}
-                      style={{
-                        width: '80px',
-                      }}
-                    />
-                    <Typography
-                      title
-                      className="mt-4 mb-4"
-                      style={{
-                        color: '#ffdc4a',
-                      }}
-                    >
-                      500 dash
-                    </Typography>
-                  </div>
-                  <Typography
-                    style={{
-                      fontSize: '2em',
-                      lineHeight: '1.2em',
-                      fontWeight: '600',
-                    }}
-                  >
-                    404 Page
-                  </Typography>
-                  <Typography color="primary" title>
-                    We can't find that page
-                  </Typography>
-
-                  <Link to="/">
-                    <Button color="clear">
-                      {' '}
-                      <HomeIcon /> Login
-                    </Button>{' '}
-                  </Link>
-                </Container>
-              </div>
+              <Login />
             </Route>
           </Switch>
         </Router>
