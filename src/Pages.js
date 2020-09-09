@@ -60,7 +60,7 @@ setMessage('failed to load dependencies');
       <Router>
         <Switch>
           <Route exact path="/">
-            <TopBar title="500 Dash" />
+            <TopBar title="" />
             <DrawerNav />{' '}
             <main
               id="contents"

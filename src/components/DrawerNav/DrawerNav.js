@@ -8,7 +8,7 @@ import {
   FiUsers as UsersIcon,
   FiFileText as PaperIcon,
   FiShoppingBag as ShoppingBag,
-  FiUser as UserIcon,
+  // FiUser as UserIcon,
   // FiDatabase as Database,
 } from 'react-icons/fi';
 
@@ -38,11 +38,11 @@ let links = [
     name: 'Customers',
     icon: <UsersIcon />,
   },
-  {
-    url: '/profile',
-    name: 'Profile',
-    icon: <UserIcon />,
-  },
+  // {
+  //   url: '/profile',
+  //   name: 'Profile',
+  //   icon: <UserIcon />,
+  // },
 ];
 
 const DrawerNav = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { v4 as uuid } from 'uuid';
+
 import Typography from '../Typography/Typography';
 
 import Input from '../Input/Input';
@@ -9,7 +9,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import styles from './ComboBox2.module.scss';
 import useFocus from '../../hooks/useFocus';
 import useDebounce from '../../hooks/useDebounce';
-
 
 function useLocations(value) {
   const [locations, setLocations] = React.useState([]);
@@ -70,10 +69,29 @@ function Locationselect({
   isSearching,
   hasError,
 }) {
+  const defaultLocation = () => {
+    onChange({
+      target: {
+        value: {
+          full_address: theRef.current.value,
+          google_map_link: '',
+          latitude: 6.465422,
+          longitude: 3.406448,
+        },
+      },
+    });
+  };
   if (hasError) {
     return (
       <div className={styles['location-list']}>
-        <div focusable>
+        <div
+          focusable
+          className={styles['location-list-item']}
+          onClick={defaultLocation}
+        >
+          <Typography> Continue with -> {theRef.current.value}</Typography>
+        </div>
+        <div focusable className={styles['location-list-item']}>
           <Typography
             style={{
               color: '#f0324b',
@@ -90,8 +108,16 @@ function Locationselect({
   if (isSearching) {
     return (
       <div className={styles['location-list']}>
-        <div focusable>
+        <div
+          focusable
+          className={styles['location-list-item']}
+          onClick={defaultLocation}
+        >
+          <Typography> Continue with -> {theRef.current.value}</Typography>
+        </div>
+        <div className={styles['location-list-item']}>
           <CircularProgress color="#f0324b" />
+          <Typography inline> Finding matches</Typography>
         </div>
       </div>
     );
@@ -99,11 +125,11 @@ function Locationselect({
   if (Locations.length) {
     return (
       <div className={styles['location-list']}>
-        {Locations.map((l) => (
+        {Locations.map((l, i) => (
           <div
             focusable
             className={styles['location-list-item']}
-            key={uuid()}
+            key={'address' + i}
             onClick={() => {
               theRef.current.value = l.full_address;
               onChange({
@@ -122,9 +148,15 @@ function Locationselect({
   } else
     return (
       <div className={styles['location-list']}>
-        <div focusable>
-          {' '}
-          <Typography> No results found </Typography>
+        <div
+          focusable
+          className={styles['location-list-item']}
+          onClick={defaultLocation}
+        >
+          <Typography> Continue with -> {theRef.current.value}</Typography>
+        </div>
+        <div className={styles['location-list-item']}>
+          <Typography>No results found</Typography>
         </div>
       </div>
     );
