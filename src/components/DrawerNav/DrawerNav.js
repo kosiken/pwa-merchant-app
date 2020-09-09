@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Typography from '../Typography/Typography';
-import Button from '../Button/Button';
-import { useDispatch, useSelector } from 'react-redux';
-import { Nav, Container, Row } from 'react-bootstrap';
+
+import { Nav } from 'react-bootstrap';
 import {
   FiHome as HomeIcon,
-  FiUsers as UserIcon,
+  FiUsers as UsersIcon,
   FiFileText as PaperIcon,
   FiShoppingBag as ShoppingBag,
+  // FiUser as UserIcon,
   // FiDatabase as Database,
 } from 'react-icons/fi';
 
@@ -36,28 +36,21 @@ let links = [
   {
     url: '/customers',
     name: 'Customers',
-    icon: <UserIcon />,
+    icon: <UsersIcon />,
   },
+  // {
+  //   url: '/profile',
+  //   name: 'Profile',
+  //   icon: <UserIcon />,
+  // },
 ];
 
-const DrawerNav = ({ children }) => {
+const DrawerNav = () => {
   const { pathname } = useLocation();
-  const dispatch = useDispatch();
-  const { email, name } = useSelector((state) => {
-    return {
-      name: state.auth.user.name,
-      email: state.auth.user.email_address,
-    };
-  });
-  const logOut = () => {
-    dispatch({
-      type: 'LOGOUT_USER',
-    });
-  };
 
   return (
-    <aside className="side-nav hide" id="drawer">
-      <section
+    <aside className="side-nav hide" id="drawer" style={{}}>
+      {/*   <section
         className="p-4"
         style={{
           backgroundColor: '#011627',
@@ -65,17 +58,7 @@ const DrawerNav = ({ children }) => {
         }}
       >
         <Container className="p-2">
-          <Typography
-            title
-            className="mb-2"
-            style={{
-              color: '#ffdc4a',
-              lineHeight: '1.2em',
-              fontWeight: '600',
-            }}
-          >
-            500 Dash
-          </Typography>
+      
           <Row className="m-0 pl-2">
             <Typography
               title
@@ -96,27 +79,53 @@ const DrawerNav = ({ children }) => {
       </section>
 
       <br />
+      */}
       <Nav className="flex-column h-80">
         {links.map((link, i) => (
           <Link
             to={link.url}
-            className={
-              'nav-link ml flex-row center ' +
-              (pathname === link.url ? 'active' : '')
-            }
+            className={'nav-link ml flex-row center '}
             key={'link' + i}
           >
             <span
+              className={'info ' + (pathname === link.url ? 'active' : '')}
               style={{
                 marginRight: '15px',
               }}
             >
               {link.icon}
             </span>
-            <Typography inline>{link.name}</Typography>
+            <Typography
+              inline
+              className={'info ' + (pathname === link.url ? 'active' : '')}
+            >
+              {link.name}
+            </Typography>
           </Link>
         ))}
       </Nav>
+      <Typography
+        style={{
+          textAlign: 'center',
+          position: 'absolute',
+          display: 'block',
+          bottom: '0',
+          left: '0',
+          width: '100%',
+        }}
+      >
+        Made with{' '}
+        <span role="img" aria-label="love">
+          ❤️{' '}
+        </span>
+        <span
+          style={{
+            color: '#f0324b',
+          }}
+        >
+          500Chow
+        </span>
+      </Typography>
     </aside>
   );
 };

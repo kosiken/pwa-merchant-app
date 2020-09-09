@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Button, Typography } from '../components';
+import { Input, Button, Typography, ComboBox2 } from '../components';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
-
+import $script from 'scriptjs';
 import { useForm } from 'react-hook-form';
 import api from '../api';
 
@@ -12,10 +12,34 @@ const SignUp = () => {
   const [key, setKey] = useState('');
   let [isLoading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-
+  let [currentLocation, setCurrentLocation] = useState(null);
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
+  React.useEffect(() => {
+    $script(
+      'https://maps.googleapis.com/maps/api/js?key=AIzaSyCDRINRTtuQGCi8P7V8lYPcJkuYW5HIKJA&libraries=places',
+      'google-maps'
+    );
+    $script.ready(
+      ['google-maps'],
+      () => {
+        console.log('depsNotFound');
+
+        if (!window.google) {
+          return;
+        }
+        if (navigator.geolocation) {
+          window.FiveService = new window.google.maps.places.PlacesService(
+            document.getElementById('map')
+          );
+        }
+      },
+      function (depsNotFound) {
+        console.log(depsNotFound);
+      }
+    );
+  }, []);
   useEffect(() => {
     const handleClose = () => {
       setOpen(false);
@@ -33,11 +57,14 @@ const SignUp = () => {
   }, [open]);
   const { register, handleSubmit, errors, getValues } = useForm();
   const dispatch = useDispatch();
+  const changeCurrentAddress = (e) => {
+    setCurrentLocation(e.target.value);
+  };
   const submit = (formData) => {
     if (formData.password !== formData.password2) return;
     setLoading(true);
     api
-      .register(formData)
+      .register({ ...formData, address: currentLocation })
       .then((user) => {
         dispatch({ user, type: 'SIGNUP_USER' });
 
@@ -69,7 +96,6 @@ const SignUp = () => {
         >
           Sign Up
         </Typography>
-
         <Input
           type="text"
           name="name"
@@ -83,7 +109,6 @@ const SignUp = () => {
           })}
           error={errors.name}
         />
-
         <Input
           type="email"
           name="email"
@@ -101,7 +126,6 @@ const SignUp = () => {
           })}
           error={errors.email}
         />
-
         <Input
           label="Phone Number"
           name={'phone'}
@@ -120,7 +144,8 @@ const SignUp = () => {
             },
           })}
           error={errors.phone}
-        />
+        />{' '}
+        <ComboBox2 onChange={changeCurrentAddress} />
         <Input
           type="password"
           name="password"

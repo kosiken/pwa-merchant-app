@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import moment from 'moment';
 import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
@@ -62,7 +63,9 @@ const Order = ({ order, loader, page }) => {
           maxWidth: '600px',
         }}
       >
-        {' '}
+        <Helmet>
+          <title>{`Order from ${order.VendorCustomer.full_name}`}</title>
+        </Helmet>
         <div>
           <div>
             <Typography title>Food Items</Typography>
@@ -111,22 +114,30 @@ const Order = ({ order, loader, page }) => {
             <Typography title className="mb-2">
               Order Details
             </Typography>
-            <Typography bold>Customer Name</Typography>
+            <Typography  bold>
+              Customer Name
+            </Typography>
             <Typography>{order.VendorCustomer.full_name}</Typography>
           </div>
           <div>
-            <Typography bold>Accepted at</Typography>
+            <Typography  bold>
+              Accepted at
+            </Typography>
 
             <Typography>
               {moment(order.accepted_at).format('MMMM Do YYYY, h:mm a')}
             </Typography>
           </div>
           <div>
-            <Typography bold>Delivery Address</Typography>
+            <Typography  bold>
+              Delivery Address
+            </Typography>
 
             <Typography>{order.Address.full_address}</Typography>
           </div>
-          <Typography bold> Status </Typography>
+          <Typography  bold>
+            Status{' '}
+          </Typography>
           <span
             className={classes + ' mb-4'}
             style={{
