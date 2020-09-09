@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import { useDispatch } from 'react-redux';
 import { Navbar, Dropdown } from 'react-bootstrap';
 import IconButton from '../IconButton/IconButton';
@@ -21,7 +22,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   </span>
 ));
 
-const TopBar = ({ title, btn, window }) => {
+const TopBar = ({ title }) => {
   const [drawer, setDrawer] = React.useState(false);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -53,6 +54,9 @@ const TopBar = ({ title, btn, window }) => {
       }}
       className="col-12 mb-4"
     >
+      <Helmet>
+        <title>{'500 Dash | ' + title}</title>
+      </Helmet>
       <IconButton
         className="navbar-toggler"
         onClick={() => {
@@ -71,7 +75,7 @@ const TopBar = ({ title, btn, window }) => {
             fontWeight: '600',
           }}
         >
-          500 Dash
+          {title}
         </Typography>
       </div>
 

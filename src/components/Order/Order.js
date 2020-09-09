@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import moment from 'moment';
 import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
@@ -62,7 +63,9 @@ const Order = ({ order, loader, page }) => {
           maxWidth: '600px',
         }}
       >
-        {' '}
+        <Helmet>
+          <title>{`Order from ${order.VendorCustomer.full_name}`}</title>
+        </Helmet>
         <div>
           <div>
             <Typography title>Food Items</Typography>
@@ -133,7 +136,6 @@ const Order = ({ order, loader, page }) => {
             <Typography>{order.Address.full_address}</Typography>
           </div>
           <Typography variant="success" bold>
-            {' '}
             Status{' '}
           </Typography>
           <span
