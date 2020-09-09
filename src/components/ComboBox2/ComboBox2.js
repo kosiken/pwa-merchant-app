@@ -9,6 +9,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import styles from './ComboBox2.module.scss';
 import useFocus from '../../hooks/useFocus';
 import useDebounce from '../../hooks/useDebounce';
+
+
 function useLocations(value) {
   const [locations, setLocations] = React.useState([]);
   const [isSearching, setIsSearching] = React.useState(false);

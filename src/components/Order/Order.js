@@ -114,13 +114,13 @@ const Order = ({ order, loader, page }) => {
             <Typography title className="mb-2">
               Order Details
             </Typography>
-            <Typography variant="success" bold>
+            <Typography  bold>
               Customer Name
             </Typography>
             <Typography>{order.VendorCustomer.full_name}</Typography>
           </div>
           <div>
-            <Typography variant="success" bold>
+            <Typography  bold>
               Accepted at
             </Typography>
 
@@ -129,13 +129,13 @@ const Order = ({ order, loader, page }) => {
             </Typography>
           </div>
           <div>
-            <Typography variant="success" bold>
+            <Typography  bold>
               Delivery Address
             </Typography>
 
             <Typography>{order.Address.full_address}</Typography>
           </div>
-          <Typography variant="success" bold>
+          <Typography  bold>
             Status{' '}
           </Typography>
           <span
