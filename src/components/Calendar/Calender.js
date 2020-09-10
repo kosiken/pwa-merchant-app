@@ -127,7 +127,7 @@ const Calender = ({ onChange }) => {
       });
     }
     if (onChange) {
-      onChange(_month, currentDay);
+      onChange({ month: _month, date: currentDay });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDay, _month]);

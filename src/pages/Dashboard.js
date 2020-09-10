@@ -3,23 +3,33 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Table, Container } from 'react-bootstrap';
 import { Order, Typography, Button, ErrorComponent } from '../components';
-// Calender
+import moment from 'moment';
 import { Calender } from '../components';
 import api from '../api';
+import { isEmpty } from 'lodash';
+import { FiFileText as PaperIcon } from 'react-icons/fi';
 
 const Dashboard = () => {
   let [isLoading, setLoading] = useState(true);
-
+  let [currentDate, setCurrentDate] = useState({ month: 0, date: 0 });
   let [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [orders, setOrders] = useState([]);
-
+  let [items, setItems] = useState([]);
   const init = () => {
     setError(false);
     (async () => {
       try {
         let __orders = await api.getOrders();
         setOrders(__orders.reverse());
+        setItems(
+          __orders.filter((v) => {
+            let m = moment(v.createdAt);
+            return (
+              m.date() === currentDate.date && m.month() === currentDate.month
+            );
+          })
+        );
 
         setLoading(false);
       } catch (error) {
@@ -33,11 +43,19 @@ const Dashboard = () => {
     init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  useEffect(() => {
+    setItems(
+      orders.filter((v) => {
+        let m = moment(v.createdAt);
+        return m.date() === currentDate.date && m.month() === currentDate.month;
+      })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentDate]);
   return (
     <div style={{ minHeight: '100vh' }}>
       <Container>
-        <Calender />
+        <Calender onChange={setCurrentDate} />
         <div style={{ width: '100%', padding: '0 1.5em' }}>
           <div className="flex center">
             <Typography
@@ -69,17 +87,37 @@ const Dashboard = () => {
                   <Order loader key={'loader' + order} />
                 ))}
 
-              {orders
-                .filter((v) => v.status === 'Created')
-                .map((order, i) => (
-                  <Order key={'order' + i} order={order} />
-                ))}
+              {items.map((order, i) => (
+                <Order key={'order' + i} order={order} />
+              ))}
             </tbody>{' '}
           </Table>
           {error && (
             <ErrorComponent message={errorMessage}>
               <Button onClick={init}> Retry </Button>
             </ErrorComponent>
+          )}
+          {!error && !isLoading && isEmpty(items) && (
+            <>
+              <Typography
+                title
+                style={{
+                  textAlign: 'center',
+                  fontSize: '4em',
+                  color: 'rgb(136, 136, 136)',
+                  marginTop: '20vh',
+                }}
+              >
+                <PaperIcon />
+              </Typography>
+              <Typography
+                style={{
+                  textAlign: 'center',
+                }}
+              >
+                {'No Orders Found for this date'}
+              </Typography>
+            </>
           )}
         </div>
       </Container>
