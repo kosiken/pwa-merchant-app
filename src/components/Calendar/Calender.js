@@ -144,9 +144,8 @@ const Calender = ({ onChange }) => {
   }
 
   return (
-    <div className="mb-4">          <Typography title>
-            {Months[_month]} <MoreIcon />
-          </Typography>
+    <div className="mb-4">         
+    
       <Dropdown className="mb-4">
         <Dropdown.Toggle as={CustomToggle2} id="dropdown-custom-components2">
           <Typography title>
