@@ -56,7 +56,7 @@ const Dashboard = () => {
     <div style={{ minHeight: '100vh' }}>
       <Container>
         <Calender onChange={setCurrentDate} />
-        <div style={{ width: '100%', padding: '0 1.5em' }}>
+       
           <div className="flex center">
             <Typography
               title
@@ -119,7 +119,7 @@ const Dashboard = () => {
               </Typography>
             </>
           )}
-        </div>
+        
       </Container>
     </div>
   );
