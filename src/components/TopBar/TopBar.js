@@ -66,13 +66,13 @@ const TopBar = ({ title }) => {
       >
         <MenuIcon />
       </IconButton>
-      <div style={{ flexGrow: 1, padding: '.5em 0' }}>
+      <div style={{ flexGrow: 1, padding: '0.5em 0px 0.5em 1em' }}>
         <Typography
           title
           style={{
             color: '#ffdc4a',
             lineHeight: '1.2em',
-            fontWeight: '600',
+          
           }}
         >
           500 Dash
