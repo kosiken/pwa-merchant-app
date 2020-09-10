@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import IconButton from '../IconButton/IconButton';
+
 import Typography from '../Typography/Typography';
 import {
   FiChevronLeft as LeftIcon,
@@ -82,17 +83,16 @@ function getCalender(date, d, m, y) {
 }
 
 const CustomToggle2 = React.forwardRef(({ children, onClick }, ref) => (
-  // eslint-disable-next-line  jsx-a11y/anchor-is-valid
-  <a
-    href="#"
+    <span
     ref={ref}
+    style={{cursor:'pointer'}}
     onClick={(e) => {
       e.preventDefault();
       onClick(e);
     }}
   >
     {children}
-  </a>
+  </span>
 ));
 
 const Calender = ({ onChange }) => {
