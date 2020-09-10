@@ -1,5 +1,5 @@
 import React from 'react';
-import { v4 as uuid } from 'uuid';
+
 import Typography from '../Typography/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Input from '../Input/Input';
@@ -50,11 +50,11 @@ function Foodselect({ Foods, theRef, onChange, loading }) {
             </Typography>
           </div>
         )}
-        {Foods.map((l) => (
+        {Foods.map((l, i) => (
           <div
             focusable
             className={styles['location-list-item'] + ' mb-1'}
-            key={uuid()}
+            key={'food-item' + i}
             onClick={() => {
               theRef.current.value = l.name;
               onChange({

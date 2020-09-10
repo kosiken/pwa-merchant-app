@@ -1,49 +1,35 @@
 import React, { useState, useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
-import { Table } from 'react-bootstrap';
-import { Container, Card, Row } from 'react-bootstrap';
+import { Table, Container } from 'react-bootstrap';
 import { Order, Typography, Button, ErrorComponent } from '../components';
-
+import moment from 'moment';
+import { Calender } from '../components';
 import api from '../api';
-
-const Entries = [
-  {
-    name: 'Food Items',
-    summary: `You add food items to 500 dash and make them available to 
-  be selected when creating orders`,
-    create: '/create-food',
-    all: '/FoodItems',
-  },
-  {
-    name: 'Customers',
-    summary: `You can save customers on 500 dash and easily select them
-    whenever you want to create an order`,
-    create: '/customers',
-    all: '/customers',
-  },
-
-  {
-    name: 'Orders',
-    summary: `You create orders for us to deliver to customers on your behalf`,
-    create: '/create-order',
-    all: '/orders',
-  },
-];
+import { isEmpty } from 'lodash';
+import { FiFileText as PaperIcon } from 'react-icons/fi';
 
 const Dashboard = () => {
   let [isLoading, setLoading] = useState(true);
-
+  let [currentDate, setCurrentDate] = useState({ month: 0, date: 0 });
   let [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [orders, setOrders] = useState([]);
-
+  let [items, setItems] = useState([]);
   const init = () => {
     setError(false);
     (async () => {
       try {
         let __orders = await api.getOrders();
         setOrders(__orders.reverse());
+        setItems(
+          __orders.filter((v) => {
+            let m = moment(v.createdAt);
+            return (
+              m.date() === currentDate.date && m.month() === currentDate.month
+            );
+          })
+        );
 
         setLoading(false);
       } catch (error) {
@@ -57,78 +43,83 @@ const Dashboard = () => {
     init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  useEffect(() => {
+    setItems(
+      orders.filter((v) => {
+        let m = moment(v.createdAt);
+        return m.date() === currentDate.date && m.month() === currentDate.month;
+      })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentDate]);
   return (
     <div style={{ minHeight: '100vh' }}>
       <Container>
-        <Row
-          style={{
-            gridColumnGap: '1em',
-            gridRowGap: '1em',
-            marginLeft: '0',
-            marginRight: '0',
-            marginBottom: '2em',
-          }}
-        >
-          {Entries.map((entry, index) => {
-            return (
-              <Card
-                key={'entry' + index}
-                style={{ width: '20rem', margin: '0 auto' }}
-              >
-                <Card.Body>
-                  <Card.Title>
-                    <Typography inline>{entry.name}</Typography>
-                  </Card.Title>
+        <Calender onChange={setCurrentDate} />
+        <div style={{ width: '100%', padding: '0 1.5em' }}>
+          <div className="flex center">
+            <Typography
+              title
+              style={{
+                flexGrow: 1,
+              }}
+            >
+              Recent Orders
+            </Typography>
 
-                  <Typography>{entry.summary}</Typography>
-                </Card.Body>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    padding: '15px',
-                  }}
-                >
-                  <Link to={entry.all}>
-                    <Button color="clear"> See all</Button>
-                  </Link>
-                  <Link to={entry.create}>
-                    <Button> Create new</Button>
-                  </Link>
-                </div>
-              </Card>
-            );
-          })}
-        </Row>
+            <Link to="/create-order">
+              <Button color="clear"> Create Order</Button>
+            </Link>
+          </div>
+          <Table borderless hover responsive>
+            <thead>
+              <tr>
+                <th>Customer</th>
 
-        <Typography title>Recent Orders</Typography>
-        <Table borderless hover responsive>
-          <thead>
-            <tr>
-              <th>Customer</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>View</th>
+              </tr>
+            </thead>
+            <tbody>
+              {isLoading &&
+                [1, 2, 3].map((order) => (
+                  <Order loader key={'loader' + order} />
+                ))}
 
-              <th>Total</th>
-              <th>Status</th>
-              <th>View</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading &&
-              [1, 2, 3].map((order) => <Order loader key={'loader' + order} />)}
-
-            {orders
-              .filter((v) => v.status === 'Created')
-              .map((order, i) => (
+              {items.map((order, i) => (
                 <Order key={'order' + i} order={order} />
               ))}
-          </tbody>{' '}
-        </Table>
-        {error && (
-          <ErrorComponent message={errorMessage}>
-            <Button onClick={init}> Retry </Button>
-          </ErrorComponent>
-        )}
+            </tbody>{' '}
+          </Table>
+          {error && (
+            <ErrorComponent message={errorMessage}>
+              <Button onClick={init}> Retry </Button>
+            </ErrorComponent>
+          )}
+          {!error && !isLoading && isEmpty(items) && (
+            <>
+              <Typography
+                title
+                style={{
+                  textAlign: 'center',
+                  fontSize: '4em',
+                  color: 'rgb(136, 136, 136)',
+                  marginTop: '20vh',
+                }}
+              >
+                <PaperIcon />
+              </Typography>
+              <Typography
+                style={{
+                  textAlign: 'center',
+                }}
+              >
+                {'No Orders Found for this date'}
+              </Typography>
+            </>
+          )}
+        </div>
       </Container>
     </div>
   );

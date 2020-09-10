@@ -21,41 +21,57 @@ import OrderPage from './pages/OrderPage';
 import logo from './assets/logo-variant.png';
 
 const Auththenticated = () => {
-const [show, setShow] = React.useState(false);
-const [message, setMessage] = React.useState('Geolocation is not supported by this browser.')
+  const [show, setShow] = React.useState(false);
+  const [message, setMessage] = React.useState(
+    'Geolocation is not supported by this browser.'
+  );
   React.useEffect(() => {
-  $script('https://maps.googleapis.com/maps/api/js?key=AIzaSyCDRINRTtuQGCi8P7V8lYPcJkuYW5HIKJA&libraries=places','google-maps');
-  $script.ready(['google-maps'],()=>{
- console.log('depsNotFound')
- 
- if(!window.google){
-setMessage('failed to load dependencies');
- setShow(true)
- return;
- }
-      if (navigator.geolocation) {
-      window.FiveService = new window.google.maps.places.PlacesService(
-        document.getElementById('map')
-      );
-    } else {
-       setShow(true)
-    }
-  }, function(depsNotFound) {
-    // foo.js & bar.js may have downloaded
-    // but ['thunk'] dependency was never found
-    // so lazy load it now
-    console.log(depsNotFound)
-  })
+    $script(
+      'https://maps.googleapis.com/maps/api/js?key=AIzaSyCDRINRTtuQGCi8P7V8lYPcJkuYW5HIKJA&libraries=places',
+      'google-maps'
+    );
+    $script.ready(
+      ['google-maps'],
+      () => {
+        console.log('depsNotFound');
+
+        if (!window.google) {
+          setMessage('failed to load dependencies');
+          setShow(true);
+          return;
+        }
+        if (navigator.geolocation) {
+          window.FiveService = new window.google.maps.places.PlacesService(
+            document.getElementById('map')
+          );
+        } else {
+          setShow(true);
+        }
+      },
+      function (depsNotFound) {
+        // foo.js & bar.js may have downloaded
+        // but ['thunk'] dependency was never found
+        // so lazy load it now
+        console.log(depsNotFound);
+      }
+    );
   }, []);
   return (
     <div>
-             <Alert variant="danger"  show={show} className="m-0" style={{
-        zIndex: '999'
-             }} onClose={() => setShow(false)} dismissible>
-        <Alert.Heading><Typography inline>Oh snap! You got an error! </Typography></Alert.Heading>
-        <Typography>
-       {message}
-        </Typography>
+      <Alert
+        variant="danger"
+        show={show}
+        className="m-0"
+        style={{
+          zIndex: '999',
+        }}
+        onClose={() => setShow(false)}
+        dismissible
+      >
+        <Alert.Heading>
+          <Typography inline>Oh snap! You got an error! </Typography>
+        </Alert.Heading>
+        <Typography>{message}</Typography>
       </Alert>
       <Router>
         <Switch>
@@ -208,7 +224,6 @@ setMessage('failed to load dependencies');
           </Route>{' '}
         </Switch>
       </Router>
-   
     </div>
   );
 };

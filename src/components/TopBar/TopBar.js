@@ -75,7 +75,7 @@ const TopBar = ({ title }) => {
             fontWeight: '600',
           }}
         >
-          500 Dash 
+          500 Dash
         </Typography>
       </div>
 

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import moment from 'moment';
 import Typography from '../Typography/Typography';
-import Button from '../Button/Button';
+
 import styles from './Order.module.scss';
 // const Statuses = [
 //   'Created',
@@ -114,13 +114,13 @@ const Order = ({ order, loader, page }) => {
             <Typography title className="mb-2">
               Order Details
             </Typography>
-            <Typography  bold>
+            <Typography small bold>
               Customer Name
             </Typography>
             <Typography>{order.VendorCustomer.full_name}</Typography>
           </div>
           <div>
-            <Typography  bold>
+            <Typography small bold>
               Accepted at
             </Typography>
 
@@ -129,15 +129,13 @@ const Order = ({ order, loader, page }) => {
             </Typography>
           </div>
           <div>
-            <Typography  bold>
+            <Typography small bold>
               Delivery Address
             </Typography>
 
             <Typography>{order.Address.full_address}</Typography>
           </div>
-          <Typography  bold>
-            Status{' '}
-          </Typography>
+          <Typography bold>Status </Typography>
           <span
             className={classes + ' mb-4'}
             style={{
@@ -147,16 +145,6 @@ const Order = ({ order, loader, page }) => {
             {status}
           </span>
           <hr />
-          <Button
-            color="clear"
-            style={{
-              float: 'right',
-            }}
-          >
-            Edit
-          </Button>
-          <br /> <br />
-          <Button full>Delete</Button> <br />
         </div>
       </Container>
     );
