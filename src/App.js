@@ -11,8 +11,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   const { store, persistor } = fun();
 
-  
-
   return (
     <Provider store={store}>
       <PersistGate loading={<Loader />} persistor={persistor}>

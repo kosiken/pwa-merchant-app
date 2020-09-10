@@ -344,7 +344,7 @@ const EditMeal = () => {
       <Typography style={{ textAlign: 'center' }}>
         Made with{' '}
         <span role="img" aria-label="love">
-          ❤️{' '}
+          ❤️
         </span>
         <span
           style={{

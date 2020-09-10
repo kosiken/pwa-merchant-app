@@ -1,19 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import IconButton from '../IconButton/IconButton';
 import Typography from '../Typography/Typography';
+import {
+  FiChevronLeft as LeftIcon,
+  FiChevronRight as RightIcon,
+  FiMoreHorizontal as MoreIcon,
+  // FiUser as UserIcon,
+  // FiDatabase as Database,
+} from 'react-icons/fi';
+import {
+  Dropdown,
 
+  // FiUser as UserIcon,
+  // FiDatabase as Database,
+} from 'react-bootstrap';
 import moment from 'moment';
 
-function getCalender(date, d, m, y) {
-  const days = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
+const days = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+const Months = [
+  'January',
+  'Febuary',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
 
+function getCalender(date, d, m, y) {
   let mon = m + 1;
   let dom = 0;
   if (mon === 2) {
@@ -26,8 +53,7 @@ function getCalender(date, d, m, y) {
 
   let caldays = [],
     cd = date - 1,
-    start = d,
-    calender = [];
+    start = d;
 
   let da = Math.floor((date - 1) / 7);
 
@@ -50,49 +76,148 @@ function getCalender(date, d, m, y) {
   }
   for (let i = 0; i < dom; i++) {
     caldays.push({ day: days[(i + start) % 7], date: i + 1 });
-    if ((i + 1) % 7 === 0) {
-      calender.push([].concat(caldays.slice()));
-      caldays = [];
-    }
   }
 
-  if (caldays.length) {
-    calender.push([].concat(caldays.slice()));
-  }
-  return calender;
+  return caldays;
 }
 
-const CalenderRow = ({ row }) => {
+const CustomToggle2 = React.forwardRef(({ children, onClick }, ref) => (
+  // eslint-disable-next-line  jsx-a11y/anchor-is-valid
+  <a
+    href="#"
+    ref={ref}
+    onClick={(e) => {
+      e.preventDefault();
+      onClick(e);
+    }}
+  >
+    {children}
+  </a>
+));
+
+const Calender = ({ onChange }) => {
+  let [calender, setCalender] = useState([]);
+  let ref = useRef(null);
+  let [_month, _setMonth] = useState(0);
+  let [currentDay, setCurrentDay] = useState(0);
+
+  useEffect(() => {
+    let m = moment();
+    let date = m.date();
+    let month = m.month();
+
+    setCalender(getCalender(date, m.day(), month, m.year()));
+    _setMonth(month);
+    setCurrentDay(date);
+  }, []);
+
+  useEffect(() => {
+    if (currentDay === 0) return;
+    let node = ref.current;
+    if (node) {
+      let scrollDistance =
+        Math.round(node.scrollWidth / calender.length) * currentDay -
+        node.clientWidth;
+
+      node.scroll({
+        top: 0,
+        left: scrollDistance + 10,
+        behavior: 'smooth',
+        //- node.clientWidth
+      });
+    }
+    if (onChange) {
+      onChange(_month, currentDay);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentDay, _month]);
+
+  function changeMonth(m) {
+    if (_month === m) {
+      return;
+    }
+    let nm = moment(new Date(2020, m, 1));
+    let date = nm.date();
+    setCalender(getCalender(date, nm.day(), m, nm.year()));
+    _setMonth(m);
+    setCurrentDay(date);
+  }
+
   return (
-    <tr>
-      {row.map((col, i) => {
-        return (
-          <td key={'date' + i}>
-            <Typography
-              title
-              style={{
-                fontWeight: 'bold',
-              }}
-            >
-              {col.date}
-            </Typography>
-            <Typography small>{col.day.slice(0, 3)}</Typography>
-          </td>
-        );
-      })}
-    </tr>
-  );
-};
-const Calender = () => {
-  let m = moment();
-  let calender = getCalender(m.date(), m.day(), m.month(), m.year());
-  return (
-    <div>
-      <table>
-        {calender.map((row, i) => (
-          <CalenderRow row={row} key={'CalRow' + i} />
-        ))}
-      </table>
+    <div className="mb-4">
+      <Dropdown className="mb-4">
+        <Dropdown.Toggle as={CustomToggle2} id="dropdown-custom-components2">
+          <Typography title>
+            {Months[_month]} <MoreIcon />
+          </Typography>
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          {Months.map((m, i) => {
+            return (
+              <Dropdown.Item key={'month' + i} eventKey={(i + 1).toString()}>
+                <Typography
+                  onClick={() => {
+                    changeMonth(i);
+                  }}
+                >
+                  {m}
+                </Typography>
+              </Dropdown.Item>
+            );
+          })}
+        </Dropdown.Menu>
+      </Dropdown>
+
+      <div className="flex">
+        <IconButton
+          style={{ display: 'inline-flex', alignItems: 'center' }}
+          onClick={() => {
+            if (currentDay > 1) setCurrentDay(currentDay - 1);
+          }}
+        >
+          <LeftIcon />
+        </IconButton>
+
+        <div className="calender" ref={ref}>
+          <div
+            style={{
+              display: 'inline-flex',
+              transition: 'all .5s ease-in',
+              position: 'absolute',
+            }}
+          >
+            {calender.map((col, i) => {
+              return (
+                <div
+                  key={'date' + i}
+                  className={currentDay === col.date ? 'date current' : 'date'}
+                  onClick={() => {
+                    setCurrentDay(col.date);
+                  }}
+                >
+                  <Typography small>{col.day.slice(0, 3)}</Typography>
+                  <Typography
+                    style={{
+                      marginBottom: '5px',
+                    }}
+                  >
+                    {col.date}
+                  </Typography>
+                </div>
+              );
+            })}
+          </div>{' '}
+        </div>
+        <IconButton
+          style={{ display: 'inline-flex', alignItems: 'center' }}
+          onClick={() => {
+            if (currentDay < calender.length) setCurrentDay(currentDay + 1);
+          }}
+        >
+          <RightIcon />
+        </IconButton>
+      </div>
     </div>
   );
 };
