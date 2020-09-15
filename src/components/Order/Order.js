@@ -68,7 +68,13 @@ const Order = ({ order, loader, page }) => {
         </Helmet>
         <div>
           <div>
-            <Typography title>Food Items</Typography>
+            {' '}
+            <Typography title className="mb-2">
+              Order Details
+            </Typography>
+            <Typography bold inline>
+              Food Items
+            </Typography>
             <ul className={styles['order-list']}>
               {order.FoodItems.map((food) => {
                 if (!food) return false;
@@ -111,16 +117,13 @@ const Order = ({ order, loader, page }) => {
               </section>
             </div>{' '}
             <hr />
-            <Typography title className="mb-2">
-              Order Details
-            </Typography>
-            <Typography small bold>
+            <Typography inline bold>
               Customer Name
             </Typography>
             <Typography>{order.VendorCustomer.full_name}</Typography>
           </div>
           <div>
-            <Typography small bold>
+            <Typography inline bold>
               Accepted at
             </Typography>
 
@@ -129,13 +132,15 @@ const Order = ({ order, loader, page }) => {
             </Typography>
           </div>
           <div>
-            <Typography small bold>
+            <Typography inline bold>
               Delivery Address
             </Typography>
 
             <Typography>{order.Address.full_address}</Typography>
           </div>
-          <Typography bold>Status </Typography>
+          <Typography inline bold>
+            Status{' '}
+          </Typography>
           <span
             className={classes + ' mb-4'}
             style={{
@@ -144,6 +149,11 @@ const Order = ({ order, loader, page }) => {
           >
             {status}
           </span>
+          {/*       <Typography inline bold>
+              Order Notes
+            </Typography>
+
+            <Typography>{order.Address.order_notes}</Typography> */}
           <hr />
         </div>
       </Container>

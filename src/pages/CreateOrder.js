@@ -314,7 +314,10 @@ const CreateOrder = () => {
           )}
           {((tab === 'Existing Customer' && chosenLocation === 0) ||
             tab === 'New Customer') && (
-            <ComboBox2 onChange={changeCurrentAddress} />
+            <ComboBox2
+              onChange={changeCurrentAddress}
+              label="Customer Address"
+            />
           )}
           {tab === 'New Customer' && (
             <div>

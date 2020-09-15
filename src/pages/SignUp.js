@@ -148,6 +148,7 @@ const SignUp = () => {
         <ComboBox2
           onChange={changeCurrentAddress}
           style={{ margin: '0 auto' }}
+          label="Address"
         />
         <Input
           type="password"
