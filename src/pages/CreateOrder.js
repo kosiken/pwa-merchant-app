@@ -389,7 +389,13 @@ const CreateOrder = () => {
               </IconButton>
             </section>
           ))}
-
+          <Input
+            type="text"
+            name="order_notes"
+            label="Order Notes"
+            ref={register()}
+            multiline
+          />
           <Button
             full
             loading={submitting}
