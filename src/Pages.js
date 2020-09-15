@@ -76,7 +76,7 @@ const Auththenticated = () => {
       <Router>
         <Switch>
           <Route exact path="/">
-            <TopBar title="" />
+            <TopBar title="Home" />
             <DrawerNav />{' '}
             <main
               id="contents"
