@@ -314,7 +314,10 @@ const CreateOrder = () => {
           )}
           {((tab === 'Existing Customer' && chosenLocation === 0) ||
             tab === 'New Customer') && (
-            <ComboBox2 onChange={changeCurrentAddress} />
+            <ComboBox2
+              onChange={changeCurrentAddress}
+              label="Customer Address"
+            />
           )}
           {tab === 'New Customer' && (
             <div>
@@ -389,7 +392,13 @@ const CreateOrder = () => {
               </IconButton>
             </section>
           ))}
-
+          <Input
+            type="text"
+            name="order_notes"
+            label="Order Notes"
+            ref={register()}
+            multiline
+          />
           <Button
             full
             loading={submitting}

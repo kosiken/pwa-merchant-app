@@ -55,71 +55,67 @@ const Dashboard = () => {
   return (
     <div style={{ minHeight: '100vh' }}>
       <Container>
+        <div className="flex center mb-4">
+          <Typography
+            title
+            style={{
+              flexGrow: 1,
+            }}
+          >
+            Recent Orders
+          </Typography>
+
+          <Link to="/create-order">
+            <Button color="clear"> Create Order</Button>
+          </Link>
+        </div>{' '}
         <Calender onChange={setCurrentDate} />
-       
-          <div className="flex center">
+        <Table borderless hover responsive>
+          <thead>
+            <tr>
+              <th>Customer</th>
+
+              <th>Total</th>
+              <th>Status</th>
+              <th>View</th>
+            </tr>
+          </thead>
+          <tbody>
+            {isLoading &&
+              [1, 2, 3].map((order) => <Order loader key={'loader' + order} />)}
+
+            {items.map((order, i) => (
+              <Order key={'order' + i} order={order} />
+            ))}
+          </tbody>{' '}
+        </Table>
+        {error && (
+          <ErrorComponent message={errorMessage}>
+            <Button onClick={init}> Retry </Button>
+          </ErrorComponent>
+        )}
+        {!error && !isLoading && isEmpty(items) && (
+          <>
             <Typography
               title
               style={{
-                flexGrow: 1,
+                textAlign: 'center',
+                fontSize: '4em',
+                color: 'rgb(136, 136, 136)',
+                marginTop: '20vh',
               }}
             >
-              Recent Orders
+              <PaperIcon />
             </Typography>
-
-            <Link to="/create-order">
-              <Button color="clear"> Create Order</Button>
-            </Link>
-          </div>
-          <Table borderless hover responsive>
-            <thead>
-              <tr>
-                <th>Customer</th>
-
-                <th>Total</th>
-                <th>Status</th>
-                <th>View</th>
-              </tr>
-            </thead>
-            <tbody>
-              {isLoading &&
-                [1, 2, 3].map((order) => (
-                  <Order loader key={'loader' + order} />
-                ))}
-
-              {items.map((order, i) => (
-                <Order key={'order' + i} order={order} />
-              ))}
-            </tbody>{' '}
-          </Table>
-          {error && (
-            <ErrorComponent message={errorMessage}>
-              <Button onClick={init}> Retry </Button>
-            </ErrorComponent>
-          )}
-          {!error && !isLoading && isEmpty(items) && (
-            <>
-              <Typography
-                title
-                style={{
-                  textAlign: 'center',
-                  fontSize: '4em',
-                  color: 'rgb(136, 136, 136)',
-                  marginTop: '20vh',
-                }}
-              >
-                <PaperIcon />
-              </Typography>
-              <Typography
-                style={{
-                  textAlign: 'center',
-                }}
-              >
-                {'No Orders Found for this date'}
-              </Typography>
-            </>
-          )}
-        
+            <Typography
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              {'No Orders Found for this date'}
+            </Typography>
+          </>
+        )}
       </Container>
     </div>
   );

@@ -145,7 +145,11 @@ const SignUp = () => {
           })}
           error={errors.phone}
         />{' '}
-        <ComboBox2 onChange={changeCurrentAddress} />
+        <ComboBox2
+          onChange={changeCurrentAddress}
+          style={{ margin: '0 auto' }}
+          label="Address"
+        />
         <Input
           type="password"
           name="password"

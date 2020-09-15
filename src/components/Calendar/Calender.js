@@ -83,9 +83,9 @@ function getCalender(date, d, m, y) {
 }
 
 const CustomToggle2 = React.forwardRef(({ children, onClick }, ref) => (
-    <span
+  <span
     ref={ref}
-    style={{cursor:'pointer'}}
+    style={{ cursor: 'pointer' }}
     onClick={(e) => {
       e.preventDefault();
       onClick(e);
@@ -144,11 +144,10 @@ const Calender = ({ onChange }) => {
   }
 
   return (
-    <div className="mb-4">         
-    
-      <Dropdown className="mb-4">
+    <div className="mb-4">
+      <Dropdown className="mb-1">
         <Dropdown.Toggle as={CustomToggle2} id="dropdown-custom-components2">
-          <Typography title>
+          <Typography inline>
             {Months[_month]} <MoreIcon />
           </Typography>
         </Dropdown.Toggle>

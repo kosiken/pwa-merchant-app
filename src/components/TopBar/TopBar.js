@@ -72,7 +72,6 @@ const TopBar = ({ title }) => {
           style={{
             color: '#ffdc4a',
             lineHeight: '1.2em',
-          
           }}
         >
           500 Dash

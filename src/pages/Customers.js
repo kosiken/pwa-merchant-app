@@ -234,7 +234,10 @@ const Customers = () => {
                 })}
                 error={errors.phone_number}
               />
-              <ComboBox2 onChange={changeCurrentAddress} />
+              <ComboBox2
+                onChange={changeCurrentAddress}
+                label="Customer Address"
+              />
 
               <Button
                 loading={isLoading}
