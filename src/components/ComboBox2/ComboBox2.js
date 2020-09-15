@@ -162,7 +162,7 @@ function Locationselect({
     );
 }
 
-function ComboBox2({ onChange }) {
+function ComboBox2({ onChange, ...otherProps }) {
   const ref = React.useRef(null);
   //const ref = React.useRef(null)
 
@@ -180,6 +180,7 @@ function ComboBox2({ onChange }) {
         autocomplete="disabled"
         multiline
         ref={ref}
+        {...otherProps}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       {show && (
