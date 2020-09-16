@@ -18,6 +18,7 @@ import FoodItems from './pages/FoodItems';
 import CreateFoodItem from './pages/CreateFoodItem';
 import Orders from './pages/Orders';
 import OrderPage from './pages/OrderPage';
+import Onboard from './pages/Onboard';
 import logo from './assets/logo-variant.png';
 
 const Auththenticated = () => {
@@ -81,7 +82,16 @@ const Auththenticated = () => {
           </Route>
           <Route exact path="/">
             {' '}
-            <Redirect to="/create-delivery-request" />
+            <Redirect to="/welcome" />
+          </Route>{' '}
+          <Route exact path="/welcome">
+            <TopBar title="Welcome" />
+      <span id="drawer"/>
+            <main
+
+            >
+              <Onboard />
+            </main>
           </Route>
           <Route exact path="/home">
             <TopBar title="Home" />

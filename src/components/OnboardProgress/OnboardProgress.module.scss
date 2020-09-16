@@ -1,0 +1,22 @@
+@import '../styles/colors.scss';
+.onboard-section {
+  display: flex;
+  width: 60%;
+  min-width: 280px;
+  justify-content: space-between;
+  position: relative;margin: 0 auto;
+}
+
+.done {
+  background-color: $success !important;
+  color: white;
+}
+.active {background-color: #392fbd !important;
+
+  color: #fff;
+}
+
+.pending {
+  
+  color: #fff;
+}

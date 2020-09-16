@@ -19,7 +19,7 @@ import { FiSearch as SearchIcon, FiX as CloseIcon } from 'react-icons/fi';
 import { v4 as uuid } from 'uuid';
 import useSearch from '../hooks/useSearch';
 
-const Customers = () => {
+const Customers = ({component, handleDone}) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   let [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -134,7 +134,11 @@ const Customers = () => {
         dispatch({
           type: 'ADD_CUSTOMER',
           customer: user,
-        });
+        });  
+              if(component){
+        handleDone(2)
+ return;
+        }
         document.getElementById('five-form').reset();
       })
       .catch((err) => {
@@ -180,7 +184,66 @@ const Customers = () => {
         setLoading2(false);
       });
   };
+if(component){
+ return (             <form
+            className="f-form "
+            style={{
+              marginTop: '1.5em',
+              marginBottom: '1em',
+            }}
+            onSubmit={handleSubmit(handleSubmitCallback)}
+            id="five-form"
+          >
+            <Container>
+              <Input
+                type="text"
+                name="full_name"
+                label="Customer Name"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: 'Customer name is required',
+                  },
+                })}
+                error={errors.full_name}
+              />
 
+              <Input
+                type="tel"
+                name="phone_number"
+                label="Customer Phone Number"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: 'Customer Phone Number is required',
+                  },
+
+                  min: {
+                    value: 10,
+                    message: 'Invalid Phone Number',
+                  },
+                })}
+                error={errors.phone_number}
+              />
+              <ComboBox2
+                onChange={changeCurrentAddress}
+                label="Customer Address"
+              />
+
+              <Button
+                loading={isLoading}
+                full
+                onClick={handleSubmit(handleSubmitCallback)}
+                style={{
+                  margin: '0',
+                }}
+              >
+                Add Customer
+              </Button>
+            </Container>
+          </form>
+            );
+};
   return (
     <>
       <div style={{ minHeight: '100vh' }} className="customerPage">

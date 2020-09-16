@@ -41,7 +41,7 @@ let links = [
   // {
   //   url: '/profile',
   //   name: 'Profile',
-  //   icon: <UserIcon />,
+  //   icon: <UserIcon />,FiCreditCard
   // },
 ];
 

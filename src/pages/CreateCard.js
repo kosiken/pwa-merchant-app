@@ -6,7 +6,7 @@ import api from '../api';
 import { Link } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-const CreateFoodItem = ({component, handleDone}) => {
+const CreateCard = ({component, handleDone}) => {
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
@@ -49,11 +49,11 @@ if(component){
             ref={register({
               required: {
                 value: true,
-                message: 'Food name is required',
+                message: 'Card number is required',
               },
             })}
             error={errors.name}
-            type="text"
+            type="number"
             name="name"
             label="Name"
             style={{ margin: '0 auto' }}
@@ -166,4 +166,4 @@ if(component){
   );
 };
 
-export default CreateFoodItem;
+export default CreateCard;
