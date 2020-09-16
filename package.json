@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.2",
+    "card-validator": "^8.1.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.20",
     "moment": "^2.27.0",

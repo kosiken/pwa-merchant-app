@@ -23,7 +23,7 @@ import { v4 as uuid } from 'uuid';
 import { FiPlus as PlusIcon, FiX as CloseIcon } from 'react-icons/fi';
 
 const CreateOrder = () => {
-  let [tab, setTab] = useState('New Customer');
+  let [tab, setTab] = useState('New Recepient');
 
   let [foodItems, setFoodItems] = useState([]);
   const [show, setShow] = useState(false);
@@ -36,13 +36,14 @@ const CreateOrder = () => {
   const [loading, setLoading] = useState(true);
   let [currentFood, setCurrentFood] = useState('');
   const [submitting, setSubmiting] = useState(false);
+  let [pickupAddress, setPickupAddress] = useState(null);
   let [currentLocation, setCurrentLocation] = useState(null);
   let [chosenLocation, setChosenLocation] = useState(0);
   let [quantity, setQuantity] = useState('');
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
 
-  let [customer, setCustomer] = useState(null);
+  let [customer, setRecepient] = useState(null);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   function handleOpen(m) {
@@ -61,7 +62,7 @@ const CreateOrder = () => {
   const { register, handleSubmit, errors, getValues } = useForm();
   const handleSubmitCallback = (s) => {
     setSubmiting(true);
-
+    console.log(pickupAddress);
     let food_items = foodItems;
     if (foodItems.some((food) => food.is_new === true)) {
       let newItems = foodItems.filter((food) => food.is_new === true);
@@ -83,7 +84,7 @@ const CreateOrder = () => {
             phone_number: customer ? customer.phone_number : getValues('phone'),
             food_items: oldItems.concat(newItems),
           };
-          if (chosenLocation === 0 || tab === 'New Customer') {
+          if (chosenLocation === 0 || tab === 'New Recepient') {
             body = { ...body, delivery_address: currentLocation };
           } else {
             body = { ...body, delivery_address_id: s.type_of_address };
@@ -111,7 +112,7 @@ const CreateOrder = () => {
       phone_number: customer ? customer.phone_number : getValues('phone'),
       food_items,
     };
-    if (chosenLocation === 0 || tab === 'New Customer') {
+    if (chosenLocation === 0 || tab === 'New Recepient') {
       body = { ...body, delivery_address: currentLocation };
     } else {
       body = { ...body, delivery_address_id: s.type_of_address };
@@ -135,7 +136,9 @@ const CreateOrder = () => {
   const changeCurrentAddress = (e) => {
     setCurrentLocation(e.target.value);
   };
-
+  const changePickupAddress = (e) => {
+    setPickupAddress(e.target.value);
+  };
   const changeQuantity = (e) => {
     setQuantity(e.target.value);
   };
@@ -155,7 +158,7 @@ const CreateOrder = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
   useEffect(() => {
-    setCustomer(null);
+    setRecepient(null);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab]);
@@ -178,7 +181,7 @@ const CreateOrder = () => {
         }
         let customers;
         if (!vendorCustomers.length) {
-          customers = await api.getCustomers();
+          customers = await api.getRecepients();
           // customers.forEach((i) => (i.Addresses = Address));
           dispatch({
             type: 'GET_CUSTOMERS',
@@ -215,7 +218,7 @@ const CreateOrder = () => {
       </Loader>
 
       <SwitchBox
-        options={['Existing Customer', 'New Customer']}
+        options={['Existing Recepient', 'New Recepient']}
         value={tab}
         onChange={setTab}
       />
@@ -229,12 +232,16 @@ const CreateOrder = () => {
         ref={formRef}
       >
         <div className="container">
-          {tab === 'Existing Customer' && (
+          <Typography small variant="primary">
+            Required*
+          </Typography>
+          <Typography variant="primary">Recepient Information*</Typography>
+          {tab === 'Existing Recepient' && (
             <>
               <ComboBox0
                 items={vendorCustomers}
                 loading={loading}
-                onChange={setCustomer}
+                onChange={setRecepient}
               />
               <Input
                 select
@@ -254,28 +261,28 @@ const CreateOrder = () => {
                     : [
                         {
                           value: 0,
-                          text: 'No Customer selected',
+                          text: 'No Recepient selected',
                         },
                       ]
                 }
                 ref={register()}
                 name="type_of_address"
-                label="Select Existing Address"
+                label="Select from previous addresses"
                 onChange={(e) => setChosenLocation(e.target.value)}
               />
             </>
           )}
 
-          {tab === 'New Customer' && (
+          {tab === 'New Recepient' && (
             <>
               <Input
                 type="text"
                 name="name"
-                label="Customer Name"
+                label="Recepient Name"
                 ref={register({
                   required: {
                     value: true,
-                    message: 'Customer name is required',
+                    message: 'Recepient name is required',
                   },
                 })}
                 error={errors.name}
@@ -284,11 +291,11 @@ const CreateOrder = () => {
               <Input
                 type="tel"
                 name="phone"
-                label="Customer Phone Number"
+                label="Recepient Phone Number"
                 ref={register({
                   required: {
                     value: true,
-                    message: 'Customer Phone Number is required',
+                    message: 'Recepient Phone Number is required',
                   },
 
                   min: {
@@ -300,23 +307,37 @@ const CreateOrder = () => {
               />
             </>
           )}
-          {((tab === 'Existing Customer' && chosenLocation === 0) ||
-            tab === 'New Customer') && (
+          {((tab === 'Existing Recepient' && chosenLocation === 0) ||
+            tab === 'New Recepient') && (
             <ComboBox2
               onChange={changeCurrentAddress}
-              label="Customer Address"
+              label="Recepient Address"
             />
           )}
-          {tab === 'New Customer' && (
-            <div>
+          {tab === 'New Recepient' && (
+            <div className="mb-3">
               <Checkbox
-                label="Save this customer for next time"
+                label="Save this recepient for next time"
                 style={{ margin: '0 0 1em' }}
               />
             </div>
           )}
-
+          <Typography>Pickup Information</Typography>
+          <Input
+            type="tel"
+            name="pickup_phone"
+            label="Pickup Phone Number"
+            ref={register({
+              min: {
+                value: 10,
+                message: 'Invalid Phone Number',
+              },
+            })}
+            error={errors.pickup_phone}
+          />
+          <ComboBox2 onChange={changePickupAddress} label="Pickup Address" />
           <div style={{ margin: '1em 0 0' }}>
+            <Typography variant="primary">Add food items* </Typography>
             <section style={{ width: '60%', display: 'inline-block' }}>
               <ComboBox
                 items={vFoods.concat(vMeals)}
@@ -380,6 +401,8 @@ const CreateOrder = () => {
               </IconButton>
             </section>
           ))}
+
+          <Typography>Extra Information</Typography>
           <Input
             type="text"
             name="order_notes"

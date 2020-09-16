@@ -8,10 +8,10 @@
   cursor: pointer;
   transition: opacity 0.2s ease-in;
   &:hover {
-    opacity: 0.5;
+    opacity: 0.8;
   }
   &:focus {
-    opacity: 0.5;
+    opacity: 0.8;
   }
 
   &.active {
@@ -37,5 +37,12 @@
     color: $gray-100;
     background-color: $gray-300;
     cursor: initial;
+  }
+  &.no-hover {
+    padding: 5px;
+    &:hover {
+      opacity: 1;
+      transform: translateY(-4px);
+    }
   }
 }

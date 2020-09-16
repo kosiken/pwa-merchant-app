@@ -77,12 +77,10 @@ const Auththenticated = () => {
       <Router>
         <Switch>
           <Route exact path="/signup">
-            {' '}
-            <Redirect to="/create-delivery-request" />
+            <Redirect to="/welcome" />
           </Route>
           <Route exact path="/">
-            {' '}
-            <Redirect to="/welcome" />
+            <Redirect to="/create-delivery-request" />
           </Route>{' '}
           <Route exact path="/welcome">
             <TopBar title="Welcome" />

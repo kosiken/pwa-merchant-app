@@ -1,31 +1,39 @@
 import React, { useState } from 'react';
 // import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { Input, Button, Toast, Typography } from '../components';
+
+import { Input, Button, Toast, Typography, CardInput } from '../components';
 //import api from '../api';
 import { Link } from 'react-router-dom';
-//import { useSnackbar } from 'notistack';
 
 const CreateCard = ({ component, handleDone }) => {
   //  const { enqueueSnackbar } = useSnackbar();
 
   // eslint-disable-next-line no-unused-vars
-  const [key, setKey] = useState('');
+
   const { register, handleSubmit, errors } = useForm();
   let [isLoading, setLoading] = useState(false);
   // function handleOpen(m) {
   // setKey(enqueueSnackbar(m));
   // }
-
-  function changeExpiry(e) {
-    console.log(e.target.value);
-    if (e.target.value.length === 2) {
-      e.target.value += '/';
+  function formatInput(value) {
+    let ret = '',
+      index = 0;
+    for (let letter of value) {
+      if (index === 2) ret += '/';
+      ret += letter;
+      index++;
     }
+
+    return ret;
+  }
+  function changeExpiry(e) {
+    let value = e.target.value.replace(/\//g, '');
+    e.target.value = formatInput(value);
   }
   const handleSubmitCallback = (s) => {
     if (component) {
-      handleDone(1);
+      handleDone(2);
       return;
     }
 
@@ -42,19 +50,8 @@ const CreateCard = ({ component, handleDone }) => {
         }}
       >
         <div className="container">
-          <Input
-            ref={register({
-              required: {
-                value: true,
-                message: 'Card number is required',
-              },
-            })}
-            error={errors.card_number}
-            type="number"
-            name="card_number"
-            label="Card number"
-          />
-          <div style={{ margin: '1em 0 0' }}>
+          <CardInput />
+          <div style={{ margin: '0 0 1em' }}>
             <section style={{ width: '50%', display: 'inline-block' }}>
               <Input
                 type="text"
@@ -97,7 +94,7 @@ const CreateCard = ({ component, handleDone }) => {
           </div>
 
           <Button loading={isLoading} className="m-0" full>
-            Add Item
+            Add Card
           </Button>
         </div>
       </form>
