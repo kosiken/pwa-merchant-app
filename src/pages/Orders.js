@@ -68,7 +68,7 @@ const Orders = () => {
         }}
       >
         <Link to="/create-order">
-          <Button color="clear"> Create Order</Button>
+          <Button color="clear"> Create Delivery Request</Button>
         </Link>
       </Toast>
 
@@ -147,7 +147,7 @@ const Orders = () => {
                     textAlign: 'center',
                   }}
                 >
-                  No Orders Found
+                  No Delivery Requests Found
                 </Typography>
               </>
             )}

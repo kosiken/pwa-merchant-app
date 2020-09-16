@@ -62,11 +62,11 @@ const Dashboard = () => {
               flexGrow: 1,
             }}
           >
-            Recent Orders
+            Recent Delivery Requests
           </Typography>
 
           <Link to="/create-order">
-            <Button color="clear"> Create Order</Button>
+            <Button color="clear"> Create Delivery Request</Button>
           </Link>
         </div>{' '}
         <Calender onChange={setCurrentDate} />

@@ -55,7 +55,7 @@ const TopBar = ({ title }) => {
       className="col-12 mb-4"
     >
       <Helmet>
-        <title>{'500 Dash | ' + title}</title>
+        <title>{'500dash | ' + title}</title>
       </Helmet>
       <IconButton
         className="navbar-toggler"

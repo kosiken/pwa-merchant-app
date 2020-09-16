@@ -64,13 +64,13 @@ const Order = ({ order, loader, page }) => {
         }}
       >
         <Helmet>
-          <title>{`Order from ${order.VendorCustomer.full_name}`}</title>
+          <title>{`Delivery Request from ${order.VendorCustomer.full_name}`}</title>
         </Helmet>
         <div>
           <div>
             {' '}
             <Typography title className="mb-2">
-              Order Details
+              Delivery Request Details
             </Typography>
             <Typography bold inline>
               Food Items
@@ -178,7 +178,7 @@ const Order = ({ order, loader, page }) => {
         <span className={classes}>{status}</span>
       </td>
       <td>
-        <Link to={'/order/' + order.id}>
+        <Link to={'/delivery-request/' + order.id}>
           <Typography
             style={{
               color: '#5d97c6',

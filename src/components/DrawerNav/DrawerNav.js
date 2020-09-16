@@ -14,7 +14,7 @@ import {
 
 let links = [
   {
-    url: '/',
+    url: '/home',
     name: 'Home',
     icon: <HomeIcon />,
   },
@@ -29,8 +29,8 @@ let links = [
   //   icon: <Database />,
   // },
   {
-    url: '/orders',
-    name: 'Orders',
+    url: '/delivery-requests',
+    name: 'Delivery Requests',
     icon: <ShoppingBag />,
   },
   {

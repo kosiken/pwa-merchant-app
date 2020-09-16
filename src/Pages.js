@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import $script from 'scriptjs';
 import { Container, Row, Col, Image, Alert } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { TopBar, DrawerNav, Typography, Button } from './components';
 import { FiHome as HomeIcon } from 'react-icons/fi';
@@ -75,7 +75,12 @@ const Auththenticated = () => {
       </Alert>
       <Router>
         <Switch>
+          {' '}
           <Route exact path="/">
+            {' '}
+            <Redirect to="/create-delivery-request" />
+          </Route>
+          <Route exact path="/home">
             <TopBar title="Home" />
             <DrawerNav />{' '}
             <main
@@ -87,8 +92,8 @@ const Auththenticated = () => {
               <Dashboard />
             </main>
           </Route>
-          <Route exact path="/orders">
-            <TopBar title="Orders" /> <DrawerNav />
+          <Route exact path="/delivery-requests">
+            <TopBar title="Delivery Requests" /> <DrawerNav />
             <main
               id="contents"
               style={{
@@ -98,8 +103,8 @@ const Auththenticated = () => {
               <Orders />
             </main>
           </Route>
-          <Route exact path="/create-order">
-            <TopBar title="Create Order" /> <DrawerNav />{' '}
+          <Route exact path="/create-delivery-request">
+            <TopBar title="Create Delivery Request" /> <DrawerNav />{' '}
             <main
               id="contents"
               style={{
@@ -177,8 +182,8 @@ const Auththenticated = () => {
               <Customers />
             </main>
           </Route>
-          <Route exact path="/order/:id">
-            <TopBar title="Order Summary" /> <DrawerNav />{' '}
+          <Route exact path="/delivery-request/:id">
+            <TopBar title="Delivery Request Summary" /> <DrawerNav />{' '}
             <main
               id="contents"
               style={{
@@ -274,12 +279,12 @@ const UnAuththenticated = () => {
                 }}
                 inline
               >
-                {' 500 Dash'}
+                {' 500dash'}
               </Typography>
             </Typography>
 
             <Typography>
-              500 Dash is a product from{' '}
+              {'500dash is a food delivery service from '}
               <a href="https://500chow.com">
                 <Typography
                   style={{
@@ -290,8 +295,8 @@ const UnAuththenticated = () => {
                   {'500 chow '}
                 </Typography>
               </a>
-              that allows food vendors and resturants to deliver to their
-              customers using our delivery service
+              {'that gives food vendors and restaurants the ability to deliver meals to' +
+                ' their customers in the best possible time and with great service'}
             </Typography>
           </div>
           <a href="#f-main">

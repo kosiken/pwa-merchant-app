@@ -53,8 +53,8 @@ const OrderPage = () => {
           alignItems: 'center',
         }}
       >
-        <Typography inline>No Such Order exists</Typography>
-        <Link to="/orders">
+        <Typography inline>No Such Delivery Request exists</Typography>
+        <Link to="/create-delivery-request">
           <Button color="clear"> Create</Button>
         </Link>
       </Toast>
