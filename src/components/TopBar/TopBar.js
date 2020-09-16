@@ -52,7 +52,7 @@ const TopBar = ({ title }) => {
         backgroundColor: '#011627',
         alignItems: 'center',
       }}
-      className="col-12 mb-4"
+      className="col-12"
     >
       <Helmet>
         <title>{'500dash | ' + title}</title>

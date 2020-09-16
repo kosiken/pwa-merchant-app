@@ -55,7 +55,7 @@ const Dashboard = () => {
   return (
     <div style={{ minHeight: '100vh' }}>
       <Container>
-        <div className="flex center mb-4">
+        <div className="flex center mt-4 mb-4">
           <Typography
             title
             style={{
@@ -65,7 +65,7 @@ const Dashboard = () => {
             Recent Delivery Requests
           </Typography>
 
-          <Link to="/create-order">
+          <Link to="/create-delivery-request">
             <Button color="clear"> Create Delivery Request</Button>
           </Link>
         </div>{' '}

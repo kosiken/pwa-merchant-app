@@ -75,7 +75,10 @@ const Auththenticated = () => {
       </Alert>
       <Router>
         <Switch>
-          {' '}
+          <Route exact path="/signup">
+            {' '}
+            <Redirect to="/create-delivery-request" />
+          </Route>
           <Route exact path="/">
             {' '}
             <Redirect to="/create-delivery-request" />

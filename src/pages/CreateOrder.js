@@ -15,7 +15,6 @@ import {
   ComboBox,
   ComboBox2,
   ComboBox0,
-  Toast,
   Loader,
 } from '../components';
 import { v4 as uuid } from 'uuid';
@@ -210,21 +209,10 @@ const CreateOrder = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh' }}>
+    <div style={{ minHeight: '100vh' }} className="mt-4">
       <Loader backdrop open={submitting}>
         <Typography> Creating order</Typography>
       </Loader>
-      <Toast
-        color="primary"
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Link to="/">
-          <Button color="clear"> Back</Button>
-        </Link>
-      </Toast>
 
       <SwitchBox
         options={['Existing Customer', 'New Customer']}

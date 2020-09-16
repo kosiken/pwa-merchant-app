@@ -60,7 +60,26 @@ const OrderPage = () => {
       </Toast>
     );
   }
-  return <Order order={order} page />;
+  return (
+    <>
+      <Toast
+        color="info"
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Typography
+          inline
+        >{`Delivery Request from ${order.VendorCustomer.full_name}`}</Typography>
+        <Link to="/home">
+          <Button color="clear"> Home</Button>
+        </Link>
+      </Toast>
+      <Order order={order} page />
+    </>
+  );
 };
 
 export default OrderPage;
