@@ -18,7 +18,11 @@ const OnboardProgress = ({ pages, onChange }) => {
           const classes = classNames(styles[page.status]);
           if (page.status === 'done') {
             return (
-              <IconButton key={'onboarding' + i} onClick={() => onChange(i)}>
+              <IconButton
+                variant="no-hover"
+                key={'onboarding' + i}
+                onClick={() => onChange(i)}
+              >
                 <Avatar className={classes}>
                   <CheckIcon />
                 </Avatar>
@@ -26,7 +30,11 @@ const OnboardProgress = ({ pages, onChange }) => {
             );
           }
           return (
-            <IconButton key={'onboarding' + i} onClick={() => onChange(i)}>
+            <IconButton
+              variant="no-hover"
+              key={'onboarding' + i}
+              onClick={() => onChange(i)}
+            >
               <Avatar className={classes} e>
                 <Typography inline> {'' + (i + 1)} </Typography>
               </Avatar>

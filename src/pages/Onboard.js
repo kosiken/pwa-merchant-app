@@ -40,6 +40,22 @@ const Onboard = () => {
     setPages(pages);
     setCurrentIndex(index);
   }
+  const NextClick = () => {
+    if (pages[currentIndex + 1].status !== 'done')
+      pages[currentIndex + 1].status = 'active';
+    if (pages[currentIndex].status !== 'done')
+      pages[currentIndex].status = 'pending';
+    setPages(pages);
+    setCurrentIndex(currentIndex + 1);
+  };
+
+  const skipClick = () => {
+    if (pages[currentIndex].status !== 'done')
+      pages[currentIndex].status = 'pending';
+    pages[3].status = 'active';
+    setPages(pages);
+    setCurrentIndex(3);
+  };
 
   function renderPage() {
     if (currentIndex === 3) {
@@ -54,18 +70,6 @@ const Onboard = () => {
               Welcome aboard to 500dash, now you've signed up there are a few
               things we want you to do
             </Typography>
-            <Button
-              color="clear"
-              onClick={() => {
-                pages[0].status = 'done';
-                pages[1].status = 'active';
-                setPages(pages);
-                setCurrentIndex(1);
-              }}
-            >
-              {' '}
-              Next
-            </Button>
           </Toast>
           <div style={{ textAlign: 'center' }}>
             <Image src={welcome} />
@@ -97,7 +101,14 @@ const Onboard = () => {
               Welcome aboard to 500dash, now you've signed up there are a few
               things we want you to do
             </Typography>
-            <Button color="clear"> Next</Button>
+            <Button color="clear" onClick={NextClick}>
+              {' '}
+              Next
+            </Button>
+            <Button color="clear" onClick={skipClick}>
+              {' '}
+              Skip
+            </Button>
           </Toast>
           <CreateFoodItem
             component
@@ -122,7 +133,14 @@ const Onboard = () => {
               Welcome aboard to 500dash, now you've signed up there are a few
               things we want you to do
             </Typography>
-            <Button color="clear"> Next</Button>
+            <Button color="clear" onClick={NextClick}>
+              {' '}
+              Next
+            </Button>{' '}
+            <Button color="clear" onClick={skipClick}>
+              {' '}
+              Skip
+            </Button>
           </Toast>
           <Customers
             component
@@ -147,7 +165,14 @@ const Onboard = () => {
               Welcome aboard to 500dash, now you've signed up there are a few
               things we want you to do
             </Typography>
-            <Button color="clear"> Next</Button>
+            <Button color="clear" onClick={NextClick}>
+              {' '}
+              Next
+            </Button>{' '}
+            <Button color="clear" onClick={skipClick}>
+              {' '}
+              Skip
+            </Button>
           </Toast>
           <CreateCard
             component
@@ -165,6 +190,7 @@ const Onboard = () => {
   return (
     <Container className="mt-4">
       <OnboardProgress pages={pages} onChange={changePage} />
+
       {renderPage()}
       <br />
       <Typography
