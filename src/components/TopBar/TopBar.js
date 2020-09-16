@@ -52,10 +52,10 @@ const TopBar = ({ title }) => {
         backgroundColor: '#011627',
         alignItems: 'center',
       }}
-      className="col-12 mb-4"
+      className="col-12"
     >
       <Helmet>
-        <title>{'500 Dash | ' + title}</title>
+        <title>{'500dash | ' + title}</title>
       </Helmet>
       <IconButton
         className="navbar-toggler"
@@ -74,7 +74,7 @@ const TopBar = ({ title }) => {
             lineHeight: '1.2em',
           }}
         >
-          500 Dash
+          500dash
         </Typography>
       </div>
 

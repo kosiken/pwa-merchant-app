@@ -18,6 +18,8 @@ import Calender from './Calendar/Calender';
 import FoodListItem from './FoodListItem/FoodListItem';
 import Meal from './Meal/Meal';
 import DrawerNav from './DrawerNav/DrawerNav';
+import OnboardProgress from './OnboardProgress/OnboardProgress';
+
 export {
   Input,
   Button,
@@ -38,4 +40,5 @@ export {
   DrawerNav,
   Meal,
   ErrorComponent,
+  OnboardProgress,
 };

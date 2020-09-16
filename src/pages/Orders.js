@@ -59,7 +59,7 @@ const Orders = () => {
   }, [current, orders]);
 
   return (
-    <div>
+    <div className="mt-4">
       <Toast
         color="primary"
         style={{
@@ -67,8 +67,8 @@ const Orders = () => {
           justifyContent: 'flex-end',
         }}
       >
-        <Link to="/create-order">
-          <Button color="clear"> Create Order</Button>
+        <Link to="/create-delivery-request">
+          <Button color="clear"> Create Delivery Request</Button>
         </Link>
       </Toast>
 
@@ -147,7 +147,7 @@ const Orders = () => {
                     textAlign: 'center',
                   }}
                 >
-                  No Orders Found
+                  No Delivery Requests Found
                 </Typography>
               </>
             )}

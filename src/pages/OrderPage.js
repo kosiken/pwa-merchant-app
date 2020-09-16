@@ -53,14 +53,33 @@ const OrderPage = () => {
           alignItems: 'center',
         }}
       >
-        <Typography inline>No Such Order exists</Typography>
-        <Link to="/orders">
+        <Typography inline>No Such Delivery Request exists</Typography>
+        <Link to="/create-delivery-request">
           <Button color="clear"> Create</Button>
         </Link>
       </Toast>
     );
   }
-  return <Order order={order} page />;
+  return (
+    <>
+      <Toast
+        color="info"
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Typography
+          inline
+        >{`Delivery Request from ${order.VendorCustomer.full_name}`}</Typography>
+        <Link to="/home">
+          <Button color="clear"> Home</Button>
+        </Link>
+      </Toast>
+      <Order order={order} page />
+    </>
+  );
 };
 
 export default OrderPage;
