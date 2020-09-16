@@ -196,7 +196,7 @@ const Onboard = () => {
       <Typography
         style={{
           textAlign: 'center',
-          position: 'absolute',
+     
           display: 'block',
           bottom: '0',
           left: '0',
