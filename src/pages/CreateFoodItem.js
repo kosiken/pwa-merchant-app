@@ -6,7 +6,7 @@ import api from '../api';
 import { Link } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-const CreateFoodItem = ({component, handleDone}) => {
+const CreateFoodItem = ({ component, handleDone }) => {
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
@@ -23,9 +23,9 @@ const CreateFoodItem = ({component, handleDone}) => {
       .createFood(s)
       .then((food) => {
         dispatch({ type: 'ADD_FOOD', food });
-        if(component){
-        handleDone(1)
- return;
+        if (component) {
+          handleDone(1);
+          return;
         }
         handleOpen('Food Item Created');
         setLoading(false);
@@ -36,8 +36,9 @@ const CreateFoodItem = ({component, handleDone}) => {
       });
   };
 
-if(component){
- return (      <form
+  if (component) {
+    return (
+      <form
         onSubmit={handleSubmit(handleSubmitCallback)}
         className="f-form"
         style={{
@@ -84,8 +85,8 @@ if(component){
           </Button>
         </div>
       </form>
-      );
-}
+    );
+  }
   return (
     <div style={{ minHeight: '100vh' }}>
       <Toast

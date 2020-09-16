@@ -1,43 +1,40 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { Input, Button, Checkbox, Toast, Typography } from '../components';
-import api from '../api';
+import { Input, Button, Toast, Typography } from '../components';
+//import api from '../api';
 import { Link } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
+//import { useSnackbar } from 'notistack';
 
-const CreateCard = ({component, handleDone}) => {
-  const { enqueueSnackbar } = useSnackbar();
-  const dispatch = useDispatch();
+const CreateCard = ({ component, handleDone }) => {
+  //  const { enqueueSnackbar } = useSnackbar();
+
   // eslint-disable-next-line no-unused-vars
   const [key, setKey] = useState('');
   const { register, handleSubmit, errors } = useForm();
   let [isLoading, setLoading] = useState(false);
-  function handleOpen(m) {
-    setKey(enqueueSnackbar(m));
-  }
+  // function handleOpen(m) {
+  // setKey(enqueueSnackbar(m));
+  // }
 
+  function changeExpiry(e) {
+    console.log(e.target.value);
+    if (e.target.value.length === 2) {
+      e.target.value += '/';
+    }
+  }
   const handleSubmitCallback = (s) => {
-    setLoading(true);
-    api
-      .createFood(s)
-      .then((food) => {
-        dispatch({ type: 'ADD_FOOD', food });
-        if(component){
-        handleDone(1)
- return;
-        }
-        handleOpen('Food Item Created');
-        setLoading(false);
-      })
-      .catch((err) => {
-        handleOpen(err.data.error);
-        setLoading(false);
-      });
+    if (component) {
+      handleDone(1);
+      return;
+    }
+
+    setLoading(false);
   };
 
-if(component){
- return (      <form
+  if (component) {
+    return (
+      <form
         onSubmit={handleSubmit(handleSubmitCallback)}
         className="f-form"
         style={{
@@ -52,40 +49,60 @@ if(component){
                 message: 'Card number is required',
               },
             })}
-            error={errors.name}
+            error={errors.card_number}
             type="number"
-            name="name"
-            label="Name"
-            style={{ margin: '0 auto' }}
+            name="card_number"
+            label="Card number"
           />
-          <Input
-            type="text"
-            name="price"
-            label="Price"
-            style={{ margin: '0 auto' }}
-            ref={register({
-              required: {
-                value: true,
-                message: 'Price is required',
-              },
-              pattern: {
-                value: /^[+-]?([0-9]*[.])?[0-9]+$/,
-                message: 'Invalid price',
-              },
-            })}
-            error={errors.price}
-          />
-          <div style={{ margin: '20px' }}>
-            <Checkbox name="is_available" label="Available?" ref={register()} />
+          <div style={{ margin: '1em 0 0' }}>
+            <section style={{ width: '50%', display: 'inline-block' }}>
+              <Input
+                type="text"
+                name="expiry"
+                onChange={changeExpiry}
+                label="MM/YY"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: 'You need to enter this value',
+                  },
+                  pattern: {
+                    value: /^\d{2}\/\d{2}$/,
+                    message: 'Invalid Expiry',
+                  },
+                })}
+                error={errors.expiry}
+              />
+            </section>
+            <section
+              style={{
+                width: '30%',
+                marginLeft: '10%',
+
+                display: 'inline-block',
+              }}
+            >
+              <Input
+                type="number"
+                name="cyc"
+                label="CYC"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: 'Card CYC is required',
+                  },
+                })}
+              />
+            </section>
           </div>
 
-          <Button loading={isLoading} full>
+          <Button loading={isLoading} className="m-0" full>
             Add Item
           </Button>
         </div>
       </form>
-      );
-}
+    );
+  }
   return (
     <div style={{ minHeight: '100vh' }}>
       <Toast
@@ -113,37 +130,57 @@ if(component){
             ref={register({
               required: {
                 value: true,
-                message: 'Food name is required',
+                message: 'Card number is required',
               },
             })}
-            error={errors.name}
-            type="text"
-            name="name"
-            label="Name"
-            style={{ margin: '0 auto' }}
+            error={errors.card_number}
+            type="number"
+            name="card_number"
+            label="Card number"
           />
-          <Input
-            type="text"
-            name="price"
-            label="Price"
-            style={{ margin: '0 auto' }}
-            ref={register({
-              required: {
-                value: true,
-                message: 'Price is required',
-              },
-              pattern: {
-                value: /^[+-]?([0-9]*[.])?[0-9]+$/,
-                message: 'Invalid price',
-              },
-            })}
-            error={errors.price}
-          />
-          <div style={{ margin: '20px' }}>
-            <Checkbox name="is_available" label="Available?" ref={register()} />
+          <div style={{ margin: '1em 0 0' }}>
+            <section style={{ width: '50%', display: 'inline-block' }}>
+              <Input
+                type="text"
+                name="expiry"
+                onChange={changeExpiry}
+                label="MM/YY"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: 'You need to enter this value',
+                  },
+                  pattern: {
+                    value: /^\d{2}\/\d{2}$/,
+                    message: 'Invalid Expiry',
+                  },
+                })}
+                error={errors.expiry}
+              />
+            </section>
+            <section
+              style={{
+                width: '30%',
+                marginLeft: '10%',
+
+                display: 'inline-block',
+              }}
+            >
+              <Input
+                type="number"
+                name="cyc"
+                label="CYC"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: 'Card CYC is required',
+                  },
+                })}
+              />
+            </section>
           </div>
 
-          <Button loading={isLoading} full>
+          <Button loading={isLoading} className="m-0" full>
             Add Item
           </Button>
         </div>

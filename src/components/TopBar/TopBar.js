@@ -74,7 +74,7 @@ const TopBar = ({ title }) => {
             lineHeight: '1.2em',
           }}
         >
-         500dash
+          500dash
         </Typography>
       </div>
 

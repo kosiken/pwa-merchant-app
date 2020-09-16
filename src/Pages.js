@@ -86,10 +86,8 @@ const Auththenticated = () => {
           </Route>{' '}
           <Route exact path="/welcome">
             <TopBar title="Welcome" />
-      <span id="drawer"/>
-            <main
-
-            >
+            <span id="drawer" />
+            <main>
               <Onboard />
             </main>
           </Route>
