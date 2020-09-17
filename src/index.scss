@@ -212,8 +212,8 @@ main {
     padding: 20px;
   }
 }
-.navbar-toggler{
-display: inline-block;
+.navbar-toggler {
+  display: inline-block;
 }
 .food-items {
   display: grid;
@@ -262,9 +262,9 @@ display: inline-block;
   .calender {
     overflow-x: hidden;
   }
-  .navbar-toggler{
-display: none;
-}
+  .navbar-toggler {
+    display: none;
+  }
 }
 
 @media (min-width: 1200px) {

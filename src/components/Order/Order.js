@@ -58,7 +58,7 @@ const Order = ({ order, loader, page }) => {
   if (page)
     return (
       <Container
-        className="mt-2"
+        className="mt-4"
         style={{
           maxWidth: '600px',
         }}

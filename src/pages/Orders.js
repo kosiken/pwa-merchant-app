@@ -10,6 +10,7 @@ import {
   Order,
   ErrorComponent,
 } from '../components';
+import { Container } from 'react-bootstrap';
 import { FiFileText as PaperIcon } from 'react-icons/fi';
 
 const Orders = () => {
@@ -60,18 +61,20 @@ const Orders = () => {
 
   return (
     <div className="mt-4">
-      <Toast
-        color="primary"
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-        }}
-      >
-        <Link to="/create-delivery-request">
-          <Button color="clear"> Create Delivery Request</Button>
-        </Link>
-      </Toast>
-
+      <Container>
+        {' '}
+        <Toast
+          color="primary"
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Link to="/create-delivery-request">
+            <Button color="clear"> Create Delivery Request</Button>
+          </Link>
+        </Toast>
+      </Container>
       <div className="container">
         <div className="filters">
           {statuses.map((status, i) => (

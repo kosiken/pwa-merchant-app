@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Modal } from 'react-bootstrap';
+// import { Modal } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
 import api from '../api';
@@ -17,10 +17,30 @@ import {
   ComboBox0,
   Loader,
 } from '../components';
+import { withStyles } from '@material-ui/core/styles';
 import { v4 as uuid } from 'uuid';
+import Tooltip from '@material-ui/core/Tooltip';
 
 // import { Link } from "react-router-dom";
-import { FiPlus as PlusIcon, FiX as CloseIcon } from 'react-icons/fi';
+import {
+  FiPlus as PlusIcon,
+  FiHelpCircle as InfoIcon,
+  FiX as CloseIcon,
+} from 'react-icons/fi';
+
+const HelpInfo = {
+  recepient: `This information helps us know where to 
+deliver your products`,
+};
+const HtmlTooltip = withStyles((theme) => ({
+  tooltip: {
+    backgroundColor: 'rgba(255, 220, 74, 0.21)',
+    color: '#e38000',
+    maxWidth: 220,
+    fontSize: theme.typography.pxToRem(12),
+    border: '1px solid #e38000',
+  },
+}))(Tooltip);
 
 const CreateOrder = () => {
   let [tab, setTab] = useState('New Recepient');
@@ -61,6 +81,10 @@ const CreateOrder = () => {
   let quantityRef = useRef(null);
   const { register, handleSubmit, errors, getValues } = useForm();
   const handleSubmitCallback = (s) => {
+    if (!foodItems.length) {
+      handleOpen("You haven't added any delivery items");
+      return;
+    }
     setSubmiting(true);
     console.log(pickupAddress);
     let food_items = foodItems;
@@ -181,7 +205,7 @@ const CreateOrder = () => {
         }
         let customers;
         if (!vendorCustomers.length) {
-          customers = await api.getRecepients();
+          customers = await api.getCustomers();
           // customers.forEach((i) => (i.Addresses = Address));
           dispatch({
             type: 'GET_CUSTOMERS',
@@ -232,10 +256,19 @@ const CreateOrder = () => {
         ref={formRef}
       >
         <div className="container">
-          <Typography small variant="primary">
+          <Typography small variant="primary" style={{ display: 'block' }}>
             Required*
           </Typography>
-          <Typography variant="primary">Recepient Information*</Typography>
+          <HtmlTooltip
+            title={<Typography inline>{HelpInfo.recepient}</Typography>}
+            placement="right"
+          >
+            <div style={{ display: 'inline-block' }}>
+              <Typography>
+                Recepient Information <InfoIcon />{' '}
+              </Typography>
+            </div>
+          </HtmlTooltip>
           {tab === 'Existing Recepient' && (
             <>
               <ComboBox0
@@ -278,7 +311,7 @@ const CreateOrder = () => {
               <Input
                 type="text"
                 name="name"
-                label="Recepient Name"
+                label="Recepient Name*"
                 ref={register({
                   required: {
                     value: true,
@@ -291,7 +324,7 @@ const CreateOrder = () => {
               <Input
                 type="tel"
                 name="phone"
-                label="Recepient Phone Number"
+                label="Recepient Phone Number*"
                 ref={register({
                   required: {
                     value: true,
@@ -311,7 +344,7 @@ const CreateOrder = () => {
             tab === 'New Recepient') && (
             <ComboBox2
               onChange={changeCurrentAddress}
-              label="Recepient Address"
+              label="Recepient Address*"
             />
           )}
           {tab === 'New Recepient' && (
@@ -322,7 +355,16 @@ const CreateOrder = () => {
               />
             </div>
           )}
-          <Typography>Pickup Information</Typography>
+          <HtmlTooltip
+            title={<Typography inline>{HelpInfo.recepient}</Typography>}
+            placement="right"
+          >
+            <div style={{ display: 'inline-block' }}>
+              <Typography>
+                Pickup Information <InfoIcon />{' '}
+              </Typography>
+            </div>
+          </HtmlTooltip>
           <Input
             type="tel"
             name="pickup_phone"
@@ -337,7 +379,17 @@ const CreateOrder = () => {
           />
           <ComboBox2 onChange={changePickupAddress} label="Pickup Address" />
           <div style={{ margin: '1em 0 0' }}>
-            <Typography variant="primary">Add food items* </Typography>
+            <HtmlTooltip
+              title={<Typography inline>{HelpInfo.recepient}</Typography>}
+              placement="right"
+            >
+              <div style={{ display: 'inline-block' }}>
+                <Typography>
+                  Add food items <InfoIcon />{' '}
+                </Typography>
+              </div>
+            </HtmlTooltip>{' '}
+            <br />
             <section style={{ width: '60%', display: 'inline-block' }}>
               <ComboBox
                 items={vFoods.concat(vMeals)}
@@ -356,7 +408,7 @@ const CreateOrder = () => {
                 type="number"
                 name="quantity"
                 onChange={changeQuantity}
-                label="Qty"
+                label="Qty*"
                 ref={quantityRef}
               />
             </section>
@@ -401,8 +453,17 @@ const CreateOrder = () => {
               </IconButton>
             </section>
           ))}
+          <HtmlTooltip
+            title={<Typography inline>{HelpInfo.recepient}</Typography>}
+            placement="right"
+          >
+            <div style={{ display: 'inline-block' }}>
+              <Typography>
+                Extra Information <InfoIcon />{' '}
+              </Typography>
+            </div>
+          </HtmlTooltip>
 
-          <Typography>Extra Information</Typography>
           <Input
             type="text"
             name="order_notes"
@@ -422,27 +483,7 @@ const CreateOrder = () => {
         </div>
       </form>
 
-
-      <Modal show={show}>
-        <Modal.Header>
-          <Typography title>Order Created</Typography>
-        </Modal.Header>
-        <Modal.Body>
-          <Typography>The order was successfully created</Typography>
-        </Modal.Body>
-        <Modal.Footer
-          style={{
-            borderTop: 'none',
-          }}
-        >
-          <Link to={'/order/' + entry}>
-            <Button color="clear"> View </Button>{' '}
-          </Link>{' '}
-          <Link to="/orders">
-            <Button>Continue</Button>
-          </Link>
-        </Modal.Footer>
-      </Modal>
+      {show && <Redirect to={'/interstital?request=' + entry} />}
     </div>
   );
 };

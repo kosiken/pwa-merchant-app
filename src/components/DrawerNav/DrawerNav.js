@@ -8,6 +8,7 @@ import {
   FiUsers as UsersIcon,
   FiFileText as PaperIcon,
   FiShoppingBag as ShoppingBag,
+  FiCreditCard as CreditCardIcon,
   // FiUser as UserIcon,
   // FiDatabase as Database,
 } from 'react-icons/fi';
@@ -37,6 +38,11 @@ let links = [
     url: '/customers',
     name: 'Customers',
     icon: <UsersIcon />,
+  },
+  {
+    url: '/cards',
+    name: 'Cards',
+    icon: <CreditCardIcon />,
   },
   // {
   //   url: '/profile',
