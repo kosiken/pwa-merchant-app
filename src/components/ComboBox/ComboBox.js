@@ -100,7 +100,7 @@ function ComboBox({ items, onChange, loading }) {
 
   return (
     <div className="add-div">
-      <Input type="search" name="food" label="Food" ref={ref} />
+      <Input type="search" name="food" label="Food*" ref={ref} />
       {show && (
         <Foodselect
           Foods={Foods}
