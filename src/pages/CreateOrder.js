@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Modal } from 'react-bootstrap';
+// import { Modal } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
 import api from '../api';
@@ -422,27 +422,7 @@ const CreateOrder = () => {
         </div>
       </form>
 
-
-      <Modal show={show}>
-        <Modal.Header>
-          <Typography title>Order Created</Typography>
-        </Modal.Header>
-        <Modal.Body>
-          <Typography>The order was successfully created</Typography>
-        </Modal.Body>
-        <Modal.Footer
-          style={{
-            borderTop: 'none',
-          }}
-        >
-          <Link to={'/order/' + entry}>
-            <Button color="clear"> View </Button>{' '}
-          </Link>{' '}
-          <Link to="/orders">
-            <Button>Continue</Button>
-          </Link>
-        </Modal.Footer>
-      </Modal>
+      {show && <Redirect to={'/interstital?order=' + entry} />}
     </div>
   );
 };
