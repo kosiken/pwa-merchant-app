@@ -76,7 +76,7 @@ const Auththenticated = () => {
       <Router>
         <Switch>
           <Route exact path="/interstital">
-            <LFRPage />
+            <TopBar title="Interstital" /> <span id="drawer" /> <LFRPage />
           </Route>
           <Route exact path="/signup">
             <Redirect to="/welcome" />

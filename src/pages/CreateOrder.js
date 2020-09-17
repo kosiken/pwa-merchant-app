@@ -181,7 +181,7 @@ const CreateOrder = () => {
         }
         let customers;
         if (!vendorCustomers.length) {
-          customers = await api.getRecepients();
+          customers = await api.getCustomers();
           // customers.forEach((i) => (i.Addresses = Address));
           dispatch({
             type: 'GET_CUSTOMERS',
