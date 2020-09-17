@@ -421,19 +421,8 @@ const CreateOrder = () => {
           </Button>
         </div>
       </form>
-      <Typography style={{ textAlign: 'center' }}>
-        Made with{' '}
-        <span role="img" aria-label="love">
-          ❤️{' '}
-        </span>
-        <span
-          style={{
-            color: '#f0324b',
-          }}
-        >
-          500Chow
-        </span>
-      </Typography>
+
+
       <Modal show={show}>
         <Modal.Header>
           <Typography title>Order Created</Typography>

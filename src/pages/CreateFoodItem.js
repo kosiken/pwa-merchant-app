@@ -36,7 +36,7 @@ const CreateFoodItem = ({ component, handleDone }) => {
       });
   };
 
-  if (component) {
+  function renderForm() {
     return (
       <form
         onSubmit={handleSubmit(handleSubmitCallback)}
@@ -56,13 +56,13 @@ const CreateFoodItem = ({ component, handleDone }) => {
             error={errors.name}
             type="text"
             name="name"
-            label="Name"
+            label="Food Item Name"
             style={{ margin: '0 auto' }}
           />
           <Input
             type="text"
             name="price"
-            label="Price"
+            label="Food Item Price"
             style={{ margin: '0 auto' }}
             ref={register({
               required: {
@@ -87,6 +87,9 @@ const CreateFoodItem = ({ component, handleDone }) => {
       </form>
     );
   }
+
+  if (component) return renderForm();
+
   return (
     <div style={{ minHeight: '100vh' }}>
       <Toast
@@ -101,55 +104,7 @@ const CreateFoodItem = ({ component, handleDone }) => {
           <Button color="clear"> Back</Button>
         </Link>
       </Toast>
-
-      <form
-        onSubmit={handleSubmit(handleSubmitCallback)}
-        className="f-form"
-        style={{
-          marginTop: '1.5em',
-        }}
-      >
-        <div className="container">
-          <Input
-            ref={register({
-              required: {
-                value: true,
-                message: 'Food name is required',
-              },
-            })}
-            error={errors.name}
-            type="text"
-            name="name"
-            label="Name"
-            style={{ margin: '0 auto' }}
-          />
-          <Input
-            type="text"
-            name="price"
-            label="Price"
-            style={{ margin: '0 auto' }}
-            ref={register({
-              required: {
-                value: true,
-                message: 'Price is required',
-              },
-              pattern: {
-                value: /^[+-]?([0-9]*[.])?[0-9]+$/,
-                message: 'Invalid price',
-              },
-            })}
-            error={errors.price}
-          />
-          <div style={{ margin: '20px' }}>
-            <Checkbox name="is_available" label="Available?" ref={register()} />
-          </div>
-
-          <Button loading={isLoading} full>
-            Add Item
-          </Button>
-        </div>
-      </form>
-
+      {renderForm()}
       <Typography style={{ textAlign: 'center' }}>
         Made with{' '}
         <span role="img" aria-label="love">

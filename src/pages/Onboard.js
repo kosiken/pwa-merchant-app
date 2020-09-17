@@ -62,7 +62,6 @@ const Onboard = () => {
       return (
         <>
           <Toast color="info">
-            {' '}
             <Typography title className="h4">
               Welcome
             </Typography>
@@ -93,7 +92,6 @@ const Onboard = () => {
       return (
         <>
           <Toast color="info">
-            {' '}
             <Typography title className="h4">
               Step One
             </Typography>
@@ -102,11 +100,9 @@ const Onboard = () => {
               things we want you to do
             </Typography>
             <Button color="clear" onClick={NextClick}>
-              {' '}
               Next
             </Button>
             <Button color="clear" onClick={skipClick}>
-              {' '}
               Skip
             </Button>
           </Toast>
@@ -134,11 +130,9 @@ const Onboard = () => {
               things we want you to do
             </Typography>
             <Button color="clear" onClick={NextClick}>
-              {' '}
               Next
-            </Button>{' '}
+            </Button>
             <Button color="clear" onClick={skipClick}>
-              {' '}
               Skip
             </Button>
           </Toast>
@@ -157,20 +151,17 @@ const Onboard = () => {
       return (
         <>
           <Toast color="info">
-            {' '}
             <Typography title className="h4">
-              Step Two
+              Step Three
             </Typography>
             <Typography className="m-0">
               Welcome aboard to 500dash, now you've signed up there are a few
               things we want you to do
             </Typography>
             <Button color="clear" onClick={NextClick}>
-              {' '}
               Next
-            </Button>{' '}
+            </Button>
             <Button color="clear" onClick={skipClick}>
-              {' '}
               Skip
             </Button>
           </Toast>
@@ -196,23 +187,23 @@ const Onboard = () => {
       <Typography
         style={{
           textAlign: 'center',
-     
+
           display: 'block',
           bottom: '0',
           left: '0',
           width: '100%',
         }}
       >
-        Made with{' '}
+        {'Made with '}
         <span role="img" aria-label="love">
-          ❤️{' '}
+          ❤️
         </span>
         <span
           style={{
             color: '#f0324b',
           }}
         >
-          500Chow
+          {' 500Chow'}
         </span>
       </Typography>
     </Container>

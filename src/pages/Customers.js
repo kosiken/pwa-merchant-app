@@ -184,7 +184,7 @@ const Customers = ({ component, handleDone }) => {
         setLoading2(false);
       });
   };
-  if (component) {
+  function renderForm() {
     return (
       <form
         className="f-form "
@@ -199,11 +199,11 @@ const Customers = ({ component, handleDone }) => {
           <Input
             type="text"
             name="full_name"
-            label="Customer Name"
+            label="Recepient Name"
             ref={register({
               required: {
                 value: true,
-                message: 'Customer name is required',
+                message: 'Recepient name is required',
               },
             })}
             error={errors.full_name}
@@ -212,11 +212,11 @@ const Customers = ({ component, handleDone }) => {
           <Input
             type="tel"
             name="phone_number"
-            label="Customer Phone Number"
+            label="Recepient Phone Number"
             ref={register({
               required: {
                 value: true,
-                message: 'Customer Phone Number is required',
+                message: 'Recepient Phone Number is required',
               },
 
               min: {
@@ -226,7 +226,10 @@ const Customers = ({ component, handleDone }) => {
             })}
             error={errors.phone_number}
           />
-          <ComboBox2 onChange={changeCurrentAddress} label="Customer Address" />
+          <ComboBox2
+            onChange={changeCurrentAddress}
+            label="Recepient Address"
+          />
 
           <Button
             loading={isLoading}
@@ -236,82 +239,18 @@ const Customers = ({ component, handleDone }) => {
               margin: '0',
             }}
           >
-            Add Customer
+            Add Recepient
           </Button>
         </Container>
       </form>
     );
   }
+  if (component) return renderForm();
   return (
     <>
       <div style={{ minHeight: '100vh' }} className="customerPage">
         <div>
-          <form
-            className="f-form "
-            style={{
-              marginTop: '1.5em',
-              marginBottom: '1em',
-            }}
-            onSubmit={handleSubmit(handleSubmitCallback)}
-            id="five-form"
-          >
-            <Container>
-              <Typography
-                inline
-                style={{
-                  margin: '0 0 1em 1em',
-                  display: 'block',
-                }}
-              >
-                Add Customers
-              </Typography>
-              <Input
-                type="text"
-                name="full_name"
-                label="Customer Name"
-                ref={register({
-                  required: {
-                    value: true,
-                    message: 'Customer name is required',
-                  },
-                })}
-                error={errors.full_name}
-              />
-
-              <Input
-                type="tel"
-                name="phone_number"
-                label="Customer Phone Number"
-                ref={register({
-                  required: {
-                    value: true,
-                    message: 'Customer Phone Number is required',
-                  },
-
-                  min: {
-                    value: 10,
-                    message: 'Invalid Phone Number',
-                  },
-                })}
-                error={errors.phone_number}
-              />
-              <ComboBox2
-                onChange={changeCurrentAddress}
-                label="Customer Address"
-              />
-
-              <Button
-                loading={isLoading}
-                full
-                onClick={handleSubmit(handleSubmitCallback)}
-                style={{
-                  margin: '0',
-                }}
-              >
-                Add Customer
-              </Button>
-            </Container>
-          </form>
+          {renderForm()}
           <Modal
             show={openb}
             onHide={handleClose}
@@ -403,7 +342,7 @@ const Customers = ({ component, handleDone }) => {
             ref={ref}
           />
           {loaded &&
-            [1, 2, 3].map((customer) => (
+            [1, 2, 3, 4, 5].map((customer) => (
               <CustomerListItem key={'customer' + customer} loader />
             ))}
           {items.map((customer) => (
