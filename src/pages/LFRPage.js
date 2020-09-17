@@ -29,7 +29,7 @@ const LFRPage = () => {
       <Container
         className="flex central"
         style={{
-          minHeight: '80vh',
+          minHeight: '60vh',
           alignItems: 'center',
         }}
       >
