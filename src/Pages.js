@@ -20,6 +20,7 @@ import Orders from './pages/Orders';
 import OrderPage from './pages/OrderPage';
 import Onboard from './pages/Onboard';
 import logo from './assets/logo-variant.png';
+import { GOOGLE_MAPS_API_KEY } from './constants';
 
 const Auththenticated = () => {
   const [show, setShow] = React.useState(false);
@@ -28,7 +29,7 @@ const Auththenticated = () => {
   );
   React.useEffect(() => {
     $script(
-      'https://maps.googleapis.com/maps/api/js?key=AIzaSyCDRINRTtuQGCi8P7V8lYPcJkuYW5HIKJA&libraries=places',
+      `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`,
       'google-maps'
     );
     $script.ready(
@@ -50,9 +51,6 @@ const Auththenticated = () => {
         }
       },
       function (depsNotFound) {
-        // foo.js & bar.js may have downloaded
-        // but ['thunk'] dependency was never found
-        // so lazy load it now
         console.log(depsNotFound);
       }
     );

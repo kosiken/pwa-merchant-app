@@ -58,25 +58,6 @@ const EditMeal = () => {
   const handleSubmitCallback = (s) => {
     handleOpen('Unresolved error for meal update');
     return;
-    /* api
-      .editModel(
-       {
-          ...s,
-
-          food_items: foods,
-          model: 'Meal'
-        },
-        token
-      )
-      .then((result) => {
-        setLoading(false);
-        handleOpen('Meal Created');
-      })
-      .catch((err) => {
-        setLoading(false);
-        handleOpen(err.data.error);
-      });
-  */
   };
 
   const changeCurrentFood = (e) => {

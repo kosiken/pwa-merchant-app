@@ -1,6 +1,6 @@
 import React from 'react';
 import Typography from '../Typography/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import BeatLoader from 'react-spinners/BeatLoader';
 import styles from './Button.module.scss';
 import classNames from 'classnames';
 const Button = ({
@@ -22,7 +22,7 @@ const Button = ({
   if (loading) {
     return (
       <button disabled className={classes} {...otherProps}>
-        <CircularProgress />
+        <BeatLoader color="#ffffff" />
       </button>
     );
   }
