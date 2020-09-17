@@ -61,6 +61,10 @@ const CreateOrder = () => {
   let quantityRef = useRef(null);
   const { register, handleSubmit, errors, getValues } = useForm();
   const handleSubmitCallback = (s) => {
+  if (!foodItems.length){
+  handleOpen('You haven\'t added any delivery items');
+  return;
+  }
     setSubmiting(true);
     console.log(pickupAddress);
     let food_items = foodItems;
