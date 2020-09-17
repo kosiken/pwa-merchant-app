@@ -422,7 +422,7 @@ const CreateOrder = () => {
         </div>
       </form>
 
-      {show && <Redirect to={'/interstital?order=' + entry} />}
+      {show && <Redirect to={'/interstital?request=' + entry} />}
     </div>
   );
 };
