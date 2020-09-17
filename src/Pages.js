@@ -5,7 +5,7 @@ import { Container, Row, Col, Image, Alert } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { TopBar, DrawerNav, Typography, Button } from './components';
-import { FiHome as HomeIcon } from 'react-icons/fi';
+import Cards from './pages/Cards';
 import Customers from './pages/Customers';
 import CreateOrder from './pages/CreateOrder';
 import Dashboard from './pages/Dashboard';
@@ -16,6 +16,7 @@ import CreateMeal from './pages/CreateMeal';
 import EditMeal from './pages/EditMeal';
 import FoodItems from './pages/FoodItems';
 import CreateFoodItem from './pages/CreateFoodItem';
+import CreateCard from './pages/CreateCard';
 import Orders from './pages/Orders';
 import OrderPage from './pages/OrderPage';
 import Onboard from './pages/Onboard';
@@ -29,12 +30,13 @@ const Auththenticated = () => {
     'Geolocation is not supported by this browser.'
   );
   React.useEffect(() => {
+    $script(`https://js.paystack.co/v2/inline.js`, 'paystack');
     $script(
       `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`,
       'google-maps'
     );
     $script.ready(
-      ['google-maps'],
+      ['google-maps', 'paystack'],
       () => {
         console.log('depsNotFound');
 
@@ -113,7 +115,7 @@ const Auththenticated = () => {
             >
               <Orders />
             </main>
-          </Route>
+          </Route>{' '}
           <Route exact path="/create-delivery-request">
             <TopBar title="Create Delivery Request" /> <DrawerNav />{' '}
             <main
@@ -123,6 +125,28 @@ const Auththenticated = () => {
               }}
             >
               <CreateOrder />
+            </main>
+          </Route>
+          <Route exact path="/add-card">
+            <TopBar title="Add Card" /> <DrawerNav />{' '}
+            <main
+              id="contents"
+              style={{
+                flexGrow: 1,
+              }}
+            >
+              <CreateCard />
+            </main>
+          </Route>{' '}
+          <Route exact path="/cards">
+            <TopBar title="Cards" /> <DrawerNav />{' '}
+            <main
+              id="contents"
+              style={{
+                flexGrow: 1,
+              }}
+            >
+              <Cards />
             </main>
           </Route>
           <Route exact path="/create-meal">
@@ -206,35 +230,23 @@ const Auththenticated = () => {
             </main>
           </Route>
           <Route path="*" exact={true}>
+            <TopBar title="404" /> <span id="drawer" />
             <Container className="flex central" style={{ textAlign: 'center' }}>
-              <div>
+              <div className="mb-4">
                 <Image
                   src={logo}
                   style={{
                     width: '80px',
                   }}
                 />
-                <Typography
-                  title
-                  className="mt-4 mb-4"
-                  style={{
-                    color: '#ffdc4a',
-                    fontSize: '2em',
-                  }}
-                >
-                  500 dash
-                </Typography>
               </div>
 
-              <Typography color="primary" title>
+              <Typography title className="h4">
                 We can't find that page
               </Typography>
 
-              <Link to="/">
-                <Button color="clear">
-                  {' '}
-                  <HomeIcon /> Home
-                </Button>{' '}
+              <Link to={'/'}>
+                <Button color="clear">Home</Button>
               </Link>
             </Container>
           </Route>{' '}

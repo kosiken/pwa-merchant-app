@@ -248,60 +248,58 @@ const Customers = ({ component, handleDone }) => {
   if (component) return renderForm();
   return (
     <>
-      <div style={{ minHeight: '100vh' }} className="customerPage">
-        <div>
-          {renderForm()}
-          <Modal
-            show={openb}
-            onHide={handleClose}
-            size="md"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-          >
-            <Modal.Body>
-              <form
-                className="f-form"
+      <div className="customerPage">
+        {renderForm()}
+        <Modal
+          show={openb}
+          onHide={handleClose}
+          size="md"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Body>
+            <form
+              className="f-form"
+              style={{
+                marginTop: '1.5em',
+              }}
+              onSubmit={handleSubmitCallback2}
+              id="theForm"
+            >
+              <Typography
+                inline
                 style={{
-                  marginTop: '1.5em',
+                  margin: '0 0 1em 1em',
+                  display: 'block',
                 }}
-                onSubmit={handleSubmitCallback2}
-                id="theForm"
               >
-                <Typography
-                  inline
-                  style={{
-                    margin: '0 0 1em 1em',
-                    display: 'block',
-                  }}
-                >
-                  Edit Customer
-                </Typography>
-                <Input
-                  type="text"
-                  name="full_name2"
-                  label={editing.full_name}
-                  style={{ margin: '0 auto' }}
-                />
+                Edit Customer
+              </Typography>
+              <Input
+                type="text"
+                name="full_name2"
+                label={editing.full_name}
+                style={{ margin: '0 auto' }}
+              />
 
-                <Input
-                  type="tel"
-                  name="phone_number2"
-                  label={editing.phone_number}
-                  style={{ margin: '0 auto' }}
-                />
+              <Input
+                type="tel"
+                name="phone_number2"
+                label={editing.phone_number}
+                style={{ margin: '0 auto' }}
+              />
 
-                <Button loading={isLoading2} full>
-                  Confirm
-                </Button>
-              </form>{' '}
-            </Modal.Body>
-            <Modal.Footer>
-              <Button color="clear" onClick={handleClose}>
-                Close
-              </Button>{' '}
-            </Modal.Footer>
-          </Modal>
-        </div>
+              <Button loading={isLoading2} full>
+                Confirm
+              </Button>
+            </form>{' '}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button color="clear" onClick={handleClose}>
+              Close
+            </Button>{' '}
+          </Modal.Footer>
+        </Modal>
 
         <div className="customers">
           <section

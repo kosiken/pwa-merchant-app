@@ -19,7 +19,6 @@ import FoodListItem from './FoodListItem/FoodListItem';
 import Meal from './Meal/Meal';
 import DrawerNav from './DrawerNav/DrawerNav';
 import OnboardProgress from './OnboardProgress/OnboardProgress';
-import CardInput from './CardInput/CardInput';
 
 export {
   Input,
@@ -42,5 +41,4 @@ export {
   Meal,
   ErrorComponent,
   OnboardProgress,
-  CardInput,
 };

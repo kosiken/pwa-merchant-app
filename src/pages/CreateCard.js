@@ -1,107 +1,149 @@
 import React, { useState } from 'react';
-// import { useDispatch } from 'react-redux';
+import { Container, Image } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
-import { Input, Button, Toast, Typography, CardInput } from '../components';
+import { useSnackbar } from 'notistack';
+import { Button, Toast, Input } from '../components';
 //import api from '../api';
 import { Link } from 'react-router-dom';
+import card from '../assets/card.svg';
 
 const CreateCard = ({ component, handleDone }) => {
   //  const { enqueueSnackbar } = useSnackbar();
-
-  // eslint-disable-next-line no-unused-vars
-
+  const user = useSelector((state) => state.auth.user);
+  const [key, setKey] = React.useState('');
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { register, handleSubmit, errors } = useForm();
+  const [open, setOpen] = React.useState(false);
   let [isLoading, setLoading] = useState(false);
-  // function handleOpen(m) {
-  // setKey(enqueueSnackbar(m));
-  // }
-  function formatInput(value) {
-    let ret = '',
-      index = 0;
-    for (let letter of value) {
-      if (index === 2) ret += '/';
-      ret += letter;
-      index++;
-    }
+  function handleOpen(m) {
+    setKey(enqueueSnackbar(m));
+    setOpen(true);
+  }
+  React.useEffect(() => {
+    const handleClose = () => {
+      setOpen(false);
+      closeSnackbar(key);
+    };
 
-    return ret;
+    let timeout;
+    if (open) {
+      timeout = setTimeout(handleClose, 2000);
+    }
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+  function paystackPay(props) {
+    return new Promise((res, rej) => {
+      const total = 50;
+      const config = {
+        key: 'pk_test_8375cb0559631010056db94e05b725e445435002', // Replace with your public key
+
+        email: props.email,
+
+        amount: total * 100,
+
+        currency: 'NGN', //GHS for Ghana Cedis
+
+        //use your reference or leave empty to have a reference generated for you
+
+        // label: "Optional string that replaces customer email"
+
+        onClose: function () {
+          //   handleOpen('Transaction was not completed, please try again');
+          rej('Transaction was not completed, please try again');
+        },
+
+        callback: function (response) {
+          handleOpen('Payment complete! Thanks for your patronage');
+          res([response.reference, true]);
+        },
+      };
+      const paystackPopup = window.PaystackPop.setup(config);
+      paystackPopup.openIframe();
+    });
   }
-  function changeExpiry(e) {
-    let value = e.target.value.replace(/\//g, '');
-    e.target.value = formatInput(value);
-  }
+
   const handleSubmitCallback = (s) => {
-    if (component) {
-      handleDone(2);
-      return;
-    }
-
-    setLoading(false);
+    paystackPay(s)
+      .then(() => {
+        if (component) {
+          handleDone(2);
+          setLoading(false);
+          return;
+        }
+      })
+      .catch(handleOpen);
   };
 
   if (component) {
     return (
-      <form
-        onSubmit={handleSubmit(handleSubmitCallback)}
-        className="f-form"
-        style={{
-          marginTop: '1.5em',
-        }}
-      >
-        <div className="container">
-          <CardInput />
-          <div style={{ margin: '0 0 1em' }}>
-            <section style={{ width: '50%', display: 'inline-block' }}>
-              <Input
-                type="text"
-                name="expiry"
-                onChange={changeExpiry}
-                label="MM/YY"
-                ref={register({
-                  required: {
-                    value: true,
-                    message: 'You need to enter this value',
-                  },
-                  pattern: {
-                    value: /^\d{2}\/\d{2}$/,
-                    message: 'Invalid Expiry',
-                  },
-                })}
-                error={errors.expiry}
-              />
-            </section>
-            <section
+      <div className="sidebar-body">
+        <form
+          className="f-form"
+          onSubmit={handleSubmit(handleSubmitCallback)}
+          autoComplete={'false'}
+        >
+          {' '}
+          <div style={{ textAlign: 'center' }}>
+            <Image
+              src={card}
               style={{
-                width: '30%',
-                marginLeft: '10%',
-
-                display: 'inline-block',
+                width: '100px',
               }}
-            >
-              <Input
-                type="number"
-                name="cyc"
-                label="CYC"
-                ref={register({
-                  required: {
-                    value: true,
-                    message: 'Card CYC is required',
-                  },
-                })}
-              />
-            </section>
+            />
+            <br /> <br />
           </div>
+          <Input
+            type="email"
+            name="email"
+            label="Email Address"
+            defaultValue={user.email_address}
+            style={{ margin: '0 auto' }}
+            ref={register({
+              required: {
+                value: true,
+                message: 'You need to enter this value',
+              },
+              pattern: {
+                value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
+                message: 'Invalid Email Address',
+              },
+            })}
+            error={errors.email}
+          />
+          <Input
+            label="Phone Number"
+            name={'phone'}
+            defaultValue={user.phone_number}
+            variant="outlined"
+            style={{ margin: '0 auto' }}
+            type="tel"
+            ref={register({
+              required: {
+                value: true,
+                message: 'Phone Number is required',
+              },
 
-          <Button loading={isLoading} className="m-0" full>
+              min: {
+                value: 10,
+                message: 'Invalid Phone Number',
+              },
+            })}
+            error={errors.phone}
+          />{' '}
+          <Button full loading={isLoading}>
             Add Card
           </Button>
-        </div>
-      </form>
+        </form>
+      </div>
     );
   }
   return (
-    <div style={{ minHeight: '100vh' }}>
+    <Container className="mt-4" style={{ minHeight: '100vh' }}>
       <Toast
         color="primary"
         style={{
@@ -110,93 +152,68 @@ const CreateCard = ({ component, handleDone }) => {
           alignItems: 'center',
         }}
       >
-        <Link to="/FoodItems">
+        <Link to="/cards">
           <Button color="clear"> Back</Button>
         </Link>
       </Toast>
-
       <form
-        onSubmit={handleSubmit(handleSubmitCallback)}
         className="f-form"
-        style={{
-          marginTop: '1.5em',
-        }}
+        onSubmit={handleSubmit(handleSubmitCallback)}
+        autoComplete={'false'}
       >
-        <div className="container">
-          <Input
-            ref={register({
-              required: {
-                value: true,
-                message: 'Card number is required',
-              },
-            })}
-            error={errors.card_number}
-            type="number"
-            name="card_number"
-            label="Card number"
+        {' '}
+        <div style={{ textAlign: 'center' }}>
+          <Image
+            src={card}
+            style={{
+              width: '100px',
+            }}
           />
-          <div style={{ margin: '1em 0 0' }}>
-            <section style={{ width: '50%', display: 'inline-block' }}>
-              <Input
-                type="text"
-                name="expiry"
-                onChange={changeExpiry}
-                label="MM/YY"
-                ref={register({
-                  required: {
-                    value: true,
-                    message: 'You need to enter this value',
-                  },
-                  pattern: {
-                    value: /^\d{2}\/\d{2}$/,
-                    message: 'Invalid Expiry',
-                  },
-                })}
-                error={errors.expiry}
-              />
-            </section>
-            <section
-              style={{
-                width: '30%',
-                marginLeft: '10%',
-
-                display: 'inline-block',
-              }}
-            >
-              <Input
-                type="number"
-                name="cyc"
-                label="CYC"
-                ref={register({
-                  required: {
-                    value: true,
-                    message: 'Card CYC is required',
-                  },
-                })}
-              />
-            </section>
-          </div>
-
-          <Button loading={isLoading} className="m-0" full>
-            Add Item
-          </Button>
+          <br /> <br />
         </div>
-      </form>
+        <Input
+          type="email"
+          name="email"
+          label="Email Address"
+          defaultValue={user.email_address}
+          style={{ margin: '0 auto' }}
+          ref={register({
+            required: {
+              value: true,
+              message: 'You need to enter this value',
+            },
+            pattern: {
+              value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
+              message: 'Invalid Email Address',
+            },
+          })}
+          error={errors.email}
+        />
+        <Input
+          label="Phone Number"
+          name={'phone'}
+          defaultValue={user.phone_number}
+          variant="outlined"
+          style={{ margin: '0 auto' }}
+          type="tel"
+          ref={register({
+            required: {
+              value: true,
+              message: 'Phone Number is required',
+            },
 
-      <Typography style={{ textAlign: 'center' }}>
-        Made with{' '}
-        <span role="img" aria-label="love">
-          ❤️{' '}
-        </span>
-        <span
-          style={{
-            color: '#f0324b',
-          }}
-        >
-          500Chow
-        </span>
-      </Typography>
-    </div>
+            min: {
+              value: 10,
+              message: 'Invalid Phone Number',
+            },
+          })}
+          error={errors.phone}
+        />{' '}
+        <Button full loading={isLoading}>
+          Add Card
+        </Button>
+      </form>
+    </Container>
   );
 };
 
