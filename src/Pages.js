@@ -19,6 +19,7 @@ import CreateFoodItem from './pages/CreateFoodItem';
 import Orders from './pages/Orders';
 import OrderPage from './pages/OrderPage';
 import Onboard from './pages/Onboard';
+import LFRPage from './pages/LFRPage';
 import logo from './assets/logo-variant.png';
 import { GOOGLE_MAPS_API_KEY } from './constants';
 
@@ -74,12 +75,15 @@ const Auththenticated = () => {
       </Alert>
       <Router>
         <Switch>
+          <Route exact path="/interstital">
+            <LFRPage />
+          </Route>
           <Route exact path="/signup">
             <Redirect to="/welcome" />
           </Route>
           <Route exact path="/">
             <Redirect to="/create-delivery-request" />
-          </Route>{' '}
+          </Route>
           <Route exact path="/welcome">
             <TopBar title="Welcome" />
             <span id="drawer" />
@@ -89,7 +93,7 @@ const Auththenticated = () => {
           </Route>
           <Route exact path="/home">
             <TopBar title="Home" />
-            <DrawerNav />{' '}
+            <DrawerNav />
             <main
               id="contents"
               style={{

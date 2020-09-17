@@ -1,5 +1,5 @@
 import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import BeatLoader from 'react-spinners/BeatLoader';
 import Backdrop from '@material-ui/core/Backdrop';
 import './Loader.scss';
 
@@ -19,7 +19,7 @@ const Loader = ({ backdrop, open, children }) => {
             textAlign: 'center',
           }}
         >
-          <CircularProgress color="inherit" />
+          <BeatLoader color="#ffffff" />
           {children}
         </div>
       </Backdrop>
@@ -27,7 +27,7 @@ const Loader = ({ backdrop, open, children }) => {
   }
   return (
     <div className="loader">
-      <CircularProgress color="#f0324b" />
+      <BeatLoader color="#f0324b" />
     </div>
   );
 };
