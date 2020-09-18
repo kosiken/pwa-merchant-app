@@ -117,7 +117,7 @@ const CreateOrder = () => {
             phone_number: customer ? customer.phone_number : getValues('phone'),
             food_items: oldItems.concat(newItems),
             pickup_phone: s.pickup_phone,
-            order_notes: s.order_notes,
+            notes: s.order_notes,
           };
           if (chosenLocation === 0 || tab === 'New Recepient') {
             body = {
