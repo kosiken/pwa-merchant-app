@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Image } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-
+import { PAYSTACK_KEY } from '../constants';
 import { useSnackbar } from 'notistack';
 import { Button, Toast, Input } from '../components';
 //import api from '../api';
@@ -40,7 +40,7 @@ const CreateCard = ({ component, handleDone }) => {
     return new Promise((res, rej) => {
       const total = 50;
       const config = {
-        key: 'pk_test_8375cb0559631010056db94e05b725e445435002', // Replace with your public key
+        key: PAYSTACK_KEY, // Replace with your public key
 
         email: props.email,
 

@@ -44,6 +44,7 @@ const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
+    console.log('ran');
     setItems(
       orders.filter((v) => {
         let m = moment(v.createdAt);
@@ -51,7 +52,7 @@ const Dashboard = () => {
       })
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentDate]);
+  }, [orders, currentDate]);
   return (
     <div style={{ minHeight: '100vh' }}>
       <Container>
