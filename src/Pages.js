@@ -39,16 +39,30 @@ const Auththenticated = () => {
       ['google-maps', 'paystack'],
       () => {
         console.log('depsNotFound');
+        let deps = '';
+        if (!window.PaystackPop) deps += ' paystack ';
 
         if (!window.google) {
-          setMessage('failed to load dependencies');
+          deps += 'google-maps';
+          setMessage('failed to load dependencies' + deps);
           setShow(true);
           return;
         }
         if (navigator.geolocation) {
-          window.FiveService = new window.google.maps.places.PlacesService(
+          navigator.geolocation.getCurrentPosition(showPosition);
+          window.FivePlacesService = new window.google.maps.places.PlacesService(
             document.getElementById('map')
           );
+          window.FiveService = new window.google.maps.places.AutocompleteService();
+
+          function showPosition(position) {
+            window.FiveBounds = new window.google.maps.LatLngBounds(
+              new window.google.maps.LatLng(
+                position.coords.latitude,
+                position.coords.longitude
+              )
+            );
+          }
         } else {
           setShow(true);
         }

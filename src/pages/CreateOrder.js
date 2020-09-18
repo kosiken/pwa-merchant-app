@@ -28,10 +28,8 @@ import {
   FiX as CloseIcon,
 } from 'react-icons/fi';
 
-const HelpInfo = {
-  recepient: `This information helps us know where to 
-deliver your products`,
-};
+import { getDetails, HelpInfo } from '../constants';
+
 const HtmlTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: 'rgba(255, 220, 74, 0.21)',
@@ -56,13 +54,13 @@ const CreateOrder = () => {
   const [loading, setLoading] = useState(true);
   let [currentFood, setCurrentFood] = useState('');
   const [submitting, setSubmiting] = useState(false);
-  let [pickupAddress, setPickupAddress] = useState(null);
-  let [currentLocation, setCurrentLocation] = useState(null);
+  let [pickupAddress, setPickupAddress] = useState({});
+  let [currentLocation, setCurrentLocation] = useState({});
   let [chosenLocation, setChosenLocation] = useState(0);
   let [quantity, setQuantity] = useState('');
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
-
+  let [message, setMessage] = useState('Submitting');
   let [customer, setRecepient] = useState(null);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
@@ -80,15 +78,25 @@ const CreateOrder = () => {
   let formRef = useRef(null);
   let quantityRef = useRef(null);
   const { register, handleSubmit, errors, getValues } = useForm();
-  const handleSubmitCallback = (s) => {
+  const handleSubmitCallback = async (s) => {
     if (!foodItems.length) {
       handleOpen("You haven't added any delivery items");
       return;
     }
     setSubmiting(true);
-    console.log(pickupAddress);
+
+    if (currentLocation.place_id) {
+      currentLocation = await getDetails(currentLocation.place_id);
+      setMessage('Resolving Delivery Address');
+    }
+
+    if (pickupAddress.place_id) {
+      pickupAddress = await getDetails(pickupAddress.place_id);
+      setMessage('Resolving Pickup Address');
+    }
     let food_items = foodItems;
     if (foodItems.some((food) => food.is_new === true)) {
+      setMessage('Creating New Items');
       let newItems = foodItems.filter((food) => food.is_new === true);
       let oldItems = foodItems.filter((food) => !food.is_new);
 
@@ -103,15 +111,26 @@ const CreateOrder = () => {
             };
           });
           dispatch({ type: 'ADD_FOODS', foods: resp });
+          setMessage('Submitting Delivery Request');
           let body = {
-            full_name: getValues('name'),
+            full_name: customer ? customer.full_name : getValues('name'),
             phone_number: customer ? customer.phone_number : getValues('phone'),
             food_items: oldItems.concat(newItems),
+            pickup_phone: s.pickup_phone,
+            notes: s.order_notes,
           };
           if (chosenLocation === 0 || tab === 'New Recepient') {
-            body = { ...body, delivery_address: currentLocation };
+            body = {
+              ...body,
+              delivery_address: currentLocation,
+              pickup_address: pickupAddress,
+            };
           } else {
-            body = { ...body, delivery_address_id: s.type_of_address };
+            body = {
+              ...body,
+              delivery_address_id: s.type_of_address,
+              pickup_address: pickupAddress,
+            };
           }
           api
             .createOrder(body, token)
@@ -130,16 +149,26 @@ const CreateOrder = () => {
         });
       return;
     }
-
+    setMessage('Submitting Delivery Request');
     let body = {
       full_name: getValues('name'),
       phone_number: customer ? customer.phone_number : getValues('phone'),
       food_items,
+      pickup_phone: s.pickup_phone,
+      order_notes: s.order_notes,
     };
     if (chosenLocation === 0 || tab === 'New Recepient') {
-      body = { ...body, delivery_address: currentLocation };
+      body = {
+        ...body,
+        delivery_address: currentLocation,
+        pickup_address: pickupAddress,
+      };
     } else {
-      body = { ...body, delivery_address_id: s.type_of_address };
+      body = {
+        ...body,
+        delivery_address_id: s.type_of_address,
+        pickup_address: pickupAddress,
+      };
     }
     api
       .createOrder(body, token)
@@ -238,7 +267,7 @@ const CreateOrder = () => {
   return (
     <div style={{ minHeight: '100vh' }} className="mt-4">
       <Loader backdrop open={submitting}>
-        <Typography> Creating order</Typography>
+        <Typography style={{ color: 'white' }}> {message}r</Typography>
       </Loader>
 
       <SwitchBox
