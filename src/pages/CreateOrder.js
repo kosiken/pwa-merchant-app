@@ -9,30 +9,21 @@ import {
   SwitchBox,
   Input,
   Button,
-  IconButton,
   Checkbox,
   Typography,
-  ComboBox,
   ComboBox2,
   ComboBox0,
   Loader,
 } from '../components';
 import { withStyles } from '@material-ui/core/styles';
-import { v4 as uuid } from 'uuid';
 import Tooltip from '@material-ui/core/Tooltip';
 
 // import { Link } from "react-router-dom";
-import {
-  FiPlus as PlusIcon,
-  FiHelpCircle as InfoIcon,
-  FiX as CloseIcon,
-} from 'react-icons/fi';
-
 import { getDetails, HelpInfo } from '../constants';
 
 const HtmlTooltip = withStyles((theme) => ({
   tooltip: {
-    backgroundColor: 'rgba(255, 220, 74, 0.21)',
+    backgroundColor: 'rgb(255, 248, 216)',
     color: '#e38000',
     maxWidth: 220,
     fontSize: theme.typography.pxToRem(12),
@@ -43,7 +34,6 @@ const HtmlTooltip = withStyles((theme) => ({
 const CreateOrder = () => {
   let [tab, setTab] = useState('New Recepient');
 
-  let [foodItems, setFoodItems] = useState([]);
   const [show, setShow] = useState(false);
   const [entry, setEntry] = useState(0);
   const handleShow = (id) => {
@@ -52,12 +42,9 @@ const CreateOrder = () => {
     setShow(true);
   };
   const [loading, setLoading] = useState(true);
-  let [currentFood, setCurrentFood] = useState('');
   const [submitting, setSubmiting] = useState(false);
-  let [pickupAddress, setPickupAddress] = useState({});
   let [currentLocation, setCurrentLocation] = useState({});
-  let [chosenLocation, setChosenLocation] = useState(0);
-  let [quantity, setQuantity] = useState('');
+
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
   let [message, setMessage] = useState('Submitting');
@@ -67,7 +54,7 @@ const CreateOrder = () => {
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
-  const { token, vendorCustomers, vMeals, vFoods } = useSelector((state) => {
+  const { token, vendorCustomers } = useSelector((state) => {
     return {
       token: state.auth.token,
       vendorCustomers: state.customer.customers || [],
@@ -76,13 +63,9 @@ const CreateOrder = () => {
     };
   });
   let formRef = useRef(null);
-  let quantityRef = useRef(null);
+ 
   const { register, handleSubmit, errors, getValues } = useForm();
   const handleSubmitCallback = async (s) => {
-    if (!foodItems.length) {
-      handleOpen("You haven't added any delivery items");
-      return;
-    }
     setSubmiting(true);
 
     if (currentLocation.place_id) {
@@ -90,84 +73,22 @@ const CreateOrder = () => {
       setMessage('Resolving Delivery Address');
     }
 
-    if (pickupAddress.place_id) {
-      pickupAddress = await getDetails(pickupAddress.place_id);
-      setMessage('Resolving Pickup Address');
-    }
-    let food_items = foodItems;
-    if (foodItems.some((food) => food.is_new === true)) {
-      setMessage('Creating New Items');
-      let newItems = foodItems.filter((food) => food.is_new === true);
-      let oldItems = foodItems.filter((food) => !food.is_new);
-
-      api
-        .createFoods(newItems)
-        .then((resp) => {
-          console.log(resp);
-          newItems = resp.map((newItem, index) => {
-            return {
-              ...newItem,
-              quantity: newItems[index].quantity,
-            };
-          });
-          dispatch({ type: 'ADD_FOODS', foods: resp });
-          setMessage('Submitting Delivery Request');
-          let body = {
-            full_name: customer ? customer.full_name : getValues('name'),
-            phone_number: customer ? customer.phone_number : getValues('phone'),
-            food_items: oldItems.concat(newItems),
-            pickup_phone: s.pickup_phone,
-            notes: s.order_notes,
-          };
-          if (chosenLocation === 0 || tab === 'New Recepient') {
-            body = {
-              ...body,
-              delivery_address: currentLocation,
-              pickup_address: pickupAddress,
-            };
-          } else {
-            body = {
-              ...body,
-              delivery_address_id: s.type_of_address,
-              pickup_address: pickupAddress,
-            };
-          }
-          api
-            .createOrder(body, token)
-            .then((result) => {
-              setSubmiting(false);
-              handleShow(result.id);
-            })
-            .catch((err) => {
-              setSubmiting(false);
-              handleOpen(err.data.error);
-            });
-        })
-        .catch((err) => {
-          setSubmiting(false);
-          handleOpen(err.message || err.data.error);
-        });
-      return;
-    }
     setMessage('Submitting Delivery Request');
     let body = {
       full_name: getValues('name'),
       phone_number: customer ? customer.phone_number : getValues('phone'),
-      food_items,
-      pickup_phone: s.pickup_phone,
+
       order_notes: s.order_notes,
     };
-    if (chosenLocation === 0 || tab === 'New Recepient') {
+    if (tab === 'New Recepient') {
       body = {
         ...body,
         delivery_address: currentLocation,
-        pickup_address: pickupAddress,
       };
     } else {
       body = {
         ...body,
         delivery_address_id: s.type_of_address,
-        pickup_address: pickupAddress,
       };
     }
     api
@@ -182,19 +103,10 @@ const CreateOrder = () => {
       });
   };
 
-  const changeCurrentFood = (e) => {
-    setCurrentFood(e.target.value);
-  };
-
   const changeCurrentAddress = (e) => {
     setCurrentLocation(e.target.value);
   };
-  const changePickupAddress = (e) => {
-    setPickupAddress(e.target.value);
-  };
-  const changeQuantity = (e) => {
-    setQuantity(e.target.value);
-  };
+
   useEffect(() => {
     const handleClose = () => {
       setOpen(false);
@@ -218,20 +130,7 @@ const CreateOrder = () => {
   useEffect(() => {
     (async () => {
       try {
-        let meals;
-        if (!vFoods.length) {
-          meals = await api.getMeals();
-          if (meals.length)
-            meals = meals.map((m) => {
-              return {
-                ...m,
-                type: 'meal',
-              };
-            });
 
-          let foods = await api.getFoods();
-          dispatch({ type: 'GET_FOODS', foods: foods.concat(meals) });
-        }
         let customers;
         if (!vendorCustomers.length) {
           customers = await api.getCustomers();
@@ -248,21 +147,10 @@ const CreateOrder = () => {
       }
     })();
     //  foodRef.current.value = '';
-    quantityRef.current.value = '';
+  
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const addFood = (e) => {
-    if (!currentFood) {
-      return;
-    }
-    setFoodItems(foodItems.concat([{ ...currentFood, quantity }]));
-    setCurrentFood(null);
-  };
-  const removeFood = (food) => {
-    console.log(foodItems.filter((f) => f !== food));
-    setFoodItems(foodItems.filter((f) => f.name !== food));
-  };
 
   return (
     <div style={{ minHeight: '100vh' }} className="mt-4">
@@ -293,8 +181,8 @@ const CreateOrder = () => {
             placement="right"
           >
             <div style={{ display: 'inline-block' }}>
-              <Typography>
-                Recepient Information <InfoIcon />{' '}
+              <Typography >
+                Recepient Information 
               </Typography>
             </div>
           </HtmlTooltip>
@@ -304,33 +192,6 @@ const CreateOrder = () => {
                 items={vendorCustomers}
                 loading={loading}
                 onChange={setRecepient}
-              />
-              <Input
-                select
-                options={
-                  customer
-                    ? [
-                        { value: 0, text: 'New Address? fill it in below' },
-                      ].concat(
-                        customer.Addresses &&
-                          customer.Addresses.map((address) => {
-                            return {
-                              value: address.id,
-                              text: address.full_address,
-                            };
-                          })
-                      )
-                    : [
-                        {
-                          value: 0,
-                          text: 'No Recepient selected',
-                        },
-                      ]
-                }
-                ref={register()}
-                name="type_of_address"
-                label="Select from previous addresses"
-                onChange={(e) => setChosenLocation(e.target.value)}
               />
             </>
           )}
@@ -369,8 +230,7 @@ const CreateOrder = () => {
               />
             </>
           )}
-          {((tab === 'Existing Recepient' && chosenLocation === 0) ||
-            tab === 'New Recepient') && (
+          {tab === 'New Recepient' && (
             <ComboBox2
               onChange={changeCurrentAddress}
               label="Recepient Address*"
@@ -384,111 +244,14 @@ const CreateOrder = () => {
               />
             </div>
           )}
+
           <HtmlTooltip
             title={<Typography inline>{HelpInfo.recepient}</Typography>}
             placement="right"
           >
             <div style={{ display: 'inline-block' }}>
               <Typography>
-                Pickup Information <InfoIcon />{' '}
-              </Typography>
-            </div>
-          </HtmlTooltip>
-          <Input
-            type="tel"
-            name="pickup_phone"
-            label="Pickup Phone Number"
-            ref={register({
-              min: {
-                value: 10,
-                message: 'Invalid Phone Number',
-              },
-            })}
-            error={errors.pickup_phone}
-          />
-          <ComboBox2 onChange={changePickupAddress} label="Pickup Address" />
-          <div style={{ margin: '1em 0 0' }}>
-            <HtmlTooltip
-              title={<Typography inline>{HelpInfo.recepient}</Typography>}
-              placement="right"
-            >
-              <div style={{ display: 'inline-block' }}>
-                <Typography>
-                  Add food items <InfoIcon />{' '}
-                </Typography>
-              </div>
-            </HtmlTooltip>{' '}
-            <br />
-            <section style={{ width: '60%', display: 'inline-block' }}>
-              <ComboBox
-                items={vFoods.concat(vMeals)}
-                loading={loading}
-                onChange={changeCurrentFood}
-              />
-            </section>
-            <section
-              style={{
-                width: '20%',
-                marginLeft: '10%',
-                display: 'inline-block',
-              }}
-            >
-              <Input
-                type="number"
-                name="quantity"
-                onChange={changeQuantity}
-                label="Qty*"
-                ref={quantityRef}
-              />
-            </section>
-          </div>
-
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'right',
-              margin: '0 0 1em',
-            }}
-          >
-            {' '}
-            <IconButton
-              variant="beveled-edge"
-              onClick={addFood}
-              disabled={!currentFood || !quantity}
-            >
-              <PlusIcon /> Add
-            </IconButton>
-          </div>
-
-          {foodItems.map((food) => (
-            <section
-              style={{
-                justifyContent: 'space-between',
-                padding: '0 15px',
-              }}
-              className="flex"
-              key={uuid()}
-            >
-              <Typography>
-                {food.name} {food.quantity}{' '}
-              </Typography>
-              <IconButton
-                style={{ color: 'red' }}
-                onClick={() => {
-                  removeFood(food.name);
-                }}
-              >
-                <CloseIcon />
-              </IconButton>
-            </section>
-          ))}
-          <HtmlTooltip
-            title={<Typography inline>{HelpInfo.recepient}</Typography>}
-            placement="right"
-          >
-            <div style={{ display: 'inline-block' }}>
-              <Typography>
-                Extra Information <InfoIcon />{' '}
+                Extra Information 
               </Typography>
             </div>
           </HtmlTooltip>

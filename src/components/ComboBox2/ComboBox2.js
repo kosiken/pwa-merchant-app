@@ -58,7 +58,7 @@ function Locationselect({
   if (isSearching) {
     return (
       <div className={styles['location-list']}>
-        <div>
+        <div className="pl-3 pr-3 pt-0">
           <Image src={googleLogo} />
         </div>
         <div
@@ -78,7 +78,7 @@ function Locationselect({
   if (Locations.length) {
     return (
       <div className={styles['location-list']}>
-        <div>
+        <div className="pl-3 pr-3 pt-0">
           <Image src={googleLogo} />
         </div>
         {Locations.map((l, i) => (
@@ -96,7 +96,7 @@ function Locationselect({
             }}
           >
             {' '}
-            <Typography inline> {l.description} </Typography>{' '}
+            <Typography small> {l.description} </Typography>{' '}
           </div>
         ))}
       </div>

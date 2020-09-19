@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Input, Button, Typography, ComboBox2 } from '../components';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';import {  Alert } from 'react-bootstrap';
 import { useSnackbar } from 'notistack';
+import { getDetails, GOOGLE_MAPS_API_KEY } from '../constants';
 import $script from 'scriptjs';
 import { useForm } from 'react-hook-form';
 import api from '../api';
@@ -12,27 +13,48 @@ const SignUp = () => {
   const [key, setKey] = useState('');
   let [isLoading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  let [currentLocation, setCurrentLocation] = useState(null);
+  let [currentLocation, setCurrentLocation] = useState(null);  const [show, setShow] = React.useState(false);  const [message, setMessage] = React.useState(
+    'Geolocation is not supported by this browser.'
+  );
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
   React.useEffect(() => {
+   
     $script(
-      'https://maps.googleapis.com/maps/api/js?key=AIzaSyCDRINRTtuQGCi8P7V8lYPcJkuYW5HIKJA&libraries=places',
+      `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`,
       'google-maps'
     );
     $script.ready(
-      ['google-maps'],
+      ['google-maps' ],
       () => {
         console.log('depsNotFound');
+        let deps = '';
+        if (!window.PaystackPop) deps += ' paystack ';
 
         if (!window.google) {
+          deps += 'google-maps';
+          setMessage('failed to load dependencies' + deps);
+          setShow(true);
           return;
         }
         if (navigator.geolocation) {
-          window.FiveService = new window.google.maps.places.PlacesService(
+          navigator.geolocation.getCurrentPosition(showPosition);
+          window.FivePlacesService = new window.google.maps.places.PlacesService(
             document.getElementById('map')
           );
+          window.FiveService = new window.google.maps.places.AutocompleteService();
+
+          function showPosition(position) {
+            window.FiveBounds = new window.google.maps.LatLngBounds(
+              new window.google.maps.LatLng(
+                position.coords.latitude,
+                position.coords.longitude
+              )
+            );
+          }
+        } else {
+          setShow(true);
         }
       },
       function (depsNotFound) {
@@ -60,17 +82,18 @@ const SignUp = () => {
   const changeCurrentAddress = (e) => {
     setCurrentLocation(e.target.value);
   };
-  const submit = (formData) => {
+  const submit = async (formData) => {
     if (formData.password !== formData.password2) return;
     setLoading(true);
+    if (currentLocation.place_id) {
+      currentLocation = await getDetails(currentLocation.place_id);
+    }
     api
       .register({ ...formData, address: currentLocation })
       .then((user) => {
         dispatch({ user, type: 'SIGNUP_USER' });
 
-        setTimeout(() => {
-          window.location.pathname = '/';
-        }, 500);
+  
       })
 
       .catch((err) => {
@@ -79,7 +102,20 @@ const SignUp = () => {
       });
   };
   return (
-    <div className="flex central">
+    <div className="flex central">       <Alert
+        variant="danger"
+        show={show}
+        className="m-0"
+        style={{
+          zIndex: '999',
+        }}
+        onClose={() => setShow(false)}
+        dismissible
+      >  <Alert.Heading>
+          <Typography inline>Oh snap! You got an error! </Typography>
+        </Alert.Heading>
+        <Typography>{message}</Typography>
+      </Alert>
       <form
         className="f-form"
         onSubmit={handleSubmit(submit)}
