@@ -31,12 +31,17 @@ function CustomerSelect({ items, onChange, theRef, loading }) {
               onChange(l);
             }}
           >
-            {' '}
-            <Typography inline> {l.full_name} </Typography>
-            <Typography className="ml-2" small variant="gray">
-              {' '}
-              {l.phone_number}{' '}
-            </Typography>
+            <div className="add-div">
+              <Typography inline> {l.full_name} </Typography>
+              <Typography className="ml-2" small variant="gray">
+                {' '}
+                {l.phone_number}{' '}
+              </Typography>
+            </div>{' '}
+            <Typography style={{fontSize:'12px'}}>
+             
+              { l.Addresses[0].full_address}{' '}
+            </Typography>{' '}
           </div>
         ))}
       </div>

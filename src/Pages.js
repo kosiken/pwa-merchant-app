@@ -17,7 +17,6 @@ import EditMeal from './pages/EditMeal';
 import FoodItems from './pages/FoodItems';
 import CreateFoodItem from './pages/CreateFoodItem';
 import CreateCard from './pages/CreateCard';
-import Orders from './pages/Orders';
 import OrderPage from './pages/OrderPage';
 import Onboard from './pages/Onboard';
 import LFRPage from './pages/LFRPage';
@@ -98,7 +97,7 @@ const Auththenticated = () => {
             <Redirect to="/welcome" />
           </Route>
           <Route exact path="/">
-            <Redirect to="/create-delivery-request" />
+            <Redirect to="/home" />
           </Route>
           <Route exact path="/welcome">
             <TopBar title="Welcome" />
@@ -116,7 +115,7 @@ const Auththenticated = () => {
                 flexGrow: 1,
               }}
             >
-              <Dashboard />
+              <CreateOrder />
             </main>
           </Route>
           <Route exact path="/delivery-requests">
@@ -127,18 +126,7 @@ const Auththenticated = () => {
                 flexGrow: 1,
               }}
             >
-              <Orders />
-            </main>
-          </Route>{' '}
-          <Route exact path="/create-delivery-request">
-            <TopBar title="Create Delivery Request" /> <DrawerNav />{' '}
-            <main
-              id="contents"
-              style={{
-                flexGrow: 1,
-              }}
-            >
-              <CreateOrder />
+              <Dashboard />
             </main>
           </Route>
           <Route exact path="/add-card">

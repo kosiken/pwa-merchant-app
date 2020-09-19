@@ -1,18 +1,15 @@
-.main-div {
-}
-
 .location-list {
   background: white;
-  padding: 1em;
+  padding: 1em 0;
   box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3),
     0 4px 8px 3px rgba(60, 64, 67, 0.15);
   position: absolute;
-  bottom: 150px;
-  width: 80%;
+  bottom: 80px;
+  width: 95%;display: block;
   max-height: 200px;
   overflow-y: scroll;
-  bottom: 80px;
-  width: 100%;
+ 
+
   min-width: 250px;
   z-index: 9999;
   //&:
@@ -20,7 +17,7 @@
 
 .location-list-item {
   cursor: pointer;
-  padding: 10px 0;
+  padding: 10px 1em;
 
   &:hover {
     background-color: #e5e5e5;

@@ -6,7 +6,7 @@ import { Nav } from 'react-bootstrap';
 import {
   FiHome as HomeIcon,
   FiUsers as UsersIcon,
-  FiFileText as PaperIcon,
+  // FiFileText as PaperIcon,
   FiShoppingBag as ShoppingBag,
   FiCreditCard as CreditCardIcon,
   // FiUser as UserIcon,
@@ -19,11 +19,11 @@ let links = [
     name: 'Home',
     icon: <HomeIcon />,
   },
-  {
-    url: '/FoodItems',
-    name: 'Food Items',
-    icon: <PaperIcon />,
-  },
+  // {
+  //   url: '/FoodItems',
+  //   name: 'Food Items',
+  //   icon: <PaperIcon />,
+  // },
   // {
   //   url: '/meals',
   //   name: 'Meals',
@@ -56,36 +56,6 @@ const DrawerNav = () => {
 
   return (
     <aside className="side-nav hide" id="drawer" style={{}}>
-      {/*   <section
-        className="p-4"
-        style={{
-          backgroundColor: '#011627',
-          color: '#fff',
-        }}
-      >
-        <Container className="p-2">
-      
-          <Row className="m-0 pl-2">
-            <Typography
-              title
-              style={{
-                fontSize: '18px',
-              }}
-            >
-              {name}
-            </Typography>
-          </Row>
-          <Row className="m-0 pl-2">
-            <Typography small>{email}</Typography>
-          </Row>
-        </Container>
-        <Button full onClick={logOut}>
-          Log Out
-        </Button>
-      </section>
-
-      <br />
-      */}
       <Nav className="flex-column h-80">
         {links.map((link, i) => (
           <Link

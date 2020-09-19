@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';import { isEmpty } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { Modal, Container } from 'react-bootstrap';
 import {
@@ -12,10 +12,11 @@ import {
   ComboBox2,
   ErrorComponent,
 } from '../components';
-
+import { getDetails } from '../constants';
 import api from '../api';
 
-import { FiSearch as SearchIcon, FiX as CloseIcon } from 'react-icons/fi';
+import { FiSearch as SearchIcon, FiX as CloseIcon,
+  FiUsers as UsersIcon} from 'react-icons/fi';
 import { v4 as uuid } from 'uuid';
 import useSearch from '../hooks/useSearch';
 
@@ -23,7 +24,7 @@ const Customers = ({ component, handleDone }) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   let [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [currentLocation, setCurrentLocation] = useState(null);
+  let [currentLocation, setCurrentLocation] = useState(null);
   const { register, handleSubmit, errors } = useForm();
   const [isLoading, setLoading] = useState(false);
   const [isLoading2, setLoading2] = useState(false);
@@ -122,9 +123,11 @@ const Customers = ({ component, handleDone }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSubmitCallback = (s) => {
+  const handleSubmitCallback = async (s) => {
     setLoading(true);
-
+    if (currentLocation.place_id) {
+      currentLocation = await getDetails(currentLocation.place_id);
+    }
     api
       .createCustomer({
         ...s,
@@ -316,7 +319,7 @@ const Customers = ({ component, handleDone }) => {
                 marginLeft: '10px',
               }}
             >
-              Your Customers
+              Recepients
             </Typography>
 
             <IconButton
@@ -354,7 +357,28 @@ const Customers = ({ component, handleDone }) => {
             <ErrorComponent message={errorMessage}>
               <Button onClick={init}> Retry </Button>
             </ErrorComponent>
-          )}
+          )}        {!error && !loaded  && isEmpty(items) && (
+          <>
+            <Typography
+              title
+              style={{
+                textAlign: 'center',
+                fontSize: '4em',
+                color: 'rgb(136, 136, 136)',
+                marginTop: '20vh',
+              }}
+            >
+              <UsersIcon />
+            </Typography>
+            <Typography
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              No Recepients Found
+            </Typography>
+          </>
+        )}
         </div>
       </div>
     </>

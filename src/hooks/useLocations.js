@@ -26,7 +26,7 @@ const useLocations = (value) => {
           }
         );
       } catch (err) {
-        console.log(err);
+        console.log(err);setHasError(true);
       }
     }
   }, [value]);
