@@ -105,7 +105,7 @@ const Order = ({ order, loader, page }) => {
                   </li>
                 );
               })}
-            </ul>*/}
+            </ul>
             <div className={'flex  mt-4'}>
               <Typography className="m-0" bold>
                 Total
@@ -115,7 +115,7 @@ const Order = ({ order, loader, page }) => {
                   {order.total_order_price || 0.0}
                 </Typography>
               </section>
-            </div>{' '}
+            </div>*/}
             <hr />
             <Typography inline bold>
               Customer Name
