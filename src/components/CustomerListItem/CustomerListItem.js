@@ -5,7 +5,7 @@ import Button from '../Button/Button';
 import Avatar from '@material-ui/core/Avatar';
 import { FiUser as UserIcon, FiEdit as EditIcon } from 'react-icons/fi';
 
-import { RiDeleteBin6Line as DeleteIcon } from 'react-icons/ri';
+// import { RiDeleteBin6Line as DeleteIcon } from 'react-icons/ri';
 import styles from './CustomerListItem.module.scss';
 import Dialog from '@material-ui/core/Dialog';
 
@@ -69,7 +69,7 @@ const CustomerListItem = ({ customer, onEdit, loader }) => {
         >
           <EditIcon />
         </IconButton>
-        <IconButton
+     {/*   <IconButton
           style={{
             position: 'absolute',
             right: '10px',
@@ -78,7 +78,7 @@ const CustomerListItem = ({ customer, onEdit, loader }) => {
           onClick={handleClickOpen}
         >
           <DeleteIcon />
-        </IconButton>
+        </IconButton> */}
       </div>
 
       <Dialog
