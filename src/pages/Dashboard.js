@@ -58,7 +58,7 @@ const Dashboard = () => {
       <Container>
         <div className="flex center mt-4 mb-4">
           <Typography
-            title
+     bold
             style={{
               flexGrow: 1,
             }}
@@ -66,7 +66,7 @@ const Dashboard = () => {
             Recent Delivery Requests
           </Typography>
 
-          <Link to="/create-delivery-request">
+          <Link to="/home">
             <Button color="clear"> Create Delivery Request</Button>
           </Link>
         </div>{' '}

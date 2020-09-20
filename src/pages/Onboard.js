@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { OnboardProgress, Button, Typography, Toast } from '../components';
-import CreateFoodItem from './CreateFoodItem';
+import { OnboardingSteps } from '../constants';
 import CreateCard from './CreateCard';
 
 import welcome from '../assets/welcome.png';
@@ -41,6 +41,9 @@ const Onboard = () => {
     setCurrentIndex(index);
   }
   const NextClick = () => {
+    if (currentIndex === 0) {
+      pages[0].status = 'done';
+    }
     if (pages[currentIndex + 1].status !== 'done')
       pages[currentIndex + 1].status = 'active';
     if (pages[currentIndex].status !== 'done')
@@ -63,18 +66,15 @@ const Onboard = () => {
         <>
           <Toast color="info">
             <Typography title className="h4">
-              Welcome
+              {OnboardingSteps[3].title}
             </Typography>
-            <Typography className="m-0">
-              Welcome aboard to 500dash, now you've signed up there are a few
-              things we want you to do
-            </Typography>
+            <Typography className="m-0">{OnboardingSteps[3].text}</Typography>
           </Toast>
           <div style={{ textAlign: 'center' }}>
             <Image src={welcome} />
             <br /> <br />
             <Link
-              to="/create-delivery-request"
+              to="/home"
               style={{
                 display: 'inline-block',
                 width: '60%',
@@ -90,32 +90,15 @@ const Onboard = () => {
       );
     } else if (currentIndex === 0) {
       return (
-        <>
-          <Toast color="info">
-            <Typography title className="h4">
-              Step One
-            </Typography>
-            <Typography className="m-0">
-              Welcome aboard to 500dash, now you've signed up there are a few
-              things we want you to do
-            </Typography>
-            <Button color="clear" onClick={NextClick}>
-              Next
-            </Button>
-            <Button color="clear" onClick={skipClick}>
-              Skip
-            </Button>
-          </Toast>
-          <CreateFoodItem
-            component
-            handleDone={(index) => {
-              pages[index].status = 'done';
-              pages[index + 1].status = 'active';
-              setPages(pages);
-              setCurrentIndex(index + 1);
-            }}
-          />
-        </>
+        <Toast color="info">
+          <Typography title className="h4">
+            {OnboardingSteps[0].title}
+          </Typography>
+          <Typography className="m-0">{OnboardingSteps[0].text}</Typography>
+          <Button color="clear" onClick={NextClick}>
+            Next
+          </Button>
+        </Toast>
       );
     } else if (currentIndex === 1) {
       return (
@@ -123,12 +106,9 @@ const Onboard = () => {
           <Toast color="info">
             {' '}
             <Typography title className="h4">
-              Step Two
+              {OnboardingSteps[1].title}
             </Typography>
-            <Typography className="m-0">
-              Welcome aboard to 500dash, now you've signed up there are a few
-              things we want you to do
-            </Typography>
+            <Typography className="m-0">{OnboardingSteps[1].text}</Typography>
             <Button color="clear" onClick={NextClick}>
               Next
             </Button>
@@ -152,12 +132,9 @@ const Onboard = () => {
         <>
           <Toast color="info">
             <Typography title className="h4">
-              Step Three
+              {OnboardingSteps[2].title}
             </Typography>
-            <Typography className="m-0">
-              Welcome aboard to 500dash, now you've signed up there are a few
-              things we want you to do
-            </Typography>
+            <Typography className="m-0">{OnboardingSteps[2].text}</Typography>
             <Button color="clear" onClick={NextClick}>
               Next
             </Button>
@@ -184,28 +161,7 @@ const Onboard = () => {
 
       {renderPage()}
       <br />
-      <Typography
-        style={{
-          textAlign: 'center',
 
-          display: 'block',
-          bottom: '0',
-          left: '0',
-          width: '100%',
-        }}
-      >
-        {'Made with '}
-        <span role="img" aria-label="love">
-          ❤️
-        </span>
-        <span
-          style={{
-            color: '#f0324b',
-          }}
-        >
-          {' 500Chow'}
-        </span>
-      </Typography>
     </Container>
   );
 };

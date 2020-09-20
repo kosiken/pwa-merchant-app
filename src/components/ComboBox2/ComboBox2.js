@@ -3,8 +3,7 @@ import React from 'react';
 import Typography from '../Typography/Typography';
 import { Image } from 'react-bootstrap';
 import Input from '../Input/Input';
-
-import CircularProgress from '@material-ui/core/CircularProgress';
+import BeatLoader from 'react-spinners/BeatLoader';
 
 import styles from './ComboBox2.module.scss';
 import useFocus from '../../hooks/useFocus';
@@ -69,8 +68,10 @@ function Locationselect({
           <Typography> Continue with -> {theRef.current.value}</Typography>
         </div>
         <div className={styles['location-list-item']}>
-          <CircularProgress color="#f0324b" />
-          <Typography inline> Finding matches</Typography>
+          <Typography inline>
+            {' '}
+            Finding matches <BeatLoader color="#011627" />
+          </Typography>
         </div>
       </div>
     );

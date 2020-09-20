@@ -27,53 +27,25 @@ export const HelpInfo = {
   recepient: `This information helps us know where to 
 deliver your products`,
 };
-/* api
-      .editModel(
-       {
-          ...s,
 
-          food_items: foods,
-          model: 'Meal'
-        },
-        token
-      )
-      .then((result) => {
-        setLoading(false);
-        handleOpen('Meal Created');
-      })
-      .catch((err) => {
-        setLoading(false);
-        handleOpen(err.data.error);
-      });
-      
-              let request = {
-          query: value,
-          fields: ['name', 'formatted_address', 'geometry', 'plus_code', 'url'],
-          region: '.ng',
-          locationBias: {
-            radius: 100,
-            center: { lat: 6.465422, lng: 3.406448 },
-          },
-        };
+export const OnboardingSteps = [
+  {
+    title: 'Welcome',
+    text: `Now you've signed up there are a few
+    things we want you to do`,
+  },
+  {
+    title: 'Add a Reciepient',
+    text: `Saved Reciepients are customers who you often make deliveries to. 
+    You can save them to quickly select them when you want to make a delivery`,
+  },
 
-        window.FiveService.textSearch(request, function (results, status) {
-          if (status === 'ZERO_RESULTS') setLocations([]);
-          if (status === 'OK') {
-            if (results instanceof Array)
-              setLocations(
-                results.map((result) => {
-                  return {
-                    latitude: result.geometry.location.lat(),
-                    longitude: result.geometry.location.lng(),
-                    full_address: `${result.name} ${result.formatted_address}`,
-                    plus_code:
-                      result.plus_code && result.plus_code.compound_code,
-                    google_map_link: `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${result.place_id}`,
-                  };
-                })
-              );
-          } });
-          
-          "ChIJXT95K8yeOxARkIUeL8MSxu0"
-
-  */
+  {
+    title: 'Add Payment Method',
+    text: `Add a card which we would use in billing all deliveries you make using 500dash`,
+  },
+  {
+    title: `All done`,
+    text: 'Welcome aboard to 500dash',
+  },
+];

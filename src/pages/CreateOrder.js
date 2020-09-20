@@ -79,6 +79,7 @@ const CreateOrder = () => {
       phone_number: customer ? customer.phone_number : getValues('phone'),
 
       order_notes: s.order_notes,
+      fee: 500,
     };
     if (tab === 'New Recepient') {
       body = {
@@ -155,7 +156,7 @@ const CreateOrder = () => {
   return (
     <div style={{ minHeight: '100vh' }} className="mt-4">
       <Loader backdrop open={submitting}>
-        <Typography style={{ color: 'white' }}> {message}r</Typography>
+        <Typography style={{ color: 'white' }}> {message}</Typography>
       </Loader>
 
       <SwitchBox

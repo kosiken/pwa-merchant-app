@@ -54,7 +54,7 @@ const OrderPage = () => {
         }}
       >
         <Typography inline>No Such Delivery Request exists</Typography>
-        <Link to="/create-delivery-request">
+        <Link to="/home">
           <Button color="clear"> Create</Button>
         </Link>
       </Toast>
