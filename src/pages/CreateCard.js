@@ -39,7 +39,7 @@ const CreateCard = ({ component, handleDone }) => {
       const config = {
         key: PAYSTACK_KEY, // Replace with your public key
 
-        email: user.public_id+'@500chow.com',
+        email: user.public_id + '@500chow.com',
 
         amount: total * 100,
 
@@ -51,8 +51,7 @@ const CreateCard = ({ component, handleDone }) => {
         // label: "Optional string that replaces customer email"
 
         onClose: function () {
-         rej('Transaction was not completed, please try again');
-        
+          rej('Transaction was not completed, please try again');
         },
 
         callback: function (response) {
@@ -89,8 +88,10 @@ const CreateCard = ({ component, handleDone }) => {
           />
           <br /> <br />
         </div>{' '}
-        
-        <Typography> You will be billed N50.00 which would be refunded to you </Typography>
+        <Typography>
+          {' '}
+          You will be billed N50.00 which would be refunded to you{' '}
+        </Typography>
         <Button full loading={isLoading} onClick={handleSubmit}>
           Add Card
         </Button>
@@ -118,9 +119,12 @@ const CreateCard = ({ component, handleDone }) => {
           />
           <br /> <br />
         </div>
-        
-        <Typography> You will be billed N50.00 which would be refunded to you </Typography>
-        
+
+        <Typography>
+          {' '}
+          You will be billed N50.00 which would be refunded to you{' '}
+        </Typography>
+
         <Button full loading={isLoading} onClick={handleSubmit}>
           Add Card
         </Button>

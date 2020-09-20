@@ -8,11 +8,11 @@ import Paper from '@material-ui/core/Paper';
 import Button from '../Button/Button';
 import styles from './ComboBox2.module.scss';
 import Dialog from '@material-ui/core/Dialog';
-import {FiX as CloseIcon} from 'react-icons/fi'
+import { FiX as CloseIcon } from 'react-icons/fi';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import DialogContent from '@material-ui/core/DialogContent';
- import DialogActions from '@material-ui/core/DialogActions';
+import DialogActions from '@material-ui/core/DialogActions';
 import useDebounce from '../../hooks/useDebounce';
 import useLocations from '../../hooks/useLocations';
 import googleLogo from '../../assets/google.png';
@@ -97,7 +97,7 @@ function Locationselect({
             }}
           >
             {' '}
-            <Typography > {l.description} </Typography>{' '}
+            <Typography> {l.description} </Typography>{' '}
           </div>
         ))}
       </div>
@@ -110,7 +110,10 @@ function Locationselect({
           className={styles['location-list-item']}
           onClick={defaultLocation}
         >
-          <Typography> {theRef.current ? 'Continue with -> ' + theRef.current.value: ''}</Typography>
+          <Typography>
+            {' '}
+            {theRef.current ? 'Continue with -> ' + theRef.current.value : ''}
+          </Typography>
         </div>
         <div className={styles['location-list-item']}>
           <Typography>No results found</Typography>
@@ -140,49 +143,53 @@ function ComboBox2({ onChange, ...otherProps }) {
 
   return (
     <div className="locations-div add-div">
-     <Button  color="clear" onClick={handleClickOpen} link>
+      <Button color="clear" onClick={handleClickOpen} link>
         Select Address
       </Button>
-      <br/><br/>
+      <br />
+      <br />
       <Dialog
         fullScreen={fullScreen}
         open={show}
-       style={{
-      minWidth:'80vw'
-      }}
-    
+        style={{
+          minWidth: '80vw',
+        }}
         aria-labelledby="responsive-dialog-title"
-      >           <DialogActions>
+      >
+        {' '}
+        <DialogActions>
           <Button onClick={handleClose} color="clear">
             <CloseIcon />
           </Button>
         </DialogActions>
-         <DialogContent>  <Paper style={{
-      minWidth:'30vw'
-     
-      }}
-       elevation={0}
-      >
-        <Input
-          type="text"
-          name="location"
-          autocomplete="disabled"
-        
-          ref={ref}
-          style={{margin:'0 auto'}}
-          {...otherProps}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <DialogContent>
+          {' '}
+          <Paper
+            style={{
+              minWidth: '30vw',
+            }}
+            elevation={0}
+          >
+            <Input
+              type="text"
+              name="location"
+              autocomplete="disabled"
+              ref={ref}
+              style={{ margin: '0 auto' }}
+              {...otherProps}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
 
-        <Locationselect
-          Locations={locations}
-          isSearching={isSearching}
-          onChange={onChange}
-          theRef={ref}
-          hasError={hasError}
-        />
-        </Paper></DialogContent>
-               <DialogActions>
+            <Locationselect
+              Locations={locations}
+              isSearching={isSearching}
+              onChange={onChange}
+              theRef={ref}
+              hasError={hasError}
+            />
+          </Paper>
+        </DialogContent>
+        <DialogActions>
           <Button onClick={handleClose} color="clear">
             Close
           </Button>

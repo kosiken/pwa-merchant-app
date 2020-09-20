@@ -6,7 +6,8 @@ import styles from './Button.module.scss';
 import classNames from 'classnames';
 const Button = ({
   children,
-  full,link,
+  full,
+  link,
   onClick,
   color = 'primary',
   loading,
@@ -27,14 +28,13 @@ const Button = ({
       </button>
     );
   }
-if(link){
-return (
-  <Link to="#" className={classes} onClick={onClick} {...otherProps}>
-          <Typography inline>{children}</Typography>
+  if (link) {
+    return (
+      <Link to="#" className={classes} onClick={onClick} {...otherProps}>
+        <Typography inline>{children}</Typography>
       </Link>
-) 
-
-}
+    );
+  }
   return (
     <button className={classes} onClick={onClick} {...otherProps}>
       <Typography inline>{children}</Typography>

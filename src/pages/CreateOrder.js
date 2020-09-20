@@ -63,7 +63,7 @@ const CreateOrder = () => {
     };
   });
   let formRef = useRef(null);
- 
+
   const { register, handleSubmit, errors, getValues } = useForm();
   const handleSubmitCallback = async (s) => {
     setSubmiting(true);
@@ -131,7 +131,6 @@ const CreateOrder = () => {
   useEffect(() => {
     (async () => {
       try {
-
         let customers;
         if (!vendorCustomers.length) {
           customers = await api.getCustomers();
@@ -148,10 +147,9 @@ const CreateOrder = () => {
       }
     })();
     //  foodRef.current.value = '';
-  
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   return (
     <div style={{ minHeight: '100vh' }} className="mt-4">
@@ -182,9 +180,7 @@ const CreateOrder = () => {
             placement="right"
           >
             <div style={{ display: 'inline-block' }}>
-              <Typography >
-                Recepient Information 
-              </Typography>
+              <Typography>Recepient Information</Typography>
             </div>
           </HtmlTooltip>
           {tab === 'Existing Recepient' && (
@@ -251,9 +247,7 @@ const CreateOrder = () => {
             placement="right"
           >
             <div style={{ display: 'inline-block' }}>
-              <Typography>
-                Extra Information 
-              </Typography>
+              <Typography>Extra Information</Typography>
             </div>
           </HtmlTooltip>
 
