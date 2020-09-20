@@ -4,9 +4,15 @@ import Typography from '../Typography/Typography';
 import { Image } from 'react-bootstrap';
 import Input from '../Input/Input';
 import BeatLoader from 'react-spinners/BeatLoader';
-
+import Paper from '@material-ui/core/Paper';
+import Button from '../Button/Button';
 import styles from './ComboBox2.module.scss';
-import useFocus from '../../hooks/useFocus';
+import Dialog from '@material-ui/core/Dialog';
+import {FiX as CloseIcon} from 'react-icons/fi'
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
+import DialogContent from '@material-ui/core/DialogContent';
+ import DialogActions from '@material-ui/core/DialogActions';
 import useDebounce from '../../hooks/useDebounce';
 import useLocations from '../../hooks/useLocations';
 import googleLogo from '../../assets/google.png';
@@ -60,13 +66,7 @@ function Locationselect({
         <div className="pl-3 pr-3 pt-0">
           <Image src={googleLogo} />
         </div>
-        <div
-          focusable
-          className={styles['location-list-item']}
-          onClick={defaultLocation}
-        >
-          <Typography> Continue with -> {theRef.current.value}</Typography>
-        </div>
+
         <div className={styles['location-list-item']}>
           <Typography inline>
             {' '}
@@ -97,7 +97,7 @@ function Locationselect({
             }}
           >
             {' '}
-            <Typography small> {l.description} </Typography>{' '}
+            <Typography > {l.description} </Typography>{' '}
           </div>
         ))}
       </div>
@@ -110,7 +110,7 @@ function Locationselect({
           className={styles['location-list-item']}
           onClick={defaultLocation}
         >
-          <Typography> Continue with -> {theRef.current.value}</Typography>
+          <Typography> {theRef.current ? 'Continue with -> ' + theRef.current.value: ''}</Typography>
         </div>
         <div className={styles['location-list-item']}>
           <Typography>No results found</Typography>
@@ -125,21 +125,55 @@ function ComboBox2({ onChange, ...otherProps }) {
 
   const [searchTerm, setSearchTerm] = React.useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
-  let show = useFocus(ref);
+  let [show, setShow] = React.useState(false);
   let { locations, isSearching, hasError } = useLocations(debouncedSearchTerm);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const handleClickOpen = () => {
+    setShow(true);
+  };
+
+  const handleClose = () => {
+    setShow(false);
+  };
 
   return (
     <div className="locations-div add-div">
-      <Input
-        type="text"
-        name="location"
-        autocomplete="disabled"
-        multiline
-        ref={ref}
-        {...otherProps}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      {show && (
+     <Button  color="clear" onClick={handleClickOpen} link>
+        Select Address
+      </Button>
+      <br/><br/>
+      <Dialog
+        fullScreen={fullScreen}
+        open={show}
+       style={{
+      minWidth:'80vw'
+      }}
+    
+        aria-labelledby="responsive-dialog-title"
+      >           <DialogActions>
+          <Button onClick={handleClose} color="clear">
+            <CloseIcon />
+          </Button>
+        </DialogActions>
+         <DialogContent>  <Paper style={{
+      minWidth:'30vw'
+     
+      }}
+       elevation={0}
+      >
+        <Input
+          type="text"
+          name="location"
+          autocomplete="disabled"
+        
+          ref={ref}
+          style={{margin:'0 auto'}}
+          {...otherProps}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
         <Locationselect
           Locations={locations}
           isSearching={isSearching}
@@ -147,7 +181,13 @@ function ComboBox2({ onChange, ...otherProps }) {
           theRef={ref}
           hasError={hasError}
         />
-      )}{' '}
+        </Paper></DialogContent>
+               <DialogActions>
+          <Button onClick={handleClose} color="clear">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
