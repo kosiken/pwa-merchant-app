@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { OnboardProgress, Button, Typography, Toast } from '../components';
-import CreateFoodItem from './CreateFoodItem';
+
 import CreateCard from './CreateCard';
 
 import welcome from '../assets/welcome.png';
@@ -27,10 +27,6 @@ const Onboard = () => {
       index: 2,
       status: 'pending',
     },
-    {
-      index: 3,
-      status: 'pending',
-    },
   ]);
   function changePage(index) {
     if (index === currentIndex) return;
@@ -52,13 +48,13 @@ const Onboard = () => {
   const skipClick = () => {
     if (pages[currentIndex].status !== 'done')
       pages[currentIndex].status = 'pending';
-    pages[3].status = 'active';
+    pages[2].status = 'active';
     setPages(pages);
-    setCurrentIndex(3);
+    setCurrentIndex(2);
   };
 
   function renderPage() {
-    if (currentIndex === 3) {
+    if (currentIndex === 2) {
       return (
         <>
           <Toast color="info">
@@ -74,7 +70,7 @@ const Onboard = () => {
             <Image src={welcome} />
             <br /> <br />
             <Link
-              to="/create-delivery-request"
+              to="/home"
               style={{
                 display: 'inline-block',
                 width: '60%',
@@ -89,35 +85,6 @@ const Onboard = () => {
         </>
       );
     } else if (currentIndex === 0) {
-      return (
-        <>
-          <Toast color="info">
-            <Typography title className="h4">
-              Step One
-            </Typography>
-            <Typography className="m-0">
-              Welcome aboard to 500dash, now you've signed up there are a few
-              things we want you to do
-            </Typography>
-            <Button color="clear" onClick={NextClick}>
-              Next
-            </Button>
-            <Button color="clear" onClick={skipClick}>
-              Skip
-            </Button>
-          </Toast>
-          <CreateFoodItem
-            component
-            handleDone={(index) => {
-              pages[index].status = 'done';
-              pages[index + 1].status = 'active';
-              setPages(pages);
-              setCurrentIndex(index + 1);
-            }}
-          />
-        </>
-      );
-    } else if (currentIndex === 1) {
       return (
         <>
           <Toast color="info">
@@ -147,7 +114,7 @@ const Onboard = () => {
           />
         </>
       );
-    } else if (currentIndex === 2) {
+    } else if (currentIndex === 1) {
       return (
         <>
           <Toast color="info">

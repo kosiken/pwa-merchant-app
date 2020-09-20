@@ -70,7 +70,7 @@ const Orders = () => {
             justifyContent: 'flex-end',
           }}
         >
-          <Link to="/create-delivery-request">
+          <Link to="/home">
             <Button color="clear"> Create Delivery Request</Button>
           </Link>
         </Toast>

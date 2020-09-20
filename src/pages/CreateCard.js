@@ -71,7 +71,7 @@ const CreateCard = ({ component, handleDone }) => {
     paystackPay(s)
       .then(() => {
         if (component) {
-          handleDone(2);
+          handleDone(1);
           setLoading(false);
           return;
         }

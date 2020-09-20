@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';import { isEmpty } from 'lodash';
+import { useForm } from 'react-hook-form';
+import { isEmpty } from 'lodash';
 import { useSnackbar } from 'notistack';
 import { Modal, Container } from 'react-bootstrap';
 import {
@@ -15,8 +16,11 @@ import {
 import { getDetails } from '../constants';
 import api from '../api';
 
-import { FiSearch as SearchIcon, FiX as CloseIcon,
-  FiUsers as UsersIcon} from 'react-icons/fi';
+import {
+  FiSearch as SearchIcon,
+  FiX as CloseIcon,
+  FiUsers as UsersIcon,
+} from 'react-icons/fi';
 import { v4 as uuid } from 'uuid';
 import useSearch from '../hooks/useSearch';
 
@@ -139,7 +143,7 @@ const Customers = ({ component, handleDone }) => {
           customer: user,
         });
         if (component) {
-          handleDone(2);
+          handleDone(0);
           return;
         }
         document.getElementById('five-form').reset();
@@ -334,7 +338,6 @@ const Customers = ({ component, handleDone }) => {
               {search && <CloseIcon />}
             </IconButton>
           </section>
-
           <Input
             name="search"
             type="search"
@@ -357,28 +360,29 @@ const Customers = ({ component, handleDone }) => {
             <ErrorComponent message={errorMessage}>
               <Button onClick={init}> Retry </Button>
             </ErrorComponent>
-          )}        {!error && !loaded  && isEmpty(items) && (
-          <>
-            <Typography
-              title
-              style={{
-                textAlign: 'center',
-                fontSize: '4em',
-                color: 'rgb(136, 136, 136)',
-                marginTop: '20vh',
-              }}
-            >
-              <UsersIcon />
-            </Typography>
-            <Typography
-              style={{
-                textAlign: 'center',
-              }}
-            >
-              No Recepients Found
-            </Typography>
-          </>
-        )}
+          )}{' '}
+          {!error && !loaded && isEmpty(items) && (
+            <>
+              <Typography
+                title
+                style={{
+                  textAlign: 'center',
+                  fontSize: '4em',
+                  color: 'rgb(136, 136, 136)',
+                  marginTop: '20vh',
+                }}
+              >
+                <UsersIcon />
+              </Typography>
+              <Typography
+                style={{
+                  textAlign: 'center',
+                }}
+              >
+                No Recepients Found
+              </Typography>
+            </>
+          )}
         </div>
       </div>
     </>

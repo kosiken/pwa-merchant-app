@@ -1,9 +1,8 @@
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import Typography from '../Typography/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Input from '../Input/Input';
-
+import BeatLoader from 'react-spinners/BeatLoader';
 import useSearch from '../../hooks/useSearch';
 import styles from './ComboBox.module.scss';
 import useFocus from '../../hooks/useFocus';
@@ -13,7 +12,7 @@ function CustomerSelect({ items, onChange, theRef, loading }) {
     return (
       <div className={styles['location-list']}>
         <div focusable>
-          <CircularProgress color="#f0324b" />
+          <BeatLoader color="#011627" />
         </div>
       </div>
     );
@@ -35,12 +34,11 @@ function CustomerSelect({ items, onChange, theRef, loading }) {
               <Typography inline> {l.full_name} </Typography>
               <Typography className="ml-2" small variant="gray">
                 {' '}
-                {l.phone_number}{' '}
+                {l.phone_number || 'No phone'}{' '}
               </Typography>
             </div>{' '}
-            <Typography style={{fontSize:'12px'}}>
-             
-              { l.Addresses[0].full_address}{' '}
+            <Typography style={{ fontSize: '12px' }}>
+              {l.Addresses ? l.Addresses[0].full_address : 'No Address'}{' '}
             </Typography>{' '}
           </div>
         ))}
