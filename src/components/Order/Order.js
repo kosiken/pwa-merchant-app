@@ -72,7 +72,7 @@ const Order = ({ order, loader, page }) => {
             <Typography title className="mb-2">
               Delivery Request Details
             </Typography>
-            <Typography bold inline>
+           {/*   <Typography bold inline>
               Food Items
             </Typography>
             <ul className={styles['order-list']}>
@@ -105,7 +105,7 @@ const Order = ({ order, loader, page }) => {
                   </li>
                 );
               })}
-            </ul>
+            </ul>*/}
             <div className={'flex  mt-4'}>
               <Typography className="m-0" bold>
                 Total
