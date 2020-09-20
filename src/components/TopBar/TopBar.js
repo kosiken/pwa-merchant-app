@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { useDispatch } from 'react-redux';
 import { Navbar, Dropdown } from 'react-bootstrap';
@@ -67,7 +67,7 @@ const TopBar = ({ title }) => {
         <MenuIcon />
       </IconButton>
       <div style={{ flexGrow: 1, padding: '0.5em 0px 0.5em 1em' }}>
-        <Typography
+    <Link to="/home">    <Typography
           title
           style={{
             color: '#ffdc4a',
@@ -75,7 +75,7 @@ const TopBar = ({ title }) => {
           }}
         >
           500dash
-        </Typography>
+        </Typography> </Link>
       </div>
 
       <Dropdown>

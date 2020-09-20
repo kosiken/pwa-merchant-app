@@ -5,7 +5,7 @@ import { Container, Row, Col, Image, Alert } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { TopBar, DrawerNav, Typography, Button } from './components';
-import Cards from './pages/Cards';
+// import Cards from './pages/Cards';
 import Customers from './pages/Customers';
 import CreateOrder from './pages/CreateOrder';
 import Dashboard from './pages/Dashboard';
@@ -148,7 +148,7 @@ const Auththenticated = () => {
                 flexGrow: 1,
               }}
             >
-              <Cards />
+              <CreateCard />
             </main>
           </Route>
           <Route exact path="/create-meal">

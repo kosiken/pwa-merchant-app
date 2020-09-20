@@ -161,28 +161,7 @@ const Onboard = () => {
 
       {renderPage()}
       <br />
-      <Typography
-        style={{
-          textAlign: 'center',
 
-          display: 'block',
-          bottom: '0',
-          left: '0',
-          width: '100%',
-        }}
-      >
-        {'Made with '}
-        <span role="img" aria-label="love">
-          ❤️
-        </span>
-        <span
-          style={{
-            color: '#f0324b',
-          }}
-        >
-          {' 500Chow'}
-        </span>
-      </Typography>
     </Container>
   );
 };
