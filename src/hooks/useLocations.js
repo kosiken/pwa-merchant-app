@@ -19,14 +19,22 @@ const useLocations = (value) => {
           (predictions, status) => {
             console.log(predictions);
             console.log(status);
-            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+            if (
+              status ===
+              window.google.maps.places.PlacesServiceStatus.ZERO_RESULTS
+            )
+              setLocations([]);
+            else if (
+              status === window.google.maps.places.PlacesServiceStatus.OK
+            ) {
               if (predictions instanceof Array) setLocations(predictions);
             }
             setIsSearching(false);
           }
         );
       } catch (err) {
-        console.log(err);setHasError(true);
+        console.log(err);
+        setHasError(true);
       }
     }
   }, [value]);

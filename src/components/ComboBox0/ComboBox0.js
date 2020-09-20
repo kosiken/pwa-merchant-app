@@ -47,7 +47,7 @@ function CustomerSelect({ items, onChange, theRef, loading }) {
   } else return false;
 }
 
-function ComboBox({ items, onChange, loading }) {
+function ComboBox0({ items, onChange, loading }) {
   const ref = React.useRef(null);
   //const ref = React.useRef(null)
 
@@ -81,4 +81,4 @@ function ComboBox({ items, onChange, loading }) {
   );
 }
 
-export default ComboBox;
+export default ComboBox0;

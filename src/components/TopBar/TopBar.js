@@ -67,15 +67,18 @@ const TopBar = ({ title }) => {
         <MenuIcon />
       </IconButton>
       <div style={{ flexGrow: 1, padding: '0.5em 0px 0.5em 1em' }}>
-    <Link to="/home">    <Typography
-          title
-          style={{
-            color: '#ffdc4a',
-            lineHeight: '1.2em',
-          }}
-        >
-          500dash
-        </Typography> </Link>
+        <Link to="/home">
+          {' '}
+          <Typography
+            title
+            style={{
+              color: '#ffdc4a',
+              lineHeight: '1.2em',
+            }}
+          >
+            500dash
+          </Typography>{' '}
+        </Link>
       </div>
 
       <Dropdown>

@@ -161,7 +161,6 @@ const Onboard = () => {
 
       {renderPage()}
       <br />
-
     </Container>
   );
 };
