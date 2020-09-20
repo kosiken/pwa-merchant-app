@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Container, Image } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { PAYSTACK_KEY } from '../constants';
 import { useSnackbar } from 'notistack';
-import { Button, Toast, Input } from '../components';
+import { Button, Toast, Typography } from '../components';
 //import api from '../api';
-import { Link } from 'react-router-dom';
 import card from '../assets/card.svg';
 
 const CreateCard = ({ component, handleDone }) => {
@@ -14,7 +12,6 @@ const CreateCard = ({ component, handleDone }) => {
   const user = useSelector((state) => state.auth.user);
   const [key, setKey] = React.useState('');
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const { register, handleSubmit, errors } = useForm();
   const [open, setOpen] = React.useState(false);
   let [isLoading, setLoading] = useState(false);
   function handleOpen(m) {
@@ -42,7 +39,7 @@ const CreateCard = ({ component, handleDone }) => {
       const config = {
         key: PAYSTACK_KEY, // Replace with your public key
 
-        email: props.email,
+        email: user.public_id,
 
         amount: total * 100,
 
@@ -67,11 +64,11 @@ const CreateCard = ({ component, handleDone }) => {
     });
   }
 
-  const handleSubmitCallback = (s) => {
+  const handleSubmit = (s) => {
     paystackPay(s)
       .then(() => {
         if (component) {
-          handleDone(1);
+          handleDone(2);
           setLoading(false);
           return;
         }
@@ -81,87 +78,7 @@ const CreateCard = ({ component, handleDone }) => {
 
   if (component) {
     return (
-      <div className="sidebar-body">
-        <form
-          className="f-form"
-          onSubmit={handleSubmit(handleSubmitCallback)}
-          autoComplete={'false'}
-        >
-          {' '}
-          <div style={{ textAlign: 'center' }}>
-            <Image
-              src={card}
-              style={{
-                width: '100px',
-              }}
-            />
-            <br /> <br />
-          </div>
-          <Input
-            type="email"
-            name="email"
-            label="Email Address"
-            defaultValue={user.email_address}
-            style={{ margin: '0 auto' }}
-            ref={register({
-              required: {
-                value: true,
-                message: 'You need to enter this value',
-              },
-              pattern: {
-                value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
-                message: 'Invalid Email Address',
-              },
-            })}
-            error={errors.email}
-          />
-          <Input
-            label="Phone Number"
-            name={'phone'}
-            defaultValue={user.phone_number}
-            variant="outlined"
-            style={{ margin: '0 auto' }}
-            type="tel"
-            ref={register({
-              required: {
-                value: true,
-                message: 'Phone Number is required',
-              },
-
-              min: {
-                value: 10,
-                message: 'Invalid Phone Number',
-              },
-            })}
-            error={errors.phone}
-          />{' '}
-          <Button full loading={isLoading}>
-            Add Card
-          </Button>
-        </form>
-      </div>
-    );
-  }
-  return (
-    <Container className="mt-4" style={{ minHeight: '100vh' }}>
-      <Toast
-        color="primary"
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <Link to="/cards">
-          <Button color="clear"> Back</Button>
-        </Link>
-      </Toast>
-      <form
-        className="f-form"
-        onSubmit={handleSubmit(handleSubmitCallback)}
-        autoComplete={'false'}
-      >
-        {' '}
+      <div className="f-form">
         <div style={{ textAlign: 'center' }}>
           <Image
             src={card}
@@ -170,49 +87,38 @@ const CreateCard = ({ component, handleDone }) => {
             }}
           />
           <br /> <br />
-        </div>
-        <Input
-          type="email"
-          name="email"
-          label="Email Address"
-          defaultValue={user.email_address}
-          style={{ margin: '0 auto' }}
-          ref={register({
-            required: {
-              value: true,
-              message: 'You need to enter this value',
-            },
-            pattern: {
-              value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
-              message: 'Invalid Email Address',
-            },
-          })}
-          error={errors.email}
-        />
-        <Input
-          label="Phone Number"
-          name={'phone'}
-          defaultValue={user.phone_number}
-          variant="outlined"
-          style={{ margin: '0 auto' }}
-          type="tel"
-          ref={register({
-            required: {
-              value: true,
-              message: 'Phone Number is required',
-            },
-
-            min: {
-              value: 10,
-              message: 'Invalid Phone Number',
-            },
-          })}
-          error={errors.phone}
-        />{' '}
-        <Button full loading={isLoading}>
+        </div>{' '}
+        <Button full loading={isLoading} onClick={handleSubmit}>
           Add Card
         </Button>
-      </form>
+      </div>
+    );
+  }
+  return (
+    <Container className="mt-4" style={{ minHeight: '100vh' }}>
+      <Toast color="info">
+        <Typography title className="h4">
+          Add Payment Method
+        </Typography>
+        <Typography className="m-0">
+          Add a card which we would use in billing all deliveries you make using
+          500dash
+        </Typography>
+      </Toast>
+      <div className="f-form">
+        <div style={{ textAlign: 'center' }}>
+          <Image
+            src={card}
+            style={{
+              width: '100px',
+            }}
+          />
+          <br /> <br />
+        </div>{' '}
+        <Button full loading={isLoading} onClick={handleSubmit}>
+          Add Card
+        </Button>
+      </div>
     </Container>
   );
 };

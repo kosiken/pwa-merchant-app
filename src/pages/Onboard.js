@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { OnboardProgress, Button, Typography, Toast } from '../components';
-
+import { OnboardingSteps } from '../constants';
 import CreateCard from './CreateCard';
 
 import welcome from '../assets/welcome.png';
@@ -27,6 +27,10 @@ const Onboard = () => {
       index: 2,
       status: 'pending',
     },
+    {
+      index: 3,
+      status: 'pending',
+    },
   ]);
   function changePage(index) {
     if (index === currentIndex) return;
@@ -37,6 +41,9 @@ const Onboard = () => {
     setCurrentIndex(index);
   }
   const NextClick = () => {
+    if (currentIndex === 0) {
+      pages[0].status = 'done';
+    }
     if (pages[currentIndex + 1].status !== 'done')
       pages[currentIndex + 1].status = 'active';
     if (pages[currentIndex].status !== 'done')
@@ -48,23 +55,20 @@ const Onboard = () => {
   const skipClick = () => {
     if (pages[currentIndex].status !== 'done')
       pages[currentIndex].status = 'pending';
-    pages[2].status = 'active';
+    pages[3].status = 'active';
     setPages(pages);
-    setCurrentIndex(2);
+    setCurrentIndex(3);
   };
 
   function renderPage() {
-    if (currentIndex === 2) {
+    if (currentIndex === 3) {
       return (
         <>
           <Toast color="info">
             <Typography title className="h4">
-              Welcome
+              {OnboardingSteps[3].title}
             </Typography>
-            <Typography className="m-0">
-              Welcome aboard to 500dash, now you've signed up there are a few
-              things we want you to do
-            </Typography>
+            <Typography className="m-0">{OnboardingSteps[3].text}</Typography>
           </Toast>
           <div style={{ textAlign: 'center' }}>
             <Image src={welcome} />
@@ -86,16 +90,25 @@ const Onboard = () => {
       );
     } else if (currentIndex === 0) {
       return (
+        <Toast color="info">
+          <Typography title className="h4">
+            {OnboardingSteps[0].title}
+          </Typography>
+          <Typography className="m-0">{OnboardingSteps[0].text}</Typography>
+          <Button color="clear" onClick={NextClick}>
+            Next
+          </Button>
+        </Toast>
+      );
+    } else if (currentIndex === 1) {
+      return (
         <>
           <Toast color="info">
             {' '}
             <Typography title className="h4">
-              Step Two
+              {OnboardingSteps[1].title}
             </Typography>
-            <Typography className="m-0">
-              Welcome aboard to 500dash, now you've signed up there are a few
-              things we want you to do
-            </Typography>
+            <Typography className="m-0">{OnboardingSteps[1].text}</Typography>
             <Button color="clear" onClick={NextClick}>
               Next
             </Button>
@@ -114,17 +127,14 @@ const Onboard = () => {
           />
         </>
       );
-    } else if (currentIndex === 1) {
+    } else if (currentIndex === 2) {
       return (
         <>
           <Toast color="info">
             <Typography title className="h4">
-              Step Three
+              {OnboardingSteps[2].title}
             </Typography>
-            <Typography className="m-0">
-              Welcome aboard to 500dash, now you've signed up there are a few
-              things we want you to do
-            </Typography>
+            <Typography className="m-0">{OnboardingSteps[2].text}</Typography>
             <Button color="clear" onClick={NextClick}>
               Next
             </Button>

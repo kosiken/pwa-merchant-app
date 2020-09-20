@@ -143,7 +143,7 @@ const Customers = ({ component, handleDone }) => {
           customer: user,
         });
         if (component) {
-          handleDone(0);
+          handleDone(1);
           return;
         }
         document.getElementById('five-form').reset();
