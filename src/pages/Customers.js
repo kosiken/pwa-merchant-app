@@ -140,7 +140,7 @@ const Customers = ({ component, handleDone }) => {
       .then((user) => {
         dispatch({
           type: 'ADD_CUSTOMER',
-          customer: user,
+          customer: {...user, Addresses:[currentLocation]},
         });
         if (component) {
           handleDone(1);
