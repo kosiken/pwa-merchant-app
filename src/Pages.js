@@ -337,7 +337,7 @@ const UnAuththenticated = () => {
 
             <Typography>
               {'500dash is a food delivery service from '}
-              <a href="https://500chow.com">
+              <a href="#f-main">
                 <Typography
                   style={{
                     color: '#5d97c6',
