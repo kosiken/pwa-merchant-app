@@ -3,7 +3,7 @@ import { Input, Button, Typography } from '../components';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import CircularProgress from '@material-ui/core/CircularProgress';
+
 import { useForm } from 'react-hook-form';
 import api from '../api';
 
@@ -12,18 +12,7 @@ const Login = () => {
   const [key, setKey] = useState('');
   let [isLoading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  function renderLoading(message) {
-    if (isLoading)
-      return (
-        <CircularProgress
-          style={{
-            color: '#ffffff',
-          }}
-        />
-      );
 
-    return message;
-  }
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
@@ -121,8 +110,8 @@ const Login = () => {
             Sign Up
           </Typography>
         </Link>
-        <Button full disabled={isLoading}>
-          {renderLoading('Login')}
+        <Button full loading={isLoading}>
+          Login
         </Button>
       </form>
       <div></div>{' '}

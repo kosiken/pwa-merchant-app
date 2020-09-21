@@ -24,8 +24,9 @@ export function getDetails(id) {
   });
 }
 export const HelpInfo = {
-  recepient: `This information helps us know where to 
+  Customer: `This information helps us know where to 
 deliver your products`,
+Location:`Address where to pick up deliveries`
 };
 
 export const OnboardingSteps = [
@@ -35,8 +36,8 @@ export const OnboardingSteps = [
     things we want you to do`,
   },
   {
-    title: 'Add a Reciepient',
-    text: `Saved Reciepients are customers who you often make deliveries to. 
+    title: 'Add a Customer',
+    text: `Saved Customers are customers who you often make deliveries to. 
     You can save them to quickly select them when you want to make a delivery`,
   },
 

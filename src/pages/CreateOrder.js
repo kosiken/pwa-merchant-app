@@ -13,26 +13,17 @@ import {
   Typography,
   ComboBox2,
   ComboBox0,
-  Loader,
+  Loader,HtmlTooltip
 } from '../components';
-import { withStyles } from '@material-ui/core/styles';
-import Tooltip from '@material-ui/core/Tooltip';
+
 
 // import { Link } from "react-router-dom";
 import { getDetails, HelpInfo } from '../constants';
 
-const HtmlTooltip = withStyles((theme) => ({
-  tooltip: {
-    backgroundColor: 'rgb(255, 248, 216)',
-    color: '#e38000',
-    maxWidth: 220,
-    fontSize: theme.typography.pxToRem(12),
-    border: '1px solid #e38000',
-  },
-}))(Tooltip);
+
 
 const CreateOrder = () => {
-  let [tab, setTab] = useState('New Recipient');
+  let [tab, setTab] = useState('New Customer');
 
   const [show, setShow] = useState(false);
   const [entry, setEntry] = useState(0);
@@ -48,7 +39,7 @@ const CreateOrder = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
   let [message, setMessage] = useState('Submitting');
-  let [customer, setRecipient] = useState(null);
+  let [customer, setCustomer] = useState(null);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   function handleOpen(m) {
@@ -81,7 +72,7 @@ const CreateOrder = () => {
       order_notes: s.order_notes,
       fee: 500,
     };
-    if (tab === 'New Recipient') {
+    if (tab === 'New Customer') {
       body = {
         ...body,
         delivery_address: currentLocation,
@@ -124,7 +115,7 @@ const CreateOrder = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
   useEffect(() => {
-    setRecipient(null);
+    setCustomer(null);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab]);
@@ -158,7 +149,7 @@ const CreateOrder = () => {
       </Loader>
 
       <SwitchBox
-        options={['Saved Recipient', 'New Recipient']}
+        options={['Saved Customer', 'New Customer']}
         value={tab}
         onChange={setTab}
       />
@@ -176,33 +167,33 @@ const CreateOrder = () => {
             Required*
           </Typography>
           <HtmlTooltip
-            title={<Typography inline>{HelpInfo.Recipient}</Typography>}
+            title={<Typography inline>{HelpInfo.Customer}</Typography>}
             placement="right"
           >
             <div style={{ display: 'inline-block' }}>
-              <Typography>Recipient Information</Typography>
+              <Typography>Customer Information</Typography>
             </div>
           </HtmlTooltip>
-          {tab === 'Saved Recipient' && (
+          {tab === 'Saved Customer' && (
             <>
               <ComboBox0
                 items={vendorCustomers}
                 loading={loading}
-                onChange={setRecipient}
+                onChange={setCustomer}
               />
             </>
           )}
 
-          {tab === 'New Recipient' && (
+          {tab === 'New Customer' && (
             <>
               <Input
                 type="text"
                 name="name"
-                label="Recipient Name*"
+                label="Customer Name*"
                 ref={register({
                   required: {
                     value: true,
-                    message: 'Recipient name is required',
+                    message: 'Customer name is required',
                   },
                 })}
                 error={errors.name}
@@ -211,11 +202,11 @@ const CreateOrder = () => {
               <Input
                 type="tel"
                 name="phone"
-                label="Recipient Phone Number*"
+                label="Customer Phone Number*"
                 ref={register({
                   required: {
                     value: true,
-                    message: 'Recipient Phone Number is required',
+                    message: 'Customer Phone Number is required',
                   },
 
                   min: {
@@ -227,23 +218,23 @@ const CreateOrder = () => {
               />
             </>
           )}
-          {tab === 'New Recipient' && (
+          {tab === 'New Customer' && (
             <ComboBox2
               onChange={changeCurrentAddress}
-              label="Recipient Address*"
+              label="Customer Address*"
             />
           )}
-          {tab === 'New Recipient' && (
+          {tab === 'New Customer' && (
             <div className="mb-3">
               <Checkbox
-                label="Save this Recipient for next time"
+                label="Save this Customer for next time"
                 style={{ margin: '0 0 1em' }}
               />
             </div>
           )}
 
           <HtmlTooltip
-            title={<Typography inline>{HelpInfo.Recipient}</Typography>}
+            title={<Typography inline>{HelpInfo.Customer}</Typography>}
             placement="right"
           >
             <div style={{ display: 'inline-block' }}>

@@ -67,7 +67,7 @@ const Dashboard = () => {
         <Table borderless hover responsive>
           <thead>
             <tr>
-              <th>Recipients</th>
+              <th>Customers</th>
 
               <th>Status</th>
               <th>View</th>

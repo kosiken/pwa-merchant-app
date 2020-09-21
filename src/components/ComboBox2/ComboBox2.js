@@ -5,7 +5,7 @@ import { Image } from 'react-bootstrap';
 import Input from '../Input/Input';
 
 import BeatLoader from 'react-spinners/BeatLoader';
-import Paper from '@material-ui/core/Paper';
+
 import styles from './ComboBox2.module.scss';
 import useFocus from '../../hooks/useFocus';
 import useDebounce from '../../hooks/useDebounce';
@@ -27,6 +27,7 @@ function Locationselect({
           google_map_link: '',
           latitude: 6.465422,
           longitude: 3.406448,
+          is_default: true,
         },
       },
     });
@@ -39,7 +40,7 @@ function Locationselect({
           className={styles['location-list-item']}
           onClick={defaultLocation}
         >
-          <Typography> Continue with -> {theRef.current.value}</Typography>
+          <Typography small> Continue with -> {theRef.current.value}</Typography>
         </div>
         <div focusable className={styles['location-list-item']}>
           <Typography
@@ -66,7 +67,7 @@ function Locationselect({
           className={styles['location-list-item']}
           onClick={defaultLocation}
         >
-          <Typography> Continue with -> {theRef.current.value}</Typography>
+          <Typography small> Continue with -> {theRef.current.value}</Typography>
         </div>
         <div className={styles['location-list-item']}>
           <BeatLoader color="#f0324b" />
@@ -96,20 +97,22 @@ function Locationselect({
             }}
           >
             {' '}
-            <Typography inline> {l.description} </Typography>{' '}
+            <Typography small> {l.description} </Typography>{' '}
           </div>
         ))}
       </div>
     );
   } else
     return (
-      <div className={styles['location-list']}>
+      <div className={styles['location-list']}>        <div className="pl-3 pr-3 mb-3">
+          <Image src={googleLogo} />
+        </div>
         <div
           focusable
           className={styles['location-list-item']}
           onClick={defaultLocation}
         >
-          {theRef.current ? 'Continue with -> ' + theRef.current.value : ''}
+               <Typography small>  {theRef.current ? 'Continue with -> ' + theRef.current.value : ''}</Typography>{' '}
         </div>
         <div className={styles['location-list-item']}>
           <Typography>No results found</Typography>
@@ -139,7 +142,7 @@ function ComboBox2({ onChange, ...otherProps }) {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       {show && (
-        <Paper>
+       
           <Locationselect
             Locations={locations}
             isSearching={isSearching}
@@ -147,7 +150,7 @@ function ComboBox2({ onChange, ...otherProps }) {
             theRef={ref}
             hasError={hasError}
           />
-        </Paper>
+       
       )}{' '}
     </div>
   );

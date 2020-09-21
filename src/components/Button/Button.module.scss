@@ -27,6 +27,7 @@
     background-color: transparent;
     color: $primary;
     box-shadow: none;
+    text-align: left;
     font-size: 85%;
     &:hover {
       color: darken($color: $primary, $amount: 20%);

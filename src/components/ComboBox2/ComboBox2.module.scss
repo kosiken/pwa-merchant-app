@@ -1,8 +1,13 @@
 .location-list {
   background: white;
   padding: 1em 0;
-
-  //&:
+  box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.3),
+    0 4px 8px 3px rgba(60, 64, 67, 0.15);
+  position: absolute;
+  width: 95%;
+  max-height: 150px;
+  overflow-y: scroll;
+ bottom: -150px;
 }
 
 .location-list-item {

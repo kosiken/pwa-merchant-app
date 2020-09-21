@@ -9,7 +9,7 @@ import {
   // FiFileText as PaperIcon,
   FiShoppingBag as ShoppingBag,
   FiCreditCard as CreditCardIcon,
-  // FiUser as UserIcon,
+  FiUser as UserIcon,
   // FiDatabase as Database,
 } from 'react-icons/fi';
 
@@ -36,7 +36,7 @@ let links = [
   },
   {
     url: '/customers',
-    name: 'Saved Recipients',
+    name: 'Saved Customers',
     icon: <UsersIcon />,
   },
   {
@@ -44,11 +44,11 @@ let links = [
     name: 'Cards',
     icon: <CreditCardIcon />,
   },
-  // {
-  //   url: '/profile',
-  //   name: 'Profile',
-  //   icon: <UserIcon />,FiCreditCard
-  // },
+  {
+    url: '/profile',
+    name: 'Profile',
+    icon: <UserIcon />,
+  },
 ];
 
 const DrawerNav = () => {

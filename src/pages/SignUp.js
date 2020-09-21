@@ -136,7 +136,9 @@ const SignUp = () => {
         >
           Sign Up
         </Typography>
-        <Input
+                 <Typography small variant="primary" style={{ display: 'block' }}>
+            Required*
+          </Typography>   <br /> <Input
           type="text"
           name="name"
           label="Name"
@@ -152,7 +154,7 @@ const SignUp = () => {
         <Input
           type="email"
           name="email"
-          label="Email Address"
+          label="Email Address*"
           style={{ margin: '0 auto' }}
           ref={register({
             required: {
@@ -167,7 +169,7 @@ const SignUp = () => {
           error={errors.email}
         />
         <Input
-          label="Phone Number"
+          label="Phone Number*"
           name={'phone'}
           variant="outlined"
           style={{ margin: '0 auto' }}
@@ -188,12 +190,12 @@ const SignUp = () => {
         <ComboBox2
           onChange={changeCurrentAddress}
           style={{ margin: '0 auto' }}
-          label="Address"
+          label="Address*"
         />
         <Input
           type="password"
           name="password"
-          label="Password"
+          label="Password*"
           style={{ margin: '0 auto' }}
           ref={register({
             required: {
@@ -203,7 +205,7 @@ const SignUp = () => {
           })}
         />
         <Input
-          label="Confirm Password"
+          label="Confirm Password*"
           type="password"
           name="password2"
           ref={register()}

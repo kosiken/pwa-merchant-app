@@ -88,7 +88,13 @@ const TopBar = ({ title }) => {
 
         <Dropdown.Menu style={{ left: '-150px' }}>
           <Dropdown.Item eventKey="1">
-            <Button onClick={logOut} color="clear">
+            <Button
+              style={{
+                width: '100%',
+              }}
+              onClick={logOut}
+              color="clear"
+            >
               Logout
             </Button>
           </Dropdown.Item>

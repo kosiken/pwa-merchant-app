@@ -11,6 +11,7 @@ import CreateOrder from './pages/CreateOrder';
 import Dashboard from './pages/Dashboard';
 import Meals from './pages/Meals';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 import SignUp from './pages/SignUp';
 import CreateMeal from './pages/CreateMeal';
 import EditMeal from './pages/EditMeal';
@@ -21,6 +22,7 @@ import OrderPage from './pages/OrderPage';
 import Onboard from './pages/Onboard';
 import LFRPage from './pages/LFRPage';
 import logo from './assets/logo-variant.png';
+import not_found from './assets/not_found.svg';
 import { GOOGLE_MAPS_API_KEY } from './constants';
 
 const Auththenticated = () => {
@@ -183,6 +185,20 @@ const Auththenticated = () => {
               <TopBar title="Create Food Item" /> <CreateFoodItem />
             </main>
           </Route>
+          <Route exact path="/profile">
+            {' '}
+            <TopBar title="Profile" />
+            <DrawerNav />{' '}
+            <main
+              id="contents"
+              style={{
+                flexGrow: 1,
+              }}
+            >
+              {' '}
+              <Profile />
+            </main>
+          </Route>
           <Route exact path="/meals">
             <TopBar title="Meals and Menu" /> <DrawerNav />{' '}
             <main
@@ -232,25 +248,36 @@ const Auththenticated = () => {
             </main>
           </Route>
           <Route path="*" exact={true}>
-            <TopBar title="404" /> <span id="drawer" />
-            <Container className="flex central" style={{ textAlign: 'center' }}>
-              <div className="mb-4">
-                <Image
-                  src={logo}
-                  style={{
-                    width: '80px',
-                  }}
-                />
-              </div>
+            <TopBar title="404" />
+            <DrawerNav />{' '}
+            <main
+              id="contents"
+              style={{
+                flexGrow: 1,
+              }}
+            >
+              <Container
+                className="flex central"
+                style={{ textAlign: 'center' }}
+              >
+                <div className="mb-4">
+                  <Image
+                    src={not_found}
+                    style={{
+                      width: '80px',
+                    }}
+                  />
+                </div>
 
-              <Typography title className="h4">
-                We can't find that page
-              </Typography>
+                <Typography title className="h4">
+                  We can't find that page
+                </Typography>
 
-              <Link to={'/'}>
-                <Button color="clear">Home</Button>
-              </Link>
-            </Container>
+                <Link to={'/'}>
+                  <Button color="clear">Home</Button>
+                </Link>
+              </Container>{' '}
+            </main>
           </Route>{' '}
         </Switch>
       </Router>
@@ -310,7 +337,7 @@ const UnAuththenticated = () => {
 
             <Typography>
               {'500dash is a food delivery service from '}
-              <a href="https://500chow.com">
+              <a href="#f-main">
                 <Typography
                   style={{
                     color: '#5d97c6',
