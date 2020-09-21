@@ -19,6 +19,7 @@ import FoodListItem from './FoodListItem/FoodListItem';
 import Meal from './Meal/Meal';
 import DrawerNav from './DrawerNav/DrawerNav';
 import OnboardProgress from './OnboardProgress/OnboardProgress';
+import HtmlTooltip from './HtmlTooltip/HtmlTooltip';
 
 export {
   Input,
@@ -41,4 +42,5 @@ export {
   Meal,
   ErrorComponent,
   OnboardProgress,
+  HtmlTooltip,
 };

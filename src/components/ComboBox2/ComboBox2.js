@@ -27,6 +27,7 @@ function Locationselect({
           google_map_link: '',
           latitude: 6.465422,
           longitude: 3.406448,
+          is_default: true,
         },
       },
     });

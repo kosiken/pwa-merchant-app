@@ -98,7 +98,7 @@ const CreateCard = ({ component, handleDone }) => {
             <InfoIcon />
           </Typography>
           <Typography className="m-0 pl-2">
-            You will be billed N50.00 which would be refunded to you
+            You will be billed N50.00 which would be added to your wallet
           </Typography>
         </Toast>
         <Button full loading={isLoading} onClick={handleSubmit}>
@@ -134,7 +134,7 @@ const CreateCard = ({ component, handleDone }) => {
             <InfoIcon />
           </Typography>
           <Typography className="m-0 pl-2">
-            You will be billed N50.00 which would be refunded to you
+            You will be billed N50.00 which would be added to your wallet
           </Typography>
         </Toast>
         <Button full loading={isLoading} onClick={handleSubmit}>

@@ -208,11 +208,11 @@ const Customers = ({ component, handleDone }) => {
           <Input
             type="text"
             name="full_name"
-            label="Recipient Name"
+            label="Customer Name"
             ref={register({
               required: {
                 value: true,
-                message: 'Recipient name is required',
+                message: 'Customer name is required',
               },
             })}
             error={errors.full_name}
@@ -221,11 +221,11 @@ const Customers = ({ component, handleDone }) => {
           <Input
             type="tel"
             name="phone_number"
-            label="Recipient Phone Number"
+            label="Customer Phone Number"
             ref={register({
               required: {
                 value: true,
-                message: 'Recipient Phone Number is required',
+                message: 'Customer Phone Number is required',
               },
 
               min: {
@@ -235,10 +235,7 @@ const Customers = ({ component, handleDone }) => {
             })}
             error={errors.phone_number}
           />
-          <ComboBox2
-            onChange={changeCurrentAddress}
-            label="Recipient Address"
-          />
+          <ComboBox2 onChange={changeCurrentAddress} label="Customer Address" />
 
           <Button
             loading={isLoading}
@@ -248,7 +245,7 @@ const Customers = ({ component, handleDone }) => {
               margin: '0',
             }}
           >
-            Add Recipient
+            Add Customer
           </Button>
         </Container>
       </form>
@@ -291,7 +288,7 @@ Saved Reciepients are customers who you often make deliveries to. You can save t
                   display: 'block',
                 }}
               >
-                Edit Recipient Information
+                Edit Customer Information
               </Typography>
               <Input
                 type="text"
@@ -334,7 +331,7 @@ Saved Reciepients are customers who you often make deliveries to. You can save t
                 marginLeft: '10px',
               }}
             >
-              Recipients
+              Customers
             </Typography>
 
             <IconButton
@@ -390,7 +387,7 @@ Saved Reciepients are customers who you often make deliveries to. You can save t
                   textAlign: 'center',
                 }}
               >
-                No Recipients Found
+                No Customers Found
               </Typography>
             </>
           )}
