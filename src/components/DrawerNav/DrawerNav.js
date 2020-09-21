@@ -36,7 +36,7 @@ let links = [
   },
   {
     url: '/customers',
-    name: 'Customers',
+    name: 'Saved Recipients',
     icon: <UsersIcon />,
   },
   {

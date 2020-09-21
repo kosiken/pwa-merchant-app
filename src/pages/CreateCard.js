@@ -6,7 +6,11 @@ import { useSnackbar } from 'notistack';
 import { Button, Toast, Typography } from '../components';
 //import api from '../api';
 import card from '../assets/card.svg';
-
+import {
+  FiInfo as InfoIcon,
+  // FiUser as UserIcon,
+  // FiDatabase as Database,
+} from 'react-icons/fi';
 const CreateCard = ({ component, handleDone }) => {
   //  const { enqueueSnackbar } = useSnackbar();
   const user = useSelector((state) => state.auth.user);
@@ -88,10 +92,15 @@ const CreateCard = ({ component, handleDone }) => {
           />
           <br /> <br />
         </div>{' '}
-        <Typography>
+        <Toast className="mb-3 flex" color="secondary">
           {' '}
-          You will be billed N50.00 which would be refunded to you{' '}
-        </Typography>
+          <Typography bold inline>
+            <InfoIcon />
+          </Typography>
+          <Typography className="m-0 pl-2">
+            You will be billed N50.00 which would be refunded to you
+          </Typography>
+        </Toast>
         <Button full loading={isLoading} onClick={handleSubmit}>
           Add Card
         </Button>
@@ -119,12 +128,15 @@ const CreateCard = ({ component, handleDone }) => {
           />
           <br /> <br />
         </div>
-
-        <Typography>
+        <Toast className="mb-3 flex" color="secondary">
           {' '}
-          You will be billed N50.00 which would be refunded to you{' '}
-        </Typography>
-
+          <Typography bold inline>
+            <InfoIcon />
+          </Typography>
+          <Typography className="m-0 pl-2">
+            You will be billed N50.00 which would be refunded to you
+          </Typography>
+        </Toast>
         <Button full loading={isLoading} onClick={handleSubmit}>
           Add Card
         </Button>

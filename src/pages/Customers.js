@@ -12,6 +12,7 @@ import {
   IconButton,
   ComboBox2,
   ErrorComponent,
+  //Toast,
 } from '../components';
 import { getDetails } from '../constants';
 import api from '../api';
@@ -20,6 +21,7 @@ import {
   FiSearch as SearchIcon,
   FiX as CloseIcon,
   FiUsers as UsersIcon,
+  //FiInfo as InfoIcon,
 } from 'react-icons/fi';
 import { v4 as uuid } from 'uuid';
 import useSearch from '../hooks/useSearch';
@@ -140,7 +142,7 @@ const Customers = ({ component, handleDone }) => {
       .then((user) => {
         dispatch({
           type: 'ADD_CUSTOMER',
-          customer: {...user, Addresses:[currentLocation]},
+          customer: { ...user, Addresses: [currentLocation] },
         });
         if (component) {
           handleDone(1);
@@ -206,11 +208,11 @@ const Customers = ({ component, handleDone }) => {
           <Input
             type="text"
             name="full_name"
-            label="Recepient Name"
+            label="Recipient Name"
             ref={register({
               required: {
                 value: true,
-                message: 'Recepient name is required',
+                message: 'Recipient name is required',
               },
             })}
             error={errors.full_name}
@@ -219,11 +221,11 @@ const Customers = ({ component, handleDone }) => {
           <Input
             type="tel"
             name="phone_number"
-            label="Recepient Phone Number"
+            label="Recipient Phone Number"
             ref={register({
               required: {
                 value: true,
-                message: 'Recepient Phone Number is required',
+                message: 'Recipient Phone Number is required',
               },
 
               min: {
@@ -235,7 +237,7 @@ const Customers = ({ component, handleDone }) => {
           />
           <ComboBox2
             onChange={changeCurrentAddress}
-            label="Recepient Address"
+            label="Recipient Address"
           />
 
           <Button
@@ -246,7 +248,7 @@ const Customers = ({ component, handleDone }) => {
               margin: '0',
             }}
           >
-            Add Recepient
+            Add Recipient
           </Button>
         </Container>
       </form>
@@ -255,6 +257,15 @@ const Customers = ({ component, handleDone }) => {
   if (component) return renderForm();
   return (
     <>
+      {/*  <Toast className="mb-3 flex" color="secondary">    <Typography bold inline>
+          <InfoIcon/>
+        
+        </Typography>
+        <Typography className="m-0 pl-2">
+        
+Saved Reciepients are customers who you often make deliveries to. You can save them to quickly select them when you want to make a delivery
+        </Typography>
+ </Toast>*/}
       <div className="customerPage">
         {renderForm()}
         <Modal
@@ -280,7 +291,7 @@ const Customers = ({ component, handleDone }) => {
                   display: 'block',
                 }}
               >
-                Edit Customer
+                Edit Recipient Information
               </Typography>
               <Input
                 type="text"
@@ -323,7 +334,7 @@ const Customers = ({ component, handleDone }) => {
                 marginLeft: '10px',
               }}
             >
-              Recepients
+              Recipients
             </Typography>
 
             <IconButton
@@ -342,7 +353,7 @@ const Customers = ({ component, handleDone }) => {
             name="search"
             type="search"
             style={{ margin: '0 auto', display: search ? 'block' : 'none' }}
-            label="Search Customers"
+            label="Search"
             ref={ref}
           />
           {loaded &&
@@ -379,7 +390,7 @@ const Customers = ({ component, handleDone }) => {
                   textAlign: 'center',
                 }}
               >
-                No Recepients Found
+                No Recipients Found
               </Typography>
             </>
           )}

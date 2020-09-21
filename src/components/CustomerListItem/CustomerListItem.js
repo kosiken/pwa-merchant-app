@@ -1,24 +1,24 @@
 import React from 'react';
 import Typography from '../Typography/Typography';
 import IconButton from '../IconButton/IconButton';
-import Button from '../Button/Button';
+// import Button from '../Button/Button';
 import Avatar from '@material-ui/core/Avatar';
 import { FiUser as UserIcon, FiEdit as EditIcon } from 'react-icons/fi';
 
 // import { RiDeleteBin6Line as DeleteIcon } from 'react-icons/ri';
 import styles from './CustomerListItem.module.scss';
-import Dialog from '@material-ui/core/Dialog';
+// import Dialog from '@material-ui/core/Dialog';
 
 const CustomerListItem = ({ customer, onEdit, loader }) => {
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  //const handleClickOpen = () => {
+  // setOpen(true);
+  //};
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  //const handleClose = () => {
+  //  setOpen(false);
+  //};
   if (loader) {
     return (
       <div className={[styles['customer-list-item']]}>
@@ -47,7 +47,6 @@ const CustomerListItem = ({ customer, onEdit, loader }) => {
         <Avatar>
           <UserIcon />
         </Avatar>
-
         <section className={styles['customer-info']}>
           <Typography
             style={{
@@ -68,8 +67,9 @@ const CustomerListItem = ({ customer, onEdit, loader }) => {
           onClick={() => onEdit(customer)}
         >
           <EditIcon />
-        </IconButton>
-     {/*   <IconButton
+        </IconButton>{' '}
+      </div>
+      {/*   <IconButton
           style={{
             position: 'absolute',
             right: '10px',
@@ -78,7 +78,7 @@ const CustomerListItem = ({ customer, onEdit, loader }) => {
           onClick={handleClickOpen}
         >
           <DeleteIcon />
-        </IconButton> */}
+        </IconButton> 
       </div>
 
       <Dialog
@@ -119,7 +119,7 @@ const CustomerListItem = ({ customer, onEdit, loader }) => {
             Confirm{' '}
           </Button>
         </div>
-      </Dialog>
+      </Dialog>*/}
     </div>
   );
 };
