@@ -66,7 +66,7 @@ function ComboBox0({ items, onChange, loading }) {
       <Input
         type="search"
         name="customer"
-        label="Customer name or phone number"
+        label="Recipient name or phone number"
         ref={ref}
       />
       {show && (

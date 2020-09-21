@@ -32,7 +32,7 @@ const HtmlTooltip = withStyles((theme) => ({
 }))(Tooltip);
 
 const CreateOrder = () => {
-  let [tab, setTab] = useState('New Recepient');
+  let [tab, setTab] = useState('New Recipient');
 
   const [show, setShow] = useState(false);
   const [entry, setEntry] = useState(0);
@@ -48,7 +48,7 @@ const CreateOrder = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
   let [message, setMessage] = useState('Submitting');
-  let [customer, setRecepient] = useState(null);
+  let [customer, setRecipient] = useState(null);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   function handleOpen(m) {
@@ -81,7 +81,7 @@ const CreateOrder = () => {
       order_notes: s.order_notes,
       fee: 500,
     };
-    if (tab === 'New Recepient') {
+    if (tab === 'New Recipient') {
       body = {
         ...body,
         delivery_address: currentLocation,
@@ -124,7 +124,7 @@ const CreateOrder = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
   useEffect(() => {
-    setRecepient(null);
+    setRecipient(null);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab]);
@@ -158,7 +158,7 @@ const CreateOrder = () => {
       </Loader>
 
       <SwitchBox
-        options={['Existing Recepient', 'New Recepient']}
+        options={['Saved Recipient', 'New Recipient']}
         value={tab}
         onChange={setTab}
       />
@@ -176,33 +176,33 @@ const CreateOrder = () => {
             Required*
           </Typography>
           <HtmlTooltip
-            title={<Typography inline>{HelpInfo.recepient}</Typography>}
+            title={<Typography inline>{HelpInfo.Recipient}</Typography>}
             placement="right"
           >
             <div style={{ display: 'inline-block' }}>
-              <Typography>Recepient Information</Typography>
+              <Typography>Recipient Information</Typography>
             </div>
           </HtmlTooltip>
-          {tab === 'Existing Recepient' && (
+          {tab === 'Saved Recipient' && (
             <>
               <ComboBox0
                 items={vendorCustomers}
                 loading={loading}
-                onChange={setRecepient}
+                onChange={setRecipient}
               />
             </>
           )}
 
-          {tab === 'New Recepient' && (
+          {tab === 'New Recipient' && (
             <>
               <Input
                 type="text"
                 name="name"
-                label="Recepient Name*"
+                label="Recipient Name*"
                 ref={register({
                   required: {
                     value: true,
-                    message: 'Recepient name is required',
+                    message: 'Recipient name is required',
                   },
                 })}
                 error={errors.name}
@@ -211,11 +211,11 @@ const CreateOrder = () => {
               <Input
                 type="tel"
                 name="phone"
-                label="Recepient Phone Number*"
+                label="Recipient Phone Number*"
                 ref={register({
                   required: {
                     value: true,
-                    message: 'Recepient Phone Number is required',
+                    message: 'Recipient Phone Number is required',
                   },
 
                   min: {
@@ -227,23 +227,23 @@ const CreateOrder = () => {
               />
             </>
           )}
-          {tab === 'New Recepient' && (
+          {tab === 'New Recipient' && (
             <ComboBox2
               onChange={changeCurrentAddress}
-              label="Recepient Address*"
+              label="Recipient Address*"
             />
           )}
-          {tab === 'New Recepient' && (
+          {tab === 'New Recipient' && (
             <div className="mb-3">
               <Checkbox
-                label="Save this recepient for next time"
+                label="Save this Recipient for next time"
                 style={{ margin: '0 0 1em' }}
               />
             </div>
           )}
 
           <HtmlTooltip
-            title={<Typography inline>{HelpInfo.recepient}</Typography>}
+            title={<Typography inline>{HelpInfo.Recipient}</Typography>}
             placement="right"
           >
             <div style={{ display: 'inline-block' }}>
