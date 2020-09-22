@@ -40,7 +40,7 @@ const Auththenticated = () => {
     $script.ready(
       ['google-maps', 'paystack'],
       () => {
-        console.log('depsNotFound');
+     
         let deps = '';
         if (!window.PaystackPop) deps += ' paystack ';
 
@@ -68,9 +68,6 @@ const Auththenticated = () => {
         } else {
           setShow(true);
         }
-      },
-      function (depsNotFound) {
-        console.log(depsNotFound);
       }
     );
   }, []);

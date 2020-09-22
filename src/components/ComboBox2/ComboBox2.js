@@ -107,7 +107,7 @@ function ComboBox2({ onChange, ...otherProps }) {
       <Input
         type="text"
         name="location"
-        autocomplete="disabled"
+       
         multiline
         ref={ref}
         {...otherProps}
