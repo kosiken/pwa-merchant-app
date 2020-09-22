@@ -43,7 +43,7 @@ const CreateCard = ({ component, handleDone }) => {
       const config = {
         key: PAYSTACK_KEY, // Replace with your public key
 
-        email: user.public_id + '@500chow.com',
+        email: user.public_id + '@500dash.com',
 
         amount: total * 100,
 
