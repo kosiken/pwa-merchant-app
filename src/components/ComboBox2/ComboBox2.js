@@ -40,7 +40,10 @@ function Locationselect({
           className={styles['location-list-item']}
           onClick={defaultLocation}
         >
-          <Typography small> Continue with -> {theRef.current.value}</Typography>
+          <Typography small>
+            {' '}
+            Continue with -> {theRef.current.value}
+          </Typography>
         </div>
         <div focusable className={styles['location-list-item']}>
           <Typography
@@ -67,7 +70,10 @@ function Locationselect({
           className={styles['location-list-item']}
           onClick={defaultLocation}
         >
-          <Typography small> Continue with -> {theRef.current.value}</Typography>
+          <Typography small>
+            {' '}
+            Continue with -> {theRef.current.value}
+          </Typography>
         </div>
         <div className={styles['location-list-item']}>
           <BeatLoader color="#f0324b" />
@@ -104,7 +110,9 @@ function Locationselect({
     );
   } else
     return (
-      <div className={styles['location-list']}>        <div className="pl-3 pr-3 mb-3">
+      <div className={styles['location-list']}>
+        {' '}
+        <div className="pl-3 pr-3 mb-3">
           <Image src={googleLogo} />
         </div>
         <div
@@ -112,7 +120,10 @@ function Locationselect({
           className={styles['location-list-item']}
           onClick={defaultLocation}
         >
-               <Typography small>  {theRef.current ? 'Continue with -> ' + theRef.current.value : ''}</Typography>{' '}
+          <Typography small>
+            {' '}
+            {theRef.current ? 'Continue with -> ' + theRef.current.value : ''}
+          </Typography>{' '}
         </div>
         <div className={styles['location-list-item']}>
           <Typography>No results found</Typography>
@@ -142,15 +153,13 @@ function ComboBox2({ onChange, ...otherProps }) {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       {show && (
-       
-          <Locationselect
-            Locations={locations}
-            isSearching={isSearching}
-            onChange={onChange}
-            theRef={ref}
-            hasError={hasError}
-          />
-       
+        <Locationselect
+          Locations={locations}
+          isSearching={isSearching}
+          onChange={onChange}
+          theRef={ref}
+          hasError={hasError}
+        />
       )}{' '}
     </div>
   );

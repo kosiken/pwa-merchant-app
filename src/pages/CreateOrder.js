@@ -13,14 +13,12 @@ import {
   Typography,
   ComboBox2,
   ComboBox0,
-  Loader,HtmlTooltip
+  Loader,
+  HtmlTooltip,
 } from '../components';
-
 
 // import { Link } from "react-router-dom";
 import { getDetails, HelpInfo } from '../constants';
-
-
 
 const CreateOrder = () => {
   let [tab, setTab] = useState('New Customer');

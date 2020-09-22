@@ -136,9 +136,11 @@ const SignUp = () => {
         >
           Sign Up
         </Typography>
-                 <Typography small variant="primary" style={{ display: 'block' }}>
-            Required*
-          </Typography>   <br /> <Input
+        <Typography small variant="primary" style={{ display: 'block' }}>
+          Required*
+        </Typography>{' '}
+        <br />{' '}
+        <Input
           type="text"
           name="name"
           label="Name"

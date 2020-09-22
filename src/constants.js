@@ -26,7 +26,7 @@ export function getDetails(id) {
 export const HelpInfo = {
   Customer: `This information helps us know where to 
 deliver your products`,
-Location:`Address where to pick up deliveries`
+  Location: `Address where to pick up deliveries`,
 };
 
 export const OnboardingSteps = [

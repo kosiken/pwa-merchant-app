@@ -43,7 +43,7 @@ const CreateCard = ({ component, handleDone }) => {
       const config = {
         key: PAYSTACK_KEY, // Replace with your public key
 
-        email: user.public_id + '@500chow.com',
+        email: user.public_id + '@500dash.com',
 
         amount: total * 100,
 
@@ -59,7 +59,7 @@ const CreateCard = ({ component, handleDone }) => {
         },
 
         callback: function (response) {
-          handleOpen('Payment complete! Thanks for your patronage');
+          handleOpen('Transaction was completed');
           res([response.reference, true]);
         },
       };
