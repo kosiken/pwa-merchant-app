@@ -19,32 +19,11 @@ function Locationselect({
   isSearching,
   hasError,
 }) {
-  const defaultLocation = () => {
-    onChange({
-      target: {
-        value: {
-          full_address: theRef.current.value,
-          google_map_link: '',
-          latitude: 6.465422,
-          longitude: 3.406448,
-          is_default: true,
-        },
-      },
-    });
-  };
+
   if (hasError) {
     return (
       <div className={styles['location-list']}>
-        <div
-          focusable
-          className={styles['location-list-item']}
-          onClick={defaultLocation}
-        >
-          <Typography small>
-            {' '}
-            Continue with -> {theRef.current.value}
-          </Typography>
-        </div>
+   
         <div focusable className={styles['location-list-item']}>
           <Typography
             style={{
@@ -65,16 +44,7 @@ function Locationselect({
         <div className="pl-3 pr-3 mb-3">
           <Image src={googleLogo} />
         </div>
-        <div
-          focusable
-          className={styles['location-list-item']}
-          onClick={defaultLocation}
-        >
-          <Typography small>
-            {' '}
-            Continue with -> {theRef.current.value}
-          </Typography>
-        </div>
+     
         <div className={styles['location-list-item']}>
           <BeatLoader color="#f0324b" />
           <Typography inline> Finding matches</Typography>
@@ -115,16 +85,7 @@ function Locationselect({
         <div className="pl-3 pr-3 mb-3">
           <Image src={googleLogo} />
         </div>
-        <div
-          focusable
-          className={styles['location-list-item']}
-          onClick={defaultLocation}
-        >
-          <Typography small>
-            {' '}
-            {theRef.current ? 'Continue with -> ' + theRef.current.value : ''}
-          </Typography>{' '}
-        </div>
+    
         <div className={styles['location-list-item']}>
           <Typography>No results found</Typography>
         </div>
