@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Alert } from 'react-bootstrap';
 import BeatLoader from 'react-spinners/BeatLoader';
+
 import { Typography, Button, HtmlTooltip, Toast } from '../components';
 import { HelpInfo } from '../constants';
 
@@ -38,7 +39,7 @@ const Profile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div>
+    <div >
       <Alert
         variant="danger"
         show={error}
@@ -57,30 +58,29 @@ const Profile = () => {
           maxWidth: '500px',
         }}
       >
-        <Typography title className="mb-2">
-          Identification Details
-        </Typography>
+      <div className="flex central"  style={{
 
-        <Typography inline bold>
-          Name
-        </Typography>
-        <Typography> {user.name}</Typography>
-        <Typography inline bold>
-          Email address
-        </Typography>
-        <Typography> {user.email_address}</Typography>
-        <Typography inline bold>
-          Phone number
-        </Typography>
-        <Typography>
-          {' '}
+      minHeight: '85vh'
+    }}>  <div  className="p-2" style={{
+    textAlign: 'center',
+  
+    }}>
+
+        <Typography title className="mb-2" style={{
+   
+    fontSize: '32px',
+fontWeight: '700'
+    }}> {user.name}</Typography>
+       
+        <Typography className="mb-1" variant="gray"> {user.email_address}</Typography>
+     
+        <Typography small bold>
+
           {user.phone_number || 'No registered phone number'}
         </Typography>
-        <hr />
+       <hr />
 
-        <Typography title className="mb-2">
-          Location Details{' '}
-        </Typography>
+   
 
         <HtmlTooltip
           title={<Typography inline>{HelpInfo.Location}</Typography>}
@@ -94,11 +94,8 @@ const Profile = () => {
         </HtmlTooltip>
 
         <Typography>{user.addresss || 'No registered addresss'}</Typography>
-        <hr />
-
-        <Typography title className="mb-2">
-          Payment Details{' '}
-        </Typography>
+      
+      
         <Typography inline bold>
           Wallet Balance
         </Typography>
@@ -108,7 +105,7 @@ const Profile = () => {
         <Button full onClick={logOut}>
           Logout
         </Button>
-        <br />
+        <br />   </div></div>
       </Container>{' '}
       {isLoading && (
         <Toast
