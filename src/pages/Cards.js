@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { isEmpty } from 'lodash';
-import { Typography, Button, Toast,  Card } from '../components';
+import { useSelector, useDispatch } from 'react-redux';
+import { Typography, Button, Toast, Card } from '../components';
 import { Container, Alert } from 'react-bootstrap';
 import api from '../api';
 import { FiCreditCard as CreditCardIcon } from 'react-icons/fi';
@@ -10,22 +11,29 @@ const Cards = () => {
   let [loading, setLoading] = useState(true);
   let [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [cards, setCards] = useState([]);
+  const dispatch = useDispatch();
+  const { cards } = useSelector((state) => {
+    return {
+      cards: state.card.cards || [],
+    };
+  });
   const init = () => {
     setError(false);
     (async () => {
       try {
-        let __cards = await api.getCards();
-        setCards(__cards);
-
+        if (isEmpty(cards)) {
+          let __cards = await api.getCards();
+          dispatch({
+            type: 'GET_CARDS',
+            cards: __cards,
+          });
+        }
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        if(!error.data)
-        
-        {
-        console.error(error);
-        return
+        if (!error.data) {
+          console.error(error);
+          return;
         }
         setErrorMessage(error.data.error);
         setError(true);
@@ -50,24 +58,30 @@ const Cards = () => {
         </Alert.Heading>
         <Typography>{errorMessage}</Typography>
       </Alert>{' '}
-    
-        <Toast
-          color="primary"
+      <Toast
+        color="primary"
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+        }}
+      >
+        {' '}
+        <Container
           style={{
             display: 'flex',
             justifyContent: 'flex-end',
           }}
-        >  <Container      style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-          }} >
+        >
           <Link to="/add-card">
             <Button color="clear"> Add Card</Button>
-          </Link> </Container>
-        </Toast>{' '}
-       <Container   style={{
-       maxWidth:'500px'
-       }}  > 
+          </Link>{' '}
+        </Container>
+      </Toast>{' '}
+      <Container
+        style={{
+          maxWidth: '500px',
+        }}
+      >
         {!error && !loading && isEmpty(cards) && (
           <>
             <Typography
@@ -90,19 +104,12 @@ const Cards = () => {
             </Typography>
           </>
         )}
-               {loading  &&
-            [1, 2, 3, 4, 5].map(index => (
-              <Card key={'card' + index}
-           loader />
-            ))}
-      
-             {cards.map((card, i) => (
-            <Card
-              card={card}
-              key={'card' + i}
-          
-            />
-          ))}
+        {loading &&
+          [1, 2, 3, 4, 5].map((index) => <Card key={'card' + index} loader />)}
+
+        {cards.map((card, i) => (
+          <Card card={card} key={'card' + i} />
+        ))}
       </Container>
     </div>
   );

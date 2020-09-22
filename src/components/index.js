@@ -42,5 +42,6 @@ export {
   Meal,
   ErrorComponent,
   OnboardProgress,
-  HtmlTooltip,Card
+  HtmlTooltip,
+  Card,
 };

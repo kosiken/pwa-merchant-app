@@ -49,7 +49,6 @@ export default function (state = initialState, action) {
       break;
 
     default:
-
       break;
   }
 

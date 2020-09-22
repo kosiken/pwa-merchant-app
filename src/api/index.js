@@ -325,6 +325,29 @@ class FiveApi {
     }
   }
 
+  async fundWallet(data) {
+    try {
+      let resp = await Server.post('/cards/fund/', data);
+
+      if (goodResponse(resp)) {
+        return resp.data;
+      } else {
+        throw new FiveChowError(resp);
+      }
+    } catch (err) {
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
+    }
+  }
   async createOrder(order) {
     try {
       let resp = await Server.post('/vendors/order/', order);

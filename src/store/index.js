@@ -5,17 +5,18 @@ import thunk from 'redux-thunk';
 import Auth from './reducers/user.reducer';
 import Food from './reducers/food.reducer';
 import Customer from './reducers/customer.reducer';
-// import { persistStore, autoRehydrate } from "redux-persist";
+import Card from './reducers/card.reducer';
 
 const RootReducer = combineReducers({
   auth: Auth,
   food: Food,
   customer: Customer,
+  card: Card,
 });
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['food', 'customer'],
+  blacklist: ['food', 'customer', 'cards'],
 };
 const createMStore = applyMiddleware(thunk)(createStore);
 const persistedReducer = persistReducer(persistConfig, RootReducer);
