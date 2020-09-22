@@ -18,6 +18,7 @@ import EditMeal from './pages/EditMeal';
 import FoodItems from './pages/FoodItems';
 import CreateFoodItem from './pages/CreateFoodItem';
 import CreateCard from './pages/CreateCard';
+import Cards from './pages/Cards';
 import OrderPage from './pages/OrderPage';
 import Onboard from './pages/Onboard';
 import LFRPage from './pages/LFRPage';
@@ -150,7 +151,7 @@ const Auththenticated = () => {
                 flexGrow: 1,
               }}
             >
-              <CreateCard />
+              <Cards />
             </main>
           </Route>
           <Route exact path="/create-meal">

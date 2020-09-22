@@ -1,7 +1,5 @@
-
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
-
 
 const HtmlTooltip = withStyles((theme) => ({
   tooltip: {
@@ -12,6 +10,5 @@ const HtmlTooltip = withStyles((theme) => ({
     border: '1px solid #e38000',
   },
 }))(Tooltip);
-
 
 export default HtmlTooltip;

@@ -59,7 +59,7 @@ const CreateCard = ({ component, handleDone }) => {
         },
 
         callback: function (response) {
-          handleOpen('Payment complete! Thanks for your patronage');
+          handleOpen('Transaction was completed');
           res([response.reference, true]);
         },
       };

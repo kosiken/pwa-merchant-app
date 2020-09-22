@@ -207,7 +207,53 @@ class FiveApi {
       }
     }
   }
+  async getMe() {
+    try {
+      let resp = await Server.get('/vendors/me');
 
+      if (goodResponse(resp)) {
+        return resp.data;
+      } else {
+        throw new FiveChowError(resp);
+      }
+    } catch (err) {
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
+    }
+  }
+
+  async getCards() {
+    try {
+      let resp = await Server.get('/cards');
+
+      if (goodResponse(resp)) {
+        return resp.data;
+      } else {
+        throw new FiveChowError(resp);
+      }
+    } catch (err) {
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
+    }
+  }
   async getMeals() {
     try {
       let resp = await Server.get('/vendors/meals');
