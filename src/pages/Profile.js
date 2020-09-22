@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Alert } from 'react-bootstrap';
 import BeatLoader from 'react-spinners/BeatLoader';
+import { Link } from 'react-router-dom';
 import { Typography, Button, HtmlTooltip, Toast } from '../components';
 import { HelpInfo } from '../constants';
 
@@ -57,58 +58,62 @@ const Profile = () => {
           maxWidth: '500px',
         }}
       >
-        <Typography title className="mb-2">
-          Identification Details
-        </Typography>
-
-        <Typography inline bold>
-          Name
-        </Typography>
-        <Typography> {user.name}</Typography>
-        <Typography inline bold>
-          Email address
-        </Typography>
-        <Typography> {user.email_address}</Typography>
-        <Typography inline bold>
-          Phone number
-        </Typography>
-        <Typography>
-          {' '}
-          {user.phone_number || 'No registered phone number'}
-        </Typography>
-        <hr />
-
-        <Typography title className="mb-2">
-          Location Details{' '}
-        </Typography>
-
-        <HtmlTooltip
-          title={<Typography inline>{HelpInfo.Location}</Typography>}
-          placement="right"
+        <div
+          className="flex central"
+          style={{
+            minHeight: '85vh',
+          }}
         >
-          <div style={{ display: 'inline-block' }}>
-            <Typography inline bold>
-              Pickup Address
+          {' '}
+          <div
+            className="p-2"
+            style={{
+              textAlign: 'center',
+            }}
+          >
+            <Typography
+              title
+              className="mb-2"
+              style={{
+                fontSize: '32px',
+                fontWeight: '700',
+              }}
+            >
+              {' '}
+              {user.name}
             </Typography>
+            <Typography className="mb-1" variant="gray">
+              {' '}
+              {user.email_address}
+            </Typography>
+            <Typography small bold>
+              {user.phone_number || 'No registered phone number'}
+            </Typography>
+            <hr />
+            <HtmlTooltip
+              title={<Typography inline>{HelpInfo.Location}</Typography>}
+              placement="right"
+            >
+              <div style={{ display: 'inline-block' }}>
+                <Typography inline bold>
+                  Pickup Address
+                </Typography>
+              </div>
+            </HtmlTooltip>
+            <Typography>{user.addresss || 'No registered addresss'}</Typography>
+            <Typography inline bold>
+              Wallet Balance
+            </Typography>{' '}
+            <Link to="/fund-wallet">
+              <Button color="clear"> Fund</Button>
+            </Link>
+            <Typography>{'NGN' + user.wallet_balance.toFixed(2)}</Typography>
+            <Button full onClick={logOut}>
+              Logout
+            </Button>
+            <br />{' '}
           </div>
-        </HtmlTooltip>
-
-        <Typography>{user.addresss || 'No registered addresss'}</Typography>
-        <hr />
-
-        <Typography title className="mb-2">
-          Payment Details{' '}
-        </Typography>
-        <Typography inline bold>
-          Wallet Balance
-        </Typography>
-
-        <Typography>{'NGN' + user.wallet_balance.toFixed(2)}</Typography>
-
-        <Button full onClick={logOut}>
-          Logout
-        </Button>
-        <br />
+        </div>
       </Container>{' '}
       {isLoading && (
         <Toast

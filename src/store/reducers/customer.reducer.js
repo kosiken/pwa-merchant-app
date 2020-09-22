@@ -21,7 +21,6 @@ export default function (state = initialState, action) {
       break;
 
     default:
-      console.warn('Unknown action ' + action.type);
       break;
   }
 

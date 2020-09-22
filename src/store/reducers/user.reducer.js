@@ -10,9 +10,7 @@ const initialState = {
 export default function (state = initialState, action) {
   let returnValue = state;
   let { user } = action;
-  if (!user) {
-    console.warn('action.user is empty');
-  }
+
   let nUser = {};
   switch (action.type) {
     case SIGNUP_USER:
@@ -51,7 +49,6 @@ export default function (state = initialState, action) {
       break;
 
     default:
-      console.warn('Unknown action ' + action.type);
       break;
   }
 

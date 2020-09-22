@@ -19,11 +19,9 @@ function Locationselect({
   isSearching,
   hasError,
 }) {
-
   if (hasError) {
     return (
       <div className={styles['location-list']}>
-   
         <div focusable className={styles['location-list-item']}>
           <Typography
             style={{
@@ -44,7 +42,7 @@ function Locationselect({
         <div className="pl-3 pr-3 mb-3">
           <Image src={googleLogo} />
         </div>
-     
+
         <div className={styles['location-list-item']}>
           <BeatLoader color="#f0324b" />
           <Typography inline> Finding matches</Typography>
@@ -85,7 +83,6 @@ function Locationselect({
         <div className="pl-3 pr-3 mb-3">
           <Image src={googleLogo} />
         </div>
-    
         <div className={styles['location-list-item']}>
           <Typography>No results found</Typography>
         </div>
@@ -107,7 +104,6 @@ function ComboBox2({ onChange, ...otherProps }) {
       <Input
         type="text"
         name="location"
-        autocomplete="disabled"
         multiline
         ref={ref}
         {...otherProps}

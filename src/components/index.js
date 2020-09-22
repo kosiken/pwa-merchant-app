@@ -20,7 +20,7 @@ import Meal from './Meal/Meal';
 import DrawerNav from './DrawerNav/DrawerNav';
 import OnboardProgress from './OnboardProgress/OnboardProgress';
 import HtmlTooltip from './HtmlTooltip/HtmlTooltip';
-
+import Card from './Card/Card';
 export {
   Input,
   Button,
@@ -43,4 +43,5 @@ export {
   ErrorComponent,
   OnboardProgress,
   HtmlTooltip,
+  Card,
 };

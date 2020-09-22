@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { PAYSTACK_KEY } from '../constants';
 import { useSnackbar } from 'notistack';
 import { Button, Toast, Typography } from '../components';
-import { v4 as uuid } from "uuid";
+import { v4 as uuid } from 'uuid';
 import card from '../assets/card.svg';
 import {
   FiInfo as InfoIcon,

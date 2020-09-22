@@ -22,7 +22,10 @@ import Cards from './pages/Cards';
 import OrderPage from './pages/OrderPage';
 import Onboard from './pages/Onboard';
 import LFRPage from './pages/LFRPage';
+
+import FundWallet from './pages/FundWallet';
 import logo from './assets/logo-variant.png';
+
 import not_found from './assets/not_found.svg';
 import { GOOGLE_MAPS_API_KEY } from './constants';
 
@@ -37,42 +40,35 @@ const Auththenticated = () => {
       `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`,
       'google-maps'
     );
-    $script.ready(
-      ['google-maps', 'paystack'],
-      () => {
-        console.log('depsNotFound');
-        let deps = '';
-        if (!window.PaystackPop) deps += ' paystack ';
+    $script.ready(['google-maps', 'paystack'], () => {
+      let deps = '';
+      if (!window.PaystackPop) deps += ' paystack ';
 
-        if (!window.google) {
-          deps += 'google-maps';
-          setMessage('failed to load dependencies' + deps);
-          setShow(true);
-          return;
-        }
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
-          window.FivePlacesService = new window.google.maps.places.PlacesService(
-            document.getElementById('map')
-          );
-          window.FiveService = new window.google.maps.places.AutocompleteService();
-
-          function showPosition(position) {
-            window.FiveBounds = new window.google.maps.LatLngBounds(
-              new window.google.maps.LatLng(
-                position.coords.latitude,
-                position.coords.longitude
-              )
-            );
-          }
-        } else {
-          setShow(true);
-        }
-      },
-      function (depsNotFound) {
-        console.log(depsNotFound);
+      if (!window.google) {
+        deps += 'google-maps';
+        setMessage('failed to load dependencies' + deps);
+        setShow(true);
+        return;
       }
-    );
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+        window.FivePlacesService = new window.google.maps.places.PlacesService(
+          document.getElementById('map')
+        );
+        window.FiveService = new window.google.maps.places.AutocompleteService();
+
+        function showPosition(position) {
+          window.FiveBounds = new window.google.maps.LatLngBounds(
+            new window.google.maps.LatLng(
+              position.coords.latitude,
+              position.coords.longitude
+            )
+          );
+        }
+      } else {
+        setShow(true);
+      }
+    });
   }, []);
   return (
     <div>
@@ -172,6 +168,17 @@ const Auththenticated = () => {
               }}
             >
               <EditMeal />
+            </main>
+          </Route>
+          <Route exact path="/fund-wallet">
+            <TopBar title="Fund Wallet" /> <DrawerNav />{' '}
+            <main
+              id="contents"
+              style={{
+                flexGrow: 1,
+              }}
+            >
+              <FundWallet />
             </main>
           </Route>
           <Route exact path="/create-food">
