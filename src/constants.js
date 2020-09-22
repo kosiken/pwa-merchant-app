@@ -1,6 +1,6 @@
-export const GOOGLE_MAPS_API_KEY = 'AIzaSyCDRINRTtuQGCi8P7V8lYPcJkuYW5HIKJA';
-export const PAYSTACK_KEY = 'pk_test_8375cb0559631010056db94e05b725e445435002';
-
+export const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+export const PAYSTACK_KEY = process.env.REACT_APP_PAYSTACK_KEY; 
+console.log(process.env)
 export function getDetails(id) {
   return new Promise((res, rej) => {
     window.FivePlacesService.getDetails(
