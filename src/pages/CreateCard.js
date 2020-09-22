@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { PAYSTACK_KEY } from '../constants';
 import { useSnackbar } from 'notistack';
 import { Button, Toast, Typography } from '../components';
-//import api from '../api';
+import { v4 as uuid } from "uuid";
 import card from '../assets/card.svg';
 import {
   FiInfo as InfoIcon,
@@ -48,7 +48,7 @@ const CreateCard = ({ component, handleDone }) => {
         amount: total * 100,
 
         currency: 'NGN', //GHS for Ghana Cedis,
-        ref: user.public_id,
+        ref: uuid(),
 
         //use your reference or leave empty to have a reference generated for you
 
