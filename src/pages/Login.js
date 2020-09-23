@@ -34,10 +34,14 @@ const Login = () => {
   const { register, handleSubmit, errors } = useForm();
   const dispatch = useDispatch();
   const submit = (formData) => {
+    const defA = {
+      full_address: 'No Address',
+    };
     setLoading(true);
     api
       .login(formData)
       .then((user) => {
+        user.Vendor.Address = user.Vendor.Address ? user.Vendor.Address : defA;
         dispatch({ user, type: 'SIGNUP_USER' });
       })
       .catch((err) => {

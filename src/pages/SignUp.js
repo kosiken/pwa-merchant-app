@@ -85,6 +85,9 @@ const SignUp = () => {
     setCurrentLocation(e.target.value);
   };
   const submit = async (formData) => {
+    const defA = {
+      full_address: 'No Address',
+    };
     if (formData.password !== formData.password2) return;
     setLoading(true);
     if (currentLocation.place_id) {
@@ -93,6 +96,7 @@ const SignUp = () => {
     api
       .register({ ...formData, address: currentLocation })
       .then((user) => {
+        user.Vendor.Address = user.Vendor.Address ? user.Vendor.Address : defA;
         dispatch({ user, type: 'SIGNUP_USER' });
       })
 

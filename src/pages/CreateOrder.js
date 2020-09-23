@@ -18,7 +18,7 @@ import {
 } from '../components';
 
 // import { Link } from "react-router-dom";
-import { getDetails, HelpInfo } from '../constants';
+import { getDetails, HelpInfo, getDistance, getFee } from '../constants';
 
 const CreateOrder = () => {
   let [tab, setTab] = useState('New Customer');
@@ -43,12 +43,13 @@ const CreateOrder = () => {
   function handleOpen(m) {
     setKey(enqueueSnackbar(m));
   }
-  const { token, vendorCustomers } = useSelector((state) => {
+  const { token, vendorCustomers, user } = useSelector((state) => {
     return {
       token: state.auth.token,
       vendorCustomers: state.customer.customers || [],
       vMeals: state.food.meals || [],
       vFoods: state.food.foods || [],
+      user: state.auth.user,
     };
   });
   let formRef = useRef(null);
@@ -56,10 +57,41 @@ const CreateOrder = () => {
   const { register, handleSubmit, errors, getValues } = useForm();
   const handleSubmitCallback = async (s) => {
     setSubmiting(true);
+    let distance;
 
-    if (currentLocation.place_id) {
+    if (tab === 'Saved Customer') {
+      if (customer) {
+        try {
+          let address = customer.Addresses[0];
+
+          distance = getDistance(address, user.Address);
+          // console.log(distance);
+        } catch (err) {
+          handleOpen('No address found for customer');
+          return;
+        }
+      } else {
+        handleOpen('No customer selected');
+        setSubmiting(false);
+        return;
+      }
+    } else if (currentLocation.place_id) {
       currentLocation = await getDetails(currentLocation.place_id);
       setMessage('Resolving Delivery Address');
+      distance = getDistance(currentLocation, user.Address);
+      //  return;
+    } else {
+      handleOpen('No location selected');
+      setSubmiting(false);
+      return;
+    }
+
+    const fee = getFee(distance);
+
+    if (!fee) {
+      handleOpen('Distance above 8km');
+      setSubmiting(false);
+      return;
     }
 
     setMessage('Submitting Delivery Request');
@@ -68,7 +100,7 @@ const CreateOrder = () => {
       phone_number: customer ? customer.phone_number : getValues('phone'),
 
       order_notes: s.order_notes,
-      fee: 500,
+      fee,
     };
     if (tab === 'New Customer') {
       body = {

@@ -1,4 +1,4 @@
-import { GET_CUSTOMERS, ADD_CUSTOMER } from '../types';
+import { GET_CUSTOMERS, ADD_CUSTOMER, LOGOUT_USER } from '../types';
 
 const initialState = {
   customers: [],
@@ -18,6 +18,9 @@ export default function (state = initialState, action) {
       returnValue = {
         customers: state.customers.concat([action.customer]),
       };
+      break;
+    case LOGOUT_USER:
+      returnValue = initialState;
       break;
 
     default:
