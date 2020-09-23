@@ -6,15 +6,16 @@ import { Typography, Button, Toast, Card } from '../components';
 import { Container, Alert } from 'react-bootstrap';
 import api from '../api';
 import { FiCreditCard as CreditCardIcon } from 'react-icons/fi';
-
+import Paper from '@material-ui/core/Paper';
 const Cards = () => {
   let [loading, setLoading] = useState(true);
   let [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
-  const { cards } = useSelector((state) => {
+  const { cards, user } = useSelector((state) => {
     return {
       cards: state.card.cards || [],
+      user: state.auth.user,
     };
   });
   const init = () => {
@@ -45,21 +46,22 @@ const Cards = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="mt-3">
+    <div
+      className="mt-3 pb-2"
+      style={{
+        position: 'relative',
+      }}
+    >
       <Typography
         title
-        variant="secondary"
         className="mb-1 ml-4"
         style={{
           fontSize: '2em',
           fontWeight: '700',
         }}
       >
-        Cards
+        Wallet
       </Typography>
-      <Link to="/add-card" className="ml-3">
-        <Button color="clear"> Add Card</Button>
-      </Link>{' '}
       <Alert
         variant="danger"
         show={error}
@@ -80,46 +82,78 @@ const Cards = () => {
         }}
       >
         {' '}
-        <Container
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-          }}
-        ></Container>
       </Toast>{' '}
+      <div
+        className="p-2 mb-3"
+        style={{
+          textAlign: 'center',
+        }}
+      >
+        {' '}
+        <Typography inline> Wallet Balance</Typography>{' '}
+        <Link to="/fund-wallet">
+          <Button color="clear"> Fund</Button>
+        </Link>
+        <Typography
+          title
+          style={{
+            fontSize: '2em',
+            fontWeight: '700',
+          }}
+        >
+          {'NGN' + user.wallet_balance.toFixed(2)}
+        </Typography>{' '}
+      </div>
       <Container
         style={{
           maxWidth: '500px',
+          position: 'relative',
         }}
       >
-        {!error && !loading && isEmpty(cards) && (
-          <>
-            <Typography
-              title
-              style={{
-                textAlign: 'center',
-                fontSize: '4em',
-                color: 'rgb(136, 136, 136)',
-                marginTop: '20vh',
-              }}
-            >
-              <CreditCardIcon />
-            </Typography>
-            <Typography
-              style={{
-                textAlign: 'center',
-              }}
-            >
-              No Cards Found
-            </Typography>
-          </>
-        )}
-        {loading &&
-          [1, 2, 3, 4, 5].map((index) => <Card key={'card' + index} loader />)}
-
-        {cards.map((card, i) => (
-          <Card card={card} key={'card' + i} />
-        ))}
+        <Paper className="p-3" elevation={0}>
+          <div
+            className="flex"
+            style={{ justifyContent: 'space-between', alignItems: 'center' }}
+          >
+            {' '}
+            <Typography inline bold>
+              Cards
+            </Typography>{' '}
+            <Link to="/add-card" className="ml-3">
+              <Button color="clear"> Add Card</Button>
+            </Link>
+          </div>
+          <hr />{' '}
+          {!error && !loading && isEmpty(cards) && (
+            <>
+              <Typography
+                title
+                style={{
+                  textAlign: 'center',
+                  fontSize: '4em',
+                  color: 'rgb(136, 136, 136)',
+                  marginTop: '20vh',
+                }}
+              >
+                <CreditCardIcon />
+              </Typography>
+              <Typography
+                style={{
+                  textAlign: 'center',
+                }}
+              >
+                No Cards Found
+              </Typography>
+            </>
+          )}
+          {loading &&
+            [1, 2, 3, 4, 5].map((index) => (
+              <Card key={'card' + index} loader />
+            ))}
+          {cards.map((card, i) => (
+            <Card card={card} key={'card' + i} />
+          ))}
+        </Paper>
       </Container>
     </div>
   );

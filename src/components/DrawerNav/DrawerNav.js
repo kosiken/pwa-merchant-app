@@ -8,11 +8,10 @@ import {
   FiUsers as UsersIcon,
   // FiFileText as PaperIcon,
   FiShoppingBag as ShoppingBag,
-  FiCreditCard as CreditCardIcon,
   FiUser as UserIcon,
   // FiDatabase as Database,
 } from 'react-icons/fi';
-
+import { RiWalletLine as WalletIcon } from 'react-icons/ri';
 let links = [
   {
     url: '/home',
@@ -21,7 +20,7 @@ let links = [
   },
   // {
   //   url: '/FoodItems',
-  //   name: 'Food Items',
+  //   name: 'Food Items',BiWallet
   //   icon: <PaperIcon />,
   // },
   // {
@@ -40,9 +39,9 @@ let links = [
     icon: <UsersIcon />,
   },
   {
-    url: '/cards',
-    name: 'Cards',
-    icon: <CreditCardIcon />,
+    url: '/wallet',
+    name: 'Wallet',
+    icon: <WalletIcon />,
   },
   {
     url: '/profile',

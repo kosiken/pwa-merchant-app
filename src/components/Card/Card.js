@@ -53,7 +53,7 @@ const Card = ({ card, loader }) => {
   }
   return (
     <div
-      className="flex mb-3"
+      className="hv flex mb-3 p-2"
       style={{
         alignItems: 'center',
       }}
