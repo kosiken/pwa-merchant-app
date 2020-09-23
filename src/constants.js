@@ -50,3 +50,21 @@ export const OnboardingSteps = [
     text: 'Welcome aboard to 500dash',
   },
 ];
+export function getDistance(location1, location2) {
+  let { latitude: lat1, longitude: lon1 } = location1;
+  let { latitude: lat2, longitude: lon2 } = location2;
+
+  const o1 = (lat1 * Math.PI) / 180,
+    o2 = (lat2 * Math.PI) / 180,
+    D = ((lon2 - lon1) * Math.PI) / 180,
+    R = 6371e3;
+  const d =
+    Math.acos(
+      Math.sin(o1) * Math.sin(o2) + Math.cos(o1) * Math.cos(o2) * Math.cos(D)
+    ) * R;
+  return Math.abs(Math.round(d / 1000));
+}
+
+export function getFee(distance) {
+  return distance > 8 ? false : distance > 4 ? 1000 : 500;
+}

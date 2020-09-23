@@ -16,7 +16,7 @@ const RootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['food', 'customer', 'cards'],
+  blacklist: ['food', 'customer', 'card'],
 };
 const createMStore = applyMiddleware(thunk)(createStore);
 const persistedReducer = persistReducer(persistConfig, RootReducer);

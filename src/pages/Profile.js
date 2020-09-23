@@ -24,12 +24,18 @@ const Profile = () => {
     (async () => {
       try {
         let user = await api.getMe();
+        const defA = {
+          full_address: 'No Address',
+        };
 
+        user.Address = user.Address ? user.Address : defA;
         dispatch({ user: { Vendor: user }, type: 'SIGNUP_USER' });
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        setErrorMessage(error.data.error);
+
+        console.log(error);
+        if (error.data) setErrorMessage(error.data.error);
         setError(true);
       }
     })();
@@ -100,14 +106,18 @@ const Profile = () => {
                 </Typography>
               </div>
             </HtmlTooltip>
-            <Typography>{user.addresss || 'No registered addresss'}</Typography>
+            <Typography variant="gray">
+              {user.Address.full_address || 'No registered addresss'}
+            </Typography>
             <Typography inline bold>
               Wallet Balance
             </Typography>{' '}
             <Link to="/fund-wallet">
               <Button color="clear"> Fund</Button>
             </Link>
-            <Typography>{'NGN' + user.wallet_balance.toFixed(2)}</Typography>
+            <Typography variant="gray">
+              {'NGN' + user.wallet_balance.toFixed(2)}
+            </Typography>
             <Button full onClick={logOut}>
               Logout
             </Button>
