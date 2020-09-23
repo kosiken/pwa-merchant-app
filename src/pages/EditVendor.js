@@ -126,7 +126,7 @@ const EditVendor = () => {
           error={errors.phone_number}
         />{' '}
         <Button full loading={isLoading}>
-        Confirm
+          Confirm
         </Button>
       </form>
       <div></div>{' '}
