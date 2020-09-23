@@ -3,21 +3,35 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Container, Alert } from 'react-bootstrap';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { Link } from 'react-router-dom';
-import { Typography, Button, HtmlTooltip, Toast } from '../components';
-import { HelpInfo } from '../constants';
+import Backdrop from '@material-ui/core/Backdrop';
+import Paper from '@material-ui/core/Paper';
+import {
+  Typography,
+  Button,
+  HtmlTooltip,
+  Toast,
+  ComboBox2,
+} from '../components';
+import { /*getDetails, */ HelpInfo } from '../constants';
 
 import api from '../api';
 
 const Profile = () => {
   const user = useSelector((state) => state.auth.user);
   let [isLoading, setLoading] = useState(true);
+  let [currentLocation, setCurrentLocation] = useState(null);
   let [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
+  const [open] = useState(false);
   const logOut = () => {
     dispatch({
       type: 'LOGOUT_USER',
     });
+  };
+  const changeCurrentAddress = (e) => {
+    console.log(currentLocation);
+    setCurrentLocation(e.target.value);
   };
   const init = () => {
     setError(false);
@@ -46,6 +60,29 @@ const Profile = () => {
   }, []);
   return (
     <div>
+      <Backdrop
+        style={{
+          height: '100vh',
+          zIndex: '999999',
+        }}
+        open={open}
+      >
+        <Paper className="f-form">
+          {' '}
+          <Typography title variant="secondary">
+            Previous Address
+          </Typography>{' '}
+          <Typography variant="gray">
+            {user.Address.full_address || 'No registered addresss'}
+          </Typography>
+          <ComboBox2
+            onChange={changeCurrentAddress}
+            style={{ margin: '0 auto' }}
+            label="New Address*"
+          />{' '}
+          <Button full>Logout</Button>
+        </Paper>
+      </Backdrop>{' '}
       <Alert
         variant="danger"
         show={error}
@@ -59,7 +96,7 @@ const Profile = () => {
         <Typography>{errorMessage}</Typography>
       </Alert>
       <Container
-        className="mt-4"
+        className="mt-4 p-2"
         style={{
           maxWidth: '500px',
         }}
@@ -95,6 +132,9 @@ const Profile = () => {
             <Typography small bold>
               {user.phone_number || 'No registered phone number'}
             </Typography>
+            <Link to="/edit">
+              <Button color="clear"> Edit</Button>
+            </Link>
             <hr />
             <HtmlTooltip
               title={<Typography inline>{HelpInfo.Location}</Typography>}
@@ -104,6 +144,7 @@ const Profile = () => {
                 <Typography inline bold>
                   Pickup Address
                 </Typography>
+                {/*<Button color="clear"  onClick={()=> setOpen(true)}> Edit</Button>*/}
               </div>
             </HtmlTooltip>
             <Typography variant="gray">
@@ -127,19 +168,21 @@ const Profile = () => {
       </Container>{' '}
       {isLoading && (
         <Toast
-          className="flex"
           style={{
             position: 'fixed',
             bottom: '0',
             width: '100%',
-            textAlign: 'center',
           }}
           color="secondary"
         >
-          <Typography inline>
+          <Typography
+            className="mb-0"
+            style={{
+              paddingLeft: '40vw',
+            }}
+          >
             <BeatLoader />
-          </Typography>
-          <Typography inline> Updating</Typography>{' '}
+          </Typography>{' '}
         </Toast>
       )}{' '}
     </div>

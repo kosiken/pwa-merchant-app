@@ -14,7 +14,7 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import SignUp from './pages/SignUp';
 import CreateMeal from './pages/CreateMeal';
-import EditMeal from './pages/EditMeal';
+import EditVendor from './pages/EditVendor';
 import FoodItems from './pages/FoodItems';
 import CreateFoodItem from './pages/CreateFoodItem';
 import CreateCard from './pages/CreateCard';
@@ -159,15 +159,15 @@ const Auththenticated = () => {
               }}
             ></main>
           </Route>
-          <Route exact path="/edit-meal/:id">
-            <TopBar title="Edit Meal" /> <DrawerNav />{' '}
+          <Route exact path="/edit">
+            <TopBar title="Edit Profile" /> <DrawerNav />{' '}
             <main
               id="contents"
               style={{
                 flexGrow: 1,
               }}
             >
-              <EditMeal />
+              <EditVendor />
             </main>
           </Route>
           <Route exact path="/fund-wallet">

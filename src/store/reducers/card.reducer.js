@@ -1,4 +1,4 @@
-import {  LOGOUT_USER } from '../types';
+import { LOGOUT_USER } from '../types';
 
 const initialState = {
   cards: [],
