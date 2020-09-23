@@ -102,7 +102,6 @@ const CreateOrder = () => {
     }
 
     const fee = getFee(distance);
- 
 
     if (!fee) {
       handleOpen('Distance above 8km');

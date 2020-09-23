@@ -418,7 +418,29 @@ class FiveApi {
       }
     }
   }
+  async updateAddress(body) {
+    try {
+      let resp = await Server.post('/vendors/me/', body);
 
+      if (goodResponse(resp)) {
+        return resp.data;
+      } else {
+        throw new FiveChowError(resp);
+      }
+    } catch (err) {
+      if (err.response) {
+        throw new FiveChowError(err.response);
+      } else {
+        throw new FiveChowError({
+          data: {
+            error: err.message,
+            code: 5010,
+          },
+          status: 0,
+        });
+      }
+    }
+  }
   async editCustomer(customer) {
     try {
       let resp = await this.api.put('/vendors/customer', customer);
