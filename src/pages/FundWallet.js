@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { isEmpty } from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
-import { Input, Typography,  Loader, Button } from '../components';
+import { Input, Typography, Loader, Button } from '../components';
 import { Container, Alert } from 'react-bootstrap';
 import api from '../api';
 import { FiCreditCard as CreditCardIcon } from 'react-icons/fi';

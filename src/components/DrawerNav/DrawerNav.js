@@ -62,6 +62,11 @@ const DrawerNav = () => {
             to={link.url}
             className={'nav-link ml flex-row center '}
             key={'link' + i}
+            
+            style={{
+            padding: '.5rem 1rem'
+            
+            }}
           >
             <span
               className={'info ' + (pathname === link.url ? 'active' : '')}

@@ -58,7 +58,21 @@ const CreateOrder = () => {
   const handleSubmitCallback = async (s) => {
     setSubmiting(true);
     let distance;
+    if (!user.Address.latitude) {
+      setMessage('Resolving Pickup Address');
 
+      let _user = await api.getMe();
+
+      if (_user.Address) {
+        user.Address = _user.Address;
+      } else {
+        handleOpen(
+          'No pickup address found, You have to add an address from the profile page'
+        );
+        setSubmiting(false);
+        return;
+      }
+    }
     if (tab === 'Saved Customer') {
       if (customer) {
         try {
@@ -68,6 +82,7 @@ const CreateOrder = () => {
           // console.log(distance);
         } catch (err) {
           handleOpen('No address found for customer');
+          setSubmiting(false);
           return;
         }
       } else {
@@ -87,6 +102,7 @@ const CreateOrder = () => {
     }
 
     const fee = getFee(distance);
+ 
 
     if (!fee) {
       handleOpen('Distance above 8km');
