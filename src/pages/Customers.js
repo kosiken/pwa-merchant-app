@@ -264,19 +264,19 @@ Saved Reciepients are customers who you often make deliveries to. You can save t
         </Typography>
  </Toast>*/}
       <div className="customerPage">
-      <div>
-      
-                     <Typography
-        title
-        variant="secondary"
-              className="mt-3 mb-1 ml-4"
-               style={{
-          fontSize: '2em',
-          fontWeight: '700',
-        }}
-      >Customers</Typography>
-        {renderForm()}
-        
+        <div>
+          <Typography
+            title
+            variant="secondary"
+            className="mt-3 mb-1 ml-4"
+            style={{
+              fontSize: '2em',
+              fontWeight: '700',
+            }}
+          >
+            Customers
+          </Typography>
+          {renderForm()}
         </div>
         <Modal
           show={openb}

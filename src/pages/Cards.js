@@ -46,19 +46,20 @@ const Cards = () => {
   }, []);
   return (
     <div className="mt-3">
-    
-                   <Typography
+      <Typography
         title
         variant="secondary"
-              className="mb-1 ml-4"
-               style={{
+        className="mb-1 ml-4"
+        style={{
           fontSize: '2em',
           fontWeight: '700',
         }}
-      >Cards</Typography>
+      >
+        Cards
+      </Typography>
       <Link to="/add-card" className="ml-3">
-            <Button color="clear"> Add Card</Button>
-          </Link>{' '}
+        <Button color="clear"> Add Card</Button>
+      </Link>{' '}
       <Alert
         variant="danger"
         show={error}
@@ -84,9 +85,7 @@ const Cards = () => {
             display: 'flex',
             justifyContent: 'flex-end',
           }}
-        >
-    
-        </Container>
+        ></Container>
       </Toast>{' '}
       <Container
         style={{

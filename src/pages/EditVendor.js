@@ -77,7 +77,7 @@ const EditVendor = () => {
         Edit Profile
       </Typography>{' '}
       <Link to="/profile" className="ml-3">
-        <Button color="clear" > Back</Button>
+        <Button color="clear"> Back</Button>
       </Link>
       {done && <Redirect to="/profile" />}
       <form

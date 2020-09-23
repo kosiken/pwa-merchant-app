@@ -101,12 +101,11 @@ const Profile = () => {
         open={open}
       >
         <Paper className="f-form">
-         
-         <div style={{textAlign: 'right'}} >
-         <Button color="clear" onClick={() => setOpen(false)}>
-         Close
-         </Button>
-         </div>
+          <div style={{ textAlign: 'right' }}>
+            <Button color="clear" onClick={() => setOpen(false)}>
+              Close
+            </Button>
+          </div>
           <Typography title variant="secondary">
             Previous Address
           </Typography>{' '}
@@ -119,7 +118,7 @@ const Profile = () => {
             label="New Address*"
           />{' '}
           <Button full onClick={updateAddreess} loading={isLoading2}>
-             Confirm
+            Confirm
           </Button>
         </Paper>
       </Backdrop>{' '}
