@@ -478,7 +478,6 @@ class FiveApi {
   }
 
   async editModel(model) {
-    console.log(model);
     let resp = await Server.post('/vendors/edit/', model);
     try {
       if (goodResponse(resp)) {
