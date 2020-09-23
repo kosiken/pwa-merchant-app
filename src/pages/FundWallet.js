@@ -78,6 +78,8 @@ const FundWallet = () => {
 
   return (
     <div className="mt-3">
+      {' '}
+      {loading && <Loader />}
       <Alert
         variant="danger"
         show={error}
