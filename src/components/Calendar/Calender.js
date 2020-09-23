@@ -100,13 +100,14 @@ const Calender = ({ onChange }) => {
   let ref = useRef(null);
   let [_month, _setMonth] = useState(0);
   let [currentDay, setCurrentDay] = useState(0);
-
+  let [_year, _setYear] = useState(0);
   useEffect(() => {
     let m = moment();
     let date = m.date();
     let month = m.month();
-
-    setCalender(getCalender(date, m.day(), month, m.year()));
+    let year = m.year();
+    _setYear(year);
+    setCalender(getCalender(date, m.day(), month, year));
     _setMonth(month);
     setCurrentDay(date);
   }, []);
@@ -136,39 +137,81 @@ const Calender = ({ onChange }) => {
     if (_month === m) {
       return;
     }
-    let nm = moment(new Date(2020, m, 1));
+    let nm = moment(new Date(_year, m, 1));
     let date = nm.date();
     setCalender(getCalender(date, nm.day(), m, nm.year()));
     _setMonth(m);
     setCurrentDay(date);
   }
+  function changeYear() {
+    let nm = moment(new Date(_year, _month, 1));
+    let date = nm.date();
+    setCalender(getCalender(date, nm.day(), _month, _year));
 
+    setCurrentDay(date);
+  }
   return (
     <div className="mb-4">
-      <Dropdown className="mb-1">
-        <Dropdown.Toggle as={CustomToggle2} id="dropdown-custom-components2">
-          <Typography inline>
-            {Months[_month]} <MoreIcon />
-          </Typography>
-        </Dropdown.Toggle>
+      <div
+        className="flex"
+        style={{ justifyContent: 'space-between', alignItems: 'center' }}
+      >
+        <Dropdown className="mb-1">
+          <Dropdown.Toggle as={CustomToggle2} id="dropdown-custom-components2">
+            <Typography inline>
+              {Months[_month]} <MoreIcon />
+            </Typography>
+          </Dropdown.Toggle>
 
-        <Dropdown.Menu>
-          {Months.map((m, i) => {
-            return (
-              <Dropdown.Item key={'month' + i} eventKey={(i + 1).toString()}>
-                <Typography
-                  onClick={() => {
-                    changeMonth(i);
-                  }}
-                >
-                  {m}
-                </Typography>
-              </Dropdown.Item>
-            );
-          })}
-        </Dropdown.Menu>
-      </Dropdown>
+          <Dropdown.Menu>
+            {Months.map((m, i) => {
+              return (
+                <Dropdown.Item key={'month' + i} eventKey={(i + 1).toString()}>
+                  <Typography
+                    onClick={() => {
+                      changeMonth(i);
+                    }}
+                  >
+                    {m}
+                  </Typography>
+                </Dropdown.Item>
+              );
+            })}
+          </Dropdown.Menu>
+        </Dropdown>
+        <section className="flex">
+          <IconButton
+            style={{ display: 'inline-flex', alignItems: 'center' }}
+            onClick={() => {
+              _setYear(_year - 1);
+              changeYear();
+            }}
+          >
+            <LeftIcon />
+          </IconButton>
+          <IconButton
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              fontSize: '16px',
+            }}
+          >
+            <Typography inline bold>
+              {_year}
+            </Typography>
+          </IconButton>
 
+          <IconButton
+            style={{ display: 'inline-flex', alignItems: 'center' }}
+            onClick={() => {
+              _setYear(_year + 1);
+              changeYear();
+            }}
+          >
+            <RightIcon />
+          </IconButton>
+        </section>
+      </div>
       <div className="flex">
         <IconButton
           style={{ display: 'inline-flex', alignItems: 'center' }}
