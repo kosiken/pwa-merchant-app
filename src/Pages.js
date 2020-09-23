@@ -139,8 +139,8 @@ const Auththenticated = () => {
               <CreateCard />
             </main>
           </Route>{' '}
-          <Route exact path="/cards">
-            <TopBar title="Cards" /> <DrawerNav />{' '}
+          <Route exact path="/wallet">
+            <TopBar title="Wallet" /> <DrawerNav />{' '}
             <main
               id="contents"
               style={{
