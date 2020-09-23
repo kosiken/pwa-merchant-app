@@ -46,6 +46,19 @@ const Cards = () => {
   }, []);
   return (
     <div className="mt-3">
+    
+                   <Typography
+        title
+        variant="secondary"
+              className="mb-1 ml-4"
+               style={{
+          fontSize: '2em',
+          fontWeight: '700',
+        }}
+      >Cards</Typography>
+      <Link to="/add-card" className="ml-3">
+            <Button color="clear"> Add Card</Button>
+          </Link>{' '}
       <Alert
         variant="danger"
         show={error}
@@ -72,9 +85,7 @@ const Cards = () => {
             justifyContent: 'flex-end',
           }}
         >
-          <Link to="/add-card">
-            <Button color="clear"> Add Card</Button>
-          </Link>{' '}
+    
         </Container>
       </Toast>{' '}
       <Container
