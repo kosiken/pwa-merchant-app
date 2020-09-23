@@ -57,7 +57,16 @@ const Dashboard = () => {
     <div style={{ minHeight: '100vh' }}>
       <Container>
         <div className="mt-4 mb-4">
-          <Typography bold>Recent Delivery Requests</Typography>
+          <Typography
+            title
+            variant="secondary"
+            style={{
+              fontSize: '2em',
+              fontWeight: '700',
+            }}
+          >
+            Recent Delivery Requests
+          </Typography>
 
           <Link to="/home">
             <Button color="clear"> Create Delivery Request</Button>
