@@ -12,18 +12,19 @@ import {
   Toast,
   ComboBox2,
 } from '../components';
-import { /*getDetails, */ HelpInfo } from '../constants';
+import { getDetails, HelpInfo } from '../constants';
 
 import api from '../api';
 
 const Profile = () => {
   const user = useSelector((state) => state.auth.user);
   let [isLoading, setLoading] = useState(true);
+  let [isLoading2, setLoading2] = useState(false);
   let [currentLocation, setCurrentLocation] = useState(null);
   let [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
-  const [open] = useState(false);
+  const [open, setOpen] = useState(false);
   const logOut = () => {
     dispatch({
       type: 'LOGOUT_USER',
@@ -37,6 +38,7 @@ const Profile = () => {
     setError(false);
     (async () => {
       try {
+        setLoading(true);
         let user = await api.getMe();
         const defA = {
           full_address: 'No Address',
@@ -58,6 +60,37 @@ const Profile = () => {
     init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const updateAddreess = async () => {
+    setLoading2(true);
+    if (currentLocation.place_id) {
+      currentLocation = await getDetails(currentLocation.place_id);
+
+      //  return;
+    } else {
+      setLoading2(false);
+      return;
+    }
+    let _user = { ...user };
+    _user.Address = null;
+    try {
+      await api.editModel({
+        ...user,
+        address: currentLocation,
+        model: 'Vendor',
+      });
+      setOpen(false);
+      setLoading2(false);
+      init();
+      return;
+    } catch (error) {
+      setLoading2(false);
+
+      if (error.data) setErrorMessage(error.data.error);
+      setError(true);
+    }
+  };
+
   return (
     <div>
       <Backdrop
@@ -80,7 +113,9 @@ const Profile = () => {
             style={{ margin: '0 auto' }}
             label="New Address*"
           />{' '}
-          <Button full>Logout</Button>
+          <Button full onClick={updateAddreess} loading={isLoading2}>
+            Logout
+          </Button>
         </Paper>
       </Backdrop>{' '}
       <Alert
@@ -144,7 +179,10 @@ const Profile = () => {
                 <Typography inline bold>
                   Pickup Address
                 </Typography>
-                {/*<Button color="clear"  onClick={()=> setOpen(true)}> Edit</Button>*/}
+                <Button color="clear" onClick={() => setOpen(true)}>
+                  {' '}
+                  Edit
+                </Button>
               </div>
             </HtmlTooltip>
             <Typography variant="gray">

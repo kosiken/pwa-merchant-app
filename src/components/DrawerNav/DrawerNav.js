@@ -62,10 +62,8 @@ const DrawerNav = () => {
             to={link.url}
             className={'nav-link ml flex-row center '}
             key={'link' + i}
-            
             style={{
-            padding: '.5rem 1rem'
-            
+              padding: '.5rem 1rem',
             }}
           >
             <span
