@@ -1,3 +1,5 @@
+import {  LOGOUT_USER } from '../types';
+
 const initialState = {
   cards: [],
 };
@@ -12,7 +14,9 @@ export default function (state = initialState, action) {
       };
 
       break;
-
+    case LOGOUT_USER:
+      returnValue = initialState;
+      break;
     default:
       break;
   }
