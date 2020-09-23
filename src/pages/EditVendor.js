@@ -68,7 +68,7 @@ const EditVendor = () => {
       <Typography
         title
         variant="secondary"
-        className="mb-1"
+        className="mb-1 ml-4"
         style={{
           fontSize: '2em',
           fontWeight: '700',
@@ -76,8 +76,8 @@ const EditVendor = () => {
       >
         Edit Profile
       </Typography>{' '}
-      <Link to="/profile">
-        <Button color="clear"> Back</Button>
+      <Link to="/profile" className="ml-3">
+        <Button color="clear" > Back</Button>
       </Link>
       {done && <Redirect to="/profile" />}
       <form
