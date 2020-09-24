@@ -66,5 +66,5 @@ export function getDistance(location1, location2) {
 }
 
 export function getFee(distance) {
-  return distance > 8 ? false : distance > 4 ? 1000 : 500;
+  return distance > 12 ? false : distance > 8 ? 1000 : 500;
 }

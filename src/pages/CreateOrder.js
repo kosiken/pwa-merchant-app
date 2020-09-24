@@ -33,9 +33,11 @@ const CreateOrder = () => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmiting] = useState(false);
   let [currentLocation, setCurrentLocation] = useState({});
-
+  let [detailedLocation, setDetailedLocation] = useState({});
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [key, setKey] = useState('');
+  const [fee, setFee] = useState(0);
+  const [distance, setDistance] = useState('');
   let [message, setMessage] = useState('Submitting');
   let [customer, setCustomer] = useState(null);
   const [open, setOpen] = useState(false);
@@ -57,7 +59,7 @@ const CreateOrder = () => {
   const { register, handleSubmit, errors, getValues } = useForm();
   const handleSubmitCallback = async (s) => {
     setSubmiting(true);
-    let distance;
+
     if (!user.Address.latitude) {
       setMessage('Resolving Pickup Address');
 
@@ -74,34 +76,16 @@ const CreateOrder = () => {
       }
     }
     if (tab === 'Saved Customer') {
-      if (customer) {
-        try {
-          let address = customer.Addresses[0];
-
-          distance = getDistance(address, user.Address);
-          // console.log(distance);
-        } catch (err) {
-          handleOpen('No address found for customer');
-          setSubmiting(false);
-          return;
-        }
-      } else {
+      if (!customer) {
         handleOpen('No customer selected');
         setSubmiting(false);
         return;
       }
-    } else if (currentLocation.place_id) {
-      currentLocation = await getDetails(currentLocation.place_id);
-      setMessage('Resolving Delivery Address');
-      distance = getDistance(currentLocation, user.Address);
-      //  return;
-    } else {
+    } else if (!detailedLocation.is_set) {
       handleOpen('No location selected');
       setSubmiting(false);
       return;
     }
-
-    const fee = getFee(distance);
 
     if (!fee) {
       handleOpen('Distance above 8km');
@@ -143,6 +127,46 @@ const CreateOrder = () => {
   const changeCurrentAddress = (e) => {
     setCurrentLocation(e.target.value);
   };
+  const bed = async () => {
+    let d, address;
+    console.log(distance);
+    if (tab === 'Saved Customer') {
+      if (customer) {
+        try {
+          let address = customer.Addresses[0];
+
+          d = getDistance(address, user.Address);
+          setDistance(d);
+          setFee(getFee(d));
+
+          // console.log(distance);
+        } catch (err) {
+          handleOpen('No address found for customer');
+          setSubmiting(false);
+          return;
+        }
+      }
+    } else {
+      if (!window.FivePlacesService) return;
+
+      if (!currentLocation.place_id) return;
+      address = await getDetails(currentLocation.place_id);
+      address.is_set = true;
+      setDetailedLocation(address);
+
+      setMessage('Resolving Delivery Address');
+      d = getDistance(address, user.Address);
+      setDistance(d);
+      setFee(getFee(d));
+    }
+  };
+  useEffect(
+    () => {
+      bed();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [customer, currentLocation]
+  );
 
   useEffect(() => {
     const handleClose = () => {
@@ -189,6 +213,16 @@ const CreateOrder = () => {
 
   return (
     <div style={{ minHeight: '100vh' }} className="mt-4">
+      <Typography
+        title
+        className="mb-4 ml-4"
+        style={{
+          fontSize: '2em',
+          fontWeight: '700',
+        }}
+      >
+        Create Delivery Request
+      </Typography>
       <Loader backdrop open={submitting}>
         <Typography style={{ color: 'white' }}> {message}</Typography>
       </Loader>
@@ -211,6 +245,14 @@ const CreateOrder = () => {
           <Typography small variant="primary" style={{ display: 'block' }}>
             Required*
           </Typography>
+          <Typography
+            small={fee === false}
+            variant={fee === false ? 'primary' : ''}
+            style={{ display: 'block' }}
+          >
+            {fee === false ? 'Distance over 8km' : 'Fee: NGN ' + fee}
+          </Typography>
+
           <HtmlTooltip
             title={<Typography inline>{HelpInfo.Customer}</Typography>}
             placement="right"
@@ -301,7 +343,7 @@ const CreateOrder = () => {
               margin: '0',
             }}
           >
-            Create Order
+            Create Delivery Request
           </Button>
         </div>
       </form>
