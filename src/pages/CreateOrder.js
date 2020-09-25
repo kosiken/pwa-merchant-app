@@ -151,11 +151,13 @@ const CreateOrder = () => {
       if (!window.FivePlacesService) return;
 
       if (!currentLocation.place_id) return;
+      setSubmiting(true);
+      setMessage('Resolving Delivery Address');
       address = await getDetails(currentLocation.place_id);
+      setSubmiting(false);
       address.is_set = true;
       setDetailedLocation(address);
 
-      setMessage('Resolving Delivery Address');
       d = getDistance(address, user.Address);
       setDistance(d);
       setFee(getFee(d));
@@ -250,7 +252,7 @@ const CreateOrder = () => {
             variant={fee === false ? 'primary' : ''}
             style={{ display: 'block' }}
           >
-            {fee === false ? 'Distance over 8km' : 'Fee: NGN ' + fee}
+            {fee === false ? 'Distance over 12km' : 'Fee: NGN ' + fee}
           </Typography>
 
           <HtmlTooltip
