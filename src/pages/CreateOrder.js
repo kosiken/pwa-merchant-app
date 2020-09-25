@@ -100,6 +100,7 @@ const CreateOrder = () => {
 
       order_notes: s.order_notes,
       fee,
+order_fee:fee,
     };
     if (tab === 'New Customer') {
       body = {
@@ -109,7 +110,7 @@ const CreateOrder = () => {
     } else {
       body = {
         ...body,
-        delivery_address_id: s.type_of_address,
+        delivery_address_id: customer.Addresses[0].id ,
       };
     }
     api
