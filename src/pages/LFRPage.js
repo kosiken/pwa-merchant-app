@@ -52,8 +52,7 @@ const LFRPage = () => {
             />
           </div>
           <BeatLoader color="#f0324b" />
-          <Typography>Looking for riders nearby</Typography>
-          <Button full>Cancel</Button>
+          <Typography>A rider would be assigned in 15 minutes</Typography>
         </div>
       </Container>
     </div>

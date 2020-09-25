@@ -100,16 +100,17 @@ const CreateOrder = () => {
 
       order_notes: s.order_notes,
       fee,
+      order_fee: fee,
     };
     if (tab === 'New Customer') {
       body = {
         ...body,
-        delivery_address: currentLocation,
+        delivery_address: { ...detailedLocation, is_set: undefined },
       };
     } else {
       body = {
         ...body,
-        delivery_address_id: s.type_of_address,
+        delivery_address_id: customer.Addresses[0].id,
       };
     }
     api
@@ -150,11 +151,13 @@ const CreateOrder = () => {
       if (!window.FivePlacesService) return;
 
       if (!currentLocation.place_id) return;
+      setSubmiting(true);
+      setMessage('Resolving Delivery Address');
       address = await getDetails(currentLocation.place_id);
+      setSubmiting(false);
       address.is_set = true;
       setDetailedLocation(address);
 
-      setMessage('Resolving Delivery Address');
       d = getDistance(address, user.Address);
       setDistance(d);
       setFee(getFee(d));
@@ -233,7 +236,6 @@ const CreateOrder = () => {
         onChange={setTab}
       />
       <form
-        autoComplete="off"
         className="f-form"
         style={{
           marginTop: '1.5em',
@@ -250,7 +252,7 @@ const CreateOrder = () => {
             variant={fee === false ? 'primary' : ''}
             style={{ display: 'block' }}
           >
-            {fee === false ? 'Distance over 8km' : 'Fee: NGN ' + fee}
+            {fee === false ? 'Distance over 12km' : 'Fee: NGN ' + fee}
           </Typography>
 
           <HtmlTooltip
