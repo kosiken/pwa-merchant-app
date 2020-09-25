@@ -100,17 +100,17 @@ const CreateOrder = () => {
 
       order_notes: s.order_notes,
       fee,
-order_fee:fee,
+      order_fee: fee,
     };
     if (tab === 'New Customer') {
       body = {
         ...body,
-        delivery_address: currentLocation,
+        delivery_address: { ...detailedLocation, is_set: undefined },
       };
     } else {
       body = {
         ...body,
-        delivery_address_id: customer.Addresses[0].id ,
+        delivery_address_id: customer.Addresses[0].id,
       };
     }
     api
@@ -234,7 +234,6 @@ order_fee:fee,
         onChange={setTab}
       />
       <form
-        autoComplete="off"
         className="f-form"
         style={{
           marginTop: '1.5em',
