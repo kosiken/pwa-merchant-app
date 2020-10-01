@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,17 +7,25 @@ import { Container, Alert } from 'react-bootstrap';
 import api from '../api';
 import { FiCreditCard as CreditCardIcon } from 'react-icons/fi';
 import Paper from '@material-ui/core/Paper';
+import { useSnackbar } from 'notistack';
+
 const Cards = () => {
   let [loading, setLoading] = useState(true);
   let [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
+  const textAreaRef = useRef(null);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [open, setOpen] = useState(false);
+  const [key, setKey] = useState('');
+
   const { cards, user } = useSelector((state) => {
     return {
       cards: state.card.cards || [],
       user: state.auth.user,
     };
   });
+
   const init = () => {
     setError(false);
     (async () => {
@@ -41,6 +49,35 @@ const Cards = () => {
       }
     })();
   };
+
+  function handleOpen(m) {
+    setKey(enqueueSnackbar(m));
+  }
+
+  const copyAccountNumber = () => {
+    textAreaRef.current.select();
+    textAreaRef.current.setSelectionRange(0, 99999);
+    document.execCommand('copy');
+
+    handleOpen(`${user.account_number} copied`);
+  };
+
+  useEffect(() => {
+    const handleClose = () => {
+      setOpen(false);
+      closeSnackbar(key);
+    };
+
+    let timeout;
+    if (open) {
+      timeout = setTimeout(handleClose, 1000);
+    }
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
   useEffect(() => {
     init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,27 +110,21 @@ const Cards = () => {
           <Typography inline>Oh snap! You got an error! </Typography>
         </Alert.Heading>
         <Typography>{errorMessage}</Typography>
-      </Alert>{' '}
+      </Alert>
       <Toast
         color="primary"
         style={{
           display: 'flex',
           justifyContent: 'flex-end',
         }}
-      >
-        {' '}
-      </Toast>{' '}
+      ></Toast>
       <div
         className="p-2 mb-3"
         style={{
           textAlign: 'center',
         }}
       >
-        {' '}
-        <Typography inline> Wallet Balance</Typography>{' '}
-        <Link to="/fund-wallet">
-          <Button color="clear"> Fund</Button>
-        </Link>
+        <Typography inline> Wallet Balance</Typography>
         <Typography
           title
           style={{
@@ -102,7 +133,34 @@ const Cards = () => {
           }}
         >
           {'NGN' + user.wallet_balance.toFixed(2)}
-        </Typography>{' '}
+        </Typography>
+      </div>
+      <div
+        style={{
+          textAlign: 'center',
+        }}
+      >
+        {user.account_number && (
+          <>
+            <Button onClick={copyAccountNumber} color="clear">
+              Fund via Bank Transfer [copy]
+            </Button>
+            <br />
+            {user.bank_name}
+            <input
+              style={{
+                borderWidth: 0,
+                width: 120,
+                backgroundColor: 'white',
+                color: 'black',
+                textAlign: 'center',
+              }}
+              contentEditable="false"
+              ref={textAreaRef}
+              value={`${user.account_number}`}
+            />
+          </>
+        )}
       </div>
       <Container
         style={{
@@ -115,12 +173,11 @@ const Cards = () => {
             className="flex"
             style={{ justifyContent: 'space-between', alignItems: 'center' }}
           >
-            {' '}
             <Typography inline bold>
               Cards
             </Typography>{' '}
-            <Link to="/add-card" className="ml-3">
-              <Button color="clear"> Add Card</Button>
+            <Link to="/fund-wallet">
+              <Button color="clear"> Fund With Card</Button>
             </Link>
           </div>
           <hr />{' '}
@@ -153,6 +210,15 @@ const Cards = () => {
           {cards.map((card, i) => (
             <Card card={card} key={'card' + i} />
           ))}
+          <div
+            style={{
+              textAlign: 'center',
+            }}
+          >
+            <Link to="/add-card" className="ml-3">
+              <Button color="clear"> Add Card</Button>
+            </Link>
+          </div>
         </Paper>
       </Container>
     </div>

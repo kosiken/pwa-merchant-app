@@ -43,7 +43,7 @@ export const OnboardingSteps = [
 
   {
     title: 'Add Payment Method',
-    text: `Add a card which we would use to fund your wallet`,
+    text: `Fund your wallet via bank transfer or with a card`,
   },
   {
     title: `All done`,
