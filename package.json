@@ -1,5 +1,6 @@
 {
   "name": "pwa-merchant-app",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -58,5 +59,4 @@
     "node-sass": "^4.14.1",
     "prettier": "^2.1.1"
   }
-  "homepage": "."
 }
