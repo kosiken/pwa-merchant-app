@@ -99,6 +99,11 @@ const CreateOrder = () => {
       return;
     }
 
+    if (Number(user.wallet_balance) < fee) {
+      handleOpen('Please fund your wallet to place this delivery request');
+      setSubmiting(false);
+      return;
+    }
     setMessage('Submitting Delivery Request');
     let body = {
       full_name: getValues('name'),
