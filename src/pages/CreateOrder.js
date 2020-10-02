@@ -60,7 +60,7 @@ const CreateOrder = () => {
   const handleSubmitCallback = async (s) => {
     setSubmiting(true);
 
-    if (Number(user.wallet_balance) < 500) {
+    if (fee > Number(user.wallet_balance)) {
       handleOpen('Please fund your wallet to place this delivery request');
       setSubmiting(false);
       return;
@@ -94,7 +94,7 @@ const CreateOrder = () => {
     }
 
     if (!fee) {
-      handleOpen('Distance above 8km');
+      handleOpen('Distance above 12km');
       setSubmiting(false);
       return;
     }
@@ -165,6 +165,7 @@ const CreateOrder = () => {
       setDetailedLocation(address);
 
       d = getDistance(address, user.Address);
+
       setDistance(d);
       setFee(getFee(d));
     }
