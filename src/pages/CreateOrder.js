@@ -60,6 +60,11 @@ const CreateOrder = () => {
   const handleSubmitCallback = async (s) => {
     setSubmiting(true);
 
+    if (fee > Number(user.wallet_balance)) {
+      handleOpen('Please fund your wallet to place this delivery request');
+      setSubmiting(false);
+      return;
+    }
 
     if (!user.Address.latitude) {
       setMessage('Resolving Pickup Address');
@@ -165,6 +170,7 @@ const CreateOrder = () => {
       setDetailedLocation(address);
 
       d = getDistance(address, user.Address);
+
       setDistance(d);
       setFee(getFee(d));
     }
