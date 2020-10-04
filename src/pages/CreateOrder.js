@@ -60,6 +60,12 @@ const CreateOrder = () => {
   const handleSubmitCallback = async (s) => {
     setSubmiting(true);
 
+    if (fee > Number(user.wallet_balance)) {
+      handleOpen('Please fund your wallet to place this delivery request');
+      setSubmiting(false);
+      return;
+    }
+
     if (!user.Address.latitude) {
       setMessage('Resolving Pickup Address');
 
@@ -88,11 +94,16 @@ const CreateOrder = () => {
     }
 
     if (!fee) {
-      handleOpen('Distance above 8km');
+      handleOpen('Distance above 12km');
       setSubmiting(false);
       return;
     }
 
+    if (Number(user.wallet_balance) < fee) {
+      handleOpen('Please fund your wallet to place this delivery request');
+      setSubmiting(false);
+      return;
+    }
     setMessage('Submitting Delivery Request');
     let body = {
       full_name: getValues('name'),
@@ -159,6 +170,7 @@ const CreateOrder = () => {
       setDetailedLocation(address);
 
       d = getDistance(address, user.Address);
+
       setDistance(d);
       setFee(getFee(d));
     }
@@ -244,16 +256,33 @@ const CreateOrder = () => {
         ref={formRef}
       >
         <div className="container">
-          <Typography small variant="primary" style={{ display: 'block' }}>
-            Required*
-          </Typography>
-          <Typography
-            small={fee === false}
-            variant={fee === false ? 'primary' : ''}
-            style={{ display: 'block' }}
-          >
-            {fee === false ? 'Distance over 12km' : 'Fee: NGN ' + fee}
-          </Typography>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div>
+              <Typography small variant="primary" style={{ display: 'block' }}>
+                Required*
+              </Typography>
+              <Typography
+                small={fee === false}
+                variant={fee === false ? 'primary' : ''}
+                style={{ display: 'block' }}
+              >
+                {fee === false ? 'Distance over 12km' : 'Fee: NGN ' + fee}
+              </Typography>
+            </div>
+
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+              }}
+            >
+              <Typography small>Wallet Balance</Typography>
+              <Typography style={{ display: 'block' }}>
+                NGN {user.wallet_balance}
+              </Typography>
+            </div>
+          </div>
 
           <HtmlTooltip
             title={<Typography inline>{HelpInfo.Customer}</Typography>}

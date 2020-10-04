@@ -4,10 +4,13 @@ import { Link } from 'react-router-dom';
 import { OnboardProgress, Button, Typography, Toast } from '../components';
 import { OnboardingSteps } from '../constants';
 import CreateCard from './CreateCard';
-
 import welcome from '../assets/welcome.png';
 import Customers from './Customers';
+import { useSelector } from 'react-redux';
+
 const Onboard = () => {
+  const user = useSelector((state) => state.auth.user);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   //  const { foodItems } = useSelector((state) => {
   //return {
@@ -142,6 +145,18 @@ const Onboard = () => {
               Skip
             </Button>
           </Toast>
+
+          {user.account_number && (
+            <div className="mt-5" style={{ textAlign: 'center' }}>
+              <Typography title>Your Personal account number</Typography>
+              <p>Use this account number to fund your Wallet</p>
+              <Typography style={{ color: '#f0324b', fontSize: '1.5em' }}>
+                {user.account_number} - {user.bank_name}
+              </Typography>
+              <p>Or</p>
+            </div>
+          )}
+
           <CreateCard
             component
             handleDone={(index) => {

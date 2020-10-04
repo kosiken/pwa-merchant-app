@@ -14,8 +14,7 @@ class FiveChowError extends Error {
   }
 }
 
-let prod = process.env.NODE_ENV === 'development';
-
+let prod = process.env.NODE_ENV !== 'development';
 const Axios = axios.create({
   baseURL: prod ? 'https://api.500chow.com' : 'http://127.0.0.1:3000',
   headers: { 'Content-Type': 'application/json' },
