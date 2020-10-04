@@ -59,7 +59,6 @@ const Dashboard = () => {
         <div className="mt-4 mb-4">
           <Typography
             title
-            variant="secondary"
             style={{
               fontSize: '2em',
               fontWeight: '700',

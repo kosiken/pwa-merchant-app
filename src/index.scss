@@ -7,11 +7,18 @@ body {
 a {
   color: inherit;
 }
-.nav-link:hover,
+.nav-link:hover {
+  color: #f39237;
+}
+.nav-white {
+  color: #ffffff;
+}
 .hv:hover {
   background-color: #e5e5e5;
 }
-
+.margino {
+  margin-top: 5vh !important;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -27,7 +34,7 @@ code {
 
 a {
   text-decoration: none !important;
-  color: #000 !important;
+  color: #000;
 }
 .add-div {
   position: relative;
@@ -51,6 +58,15 @@ a {
 }
 .flex {
   display: flex;
+}
+.flex-md {
+  display: block;
+}
+.landingImg {
+  width: 240px;
+}
+.blue {
+  background-color: #9cd4ed;
 }
 
 main {
@@ -229,6 +245,9 @@ main {
   flex-direction: column;
 }
 @media all and (min-width: 699px) {
+  .landingImg {
+    width: 300px;
+  }
   .food-items {
     padding: 0;
     display: grid;
@@ -239,6 +258,9 @@ main {
 }
 
 @media all and (min-width: 799px) {
+  .margino {
+    margin-top: 10vh !important;
+  }
   .food-items {
     padding: 0;
     display: grid;
@@ -270,9 +292,16 @@ main {
   .navbar-toggler {
     display: none;
   }
+
+  .flex-md {
+    display: flex;
+  }
 }
 
 @media (min-width: 1200px) {
+  .landingImg {
+    width: 350px;
+  }
   .customerPage {
     display: grid;
     grid-template-columns: auto 350px;

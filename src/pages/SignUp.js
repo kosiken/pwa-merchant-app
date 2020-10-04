@@ -131,7 +131,6 @@ const SignUp = () => {
       >
         <Typography
           title
-          variant="secondary"
           className="mb-4"
           style={{
             fontSize: '2em',
@@ -222,7 +221,7 @@ const SignUp = () => {
               : {}
           }
         />
-        <Link to="/">
+        <Link to="/login">
           <Typography
             style={{
               color: '#5d97c6',

@@ -9,11 +9,21 @@
   outline: none;
   // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  font-weight: 500;
+  font-weight: 600;
   &.primary {
     background-color: $primary;
     &:hover {
       background-color: darken($color: $primary, $amount: 20%);
+    }
+  }
+
+  &.outlined {
+    background-color: transparent;
+    border: 2px solid #091133;
+    color: #091133;
+    &:hover {
+      border: 2px solid lighten($color: #091133, $amount: 20%);
+      color: lighten($color: #091133, $amount: 20%);
     }
   }
   &.secondary {
@@ -25,7 +35,7 @@
 
   &.clear {
     background-color: transparent;
-    color: $primary;
+    color: $info;
     box-shadow: none;
     text-align: left;
     font-size: 85%;

@@ -49,8 +49,9 @@ const TopBar = ({ title }) => {
       expand="lg"
       sticky="top"
       style={{
-        backgroundColor: '#011627',
+        backgroundColor: '#1c77c3',
         alignItems: 'center',
+        boxShadow: '0 1px 6px 0 rgba(32, 33, 36, 0.28)',
       }}
       className="col-12"
     >
@@ -72,7 +73,8 @@ const TopBar = ({ title }) => {
           <Typography
             title
             style={{
-              color: '#ffdc4a',
+              color: '#fff',
+              fontWeight: '700',
               lineHeight: '1.2em',
             }}
           >

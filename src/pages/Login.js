@@ -54,7 +54,6 @@ const Login = () => {
       <form className="f-form" onSubmit={handleSubmit(submit)} id="f-main">
         <Typography
           title
-          variant="secondary"
           className="mb-4"
           style={{
             fontSize: '2em',

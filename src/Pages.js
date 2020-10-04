@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import $script from 'scriptjs';
-import { Container, Row, Col, Image, Alert } from 'react-bootstrap';
+import { Container, Image, Alert } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { TopBar, DrawerNav, Typography, Button } from './components';
@@ -20,14 +20,15 @@ import CreateFoodItem from './pages/CreateFoodItem';
 import CreateCard from './pages/CreateCard';
 import Cards from './pages/Cards';
 import OrderPage from './pages/OrderPage';
+
 import Onboard from './pages/Onboard';
 import LFRPage from './pages/LFRPage';
 
 import FundWallet from './pages/FundWallet';
-import logo from './assets/logo-variant.png';
 
 import not_found from './assets/not_found.svg';
 import { GOOGLE_MAPS_API_KEY } from './constants';
+import LandingPage from './pages/Landing';
 
 const Auththenticated = () => {
   const [show, setShow] = React.useState(false);
@@ -96,6 +97,9 @@ const Auththenticated = () => {
             <Redirect to="/welcome" />
           </Route>
           <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>{' '}
+          <Route exact path="/login">
             <Redirect to="/home" />
           </Route>
           <Route exact path="/welcome">
@@ -295,114 +299,19 @@ const Auththenticated = () => {
 
 const UnAuththenticated = () => {
   return (
-    <Row className="m-0">
-      <Col
-        xs={12}
-        md={6}
-        lg={5}
-        className="pt-3 pb-4 flex central"
-        style={{
-          backgroundColor: '#011627',
-          color: '#fff',
-        }}
-      >
-        <Container>
-          <div>
-            <Image
-              src={logo}
-              style={{
-                width: '80px',
-              }}
-            />
-            <Typography
-              title
-              className="mt-4 mb-4"
-              style={{
-                color: '#ffdc4a',
-              }}
-            >
-              500 dash
-            </Typography>
-          </div>
-          <div>
-            <Typography
-              style={{
-                fontSize: '2em',
-                lineHeight: '1.2em',
-                fontWeight: '600',
-              }}
-            >
-              Get your meals to your customers using{' '}
-              <Typography
-                style={{
-                  color: '#ffdc4a',
-                }}
-                inline
-              >
-                {' 500dash'}
-              </Typography>
-            </Typography>
-
-            <Typography>
-              {'500dash is a food delivery service from '}
-              <a href="#f-main">
-                <Typography
-                  style={{
-                    color: '#5d97c6',
-                  }}
-                  inline
-                >
-                  {'500 chow '}
-                </Typography>
-              </a>
-              {'that gives food vendors and restaurants the ability to deliver meals to' +
-                ' their customers in the best possible time and with great service'}
-            </Typography>
-          </div>
-          <a href="#f-main">
-            <Button className="hide-md">Continue</Button>
-          </a>
-        </Container>
-
-        <Typography
-          style={{
-            textAlign: 'center',
-            position: 'absolute',
-            display: 'block',
-            bottom: '0',
-            left: '0',
-            width: '100%',
-          }}
-        >
-          Made with{' '}
-          <span role="img" aria-label="love">
-            ❤️{' '}
-          </span>
-          <span
-            style={{
-              color: '#f0324b',
-            }}
-          >
-            500Chow
-          </span>
-        </Typography>
-      </Col>
-      <Col xs={12} md={6} lg={7} className="p-0">
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              <Login />
-            </Route>
-            <Route exact path="/signup">
-              <SignUp />
-            </Route>{' '}
-            <Route path="*" exact={true}>
-              <Login />
-            </Route>
-          </Switch>
-        </Router>
-      </Col>
-    </Row>
+    <Router>
+      <Switch>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/signup">
+          <SignUp />
+        </Route>
+        <Route exact path="*">
+          <LandingPage />
+        </Route>{' '}
+      </Switch>
+    </Router>
   );
 };
 

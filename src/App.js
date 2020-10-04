@@ -7,7 +7,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { SnackbarProvider } from 'notistack';
 import fun from './store';
 import Pages from './Pages';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 function App() {
   const { store, persistor } = fun();
 

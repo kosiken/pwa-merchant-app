@@ -98,7 +98,7 @@ const DrawerNav = () => {
         </span>
         <span
           style={{
-            color: '#f0324b',
+            color: '#1c77c3',
           }}
         >
           500Chow
