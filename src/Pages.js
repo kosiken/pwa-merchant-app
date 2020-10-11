@@ -4,7 +4,14 @@ import $script from 'scriptjs';
 import { Container, Image, Alert } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { TopBar, DrawerNav, Typography, Button, NavBar } from './components';
+import {
+  TopBar,
+  DrawerNav,
+  Typography,
+  Button,
+  NavBar,
+  Loader,
+} from './components';
 // import Cards from './pages/Cards';
 import Customers from './pages/Customers';
 import CreateOrder from './pages/CreateOrder';
@@ -35,6 +42,8 @@ const Auththenticated = () => {
   const [message, setMessage] = React.useState(
     'Geolocation is not supported by this browser.'
   );
+  const [loaded, setLoaded] = React.useState(false);
+
   React.useEffect(() => {
     $script(`https://js.paystack.co/v2/inline.js`, 'paystack');
     $script(
@@ -48,9 +57,11 @@ const Auththenticated = () => {
       if (!window.google) {
         deps += 'google-maps';
         setMessage('failed to load dependencies' + deps);
-        setShow(true);
+        setShow(true); setLoaded(true);
         return;
       }
+
+      setLoaded(true);
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
         window.FivePlacesService = new window.google.maps.places.PlacesService(
@@ -71,6 +82,8 @@ const Auththenticated = () => {
       }
     });
   }, []);
+
+  if (!loaded) return <Loader />;
   return (
     <div>
       <Alert

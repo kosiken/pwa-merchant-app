@@ -11,6 +11,9 @@ import Loader from './Loader/Loader';
 import ErrorComponent from './Error/Error';
 import Order from './Order/Order';
 import ComboBox from './ComboBox/ComboBox';
+
+import Map from './Map/Map';
+
 import ComboBox2 from './ComboBox2/ComboBox2';
 import ComboBox0 from './ComboBox0/ComboBox0';
 import Toast from './Toast/Toast';
@@ -21,6 +24,7 @@ import DrawerNav from './DrawerNav/DrawerNav';
 import OnboardProgress from './OnboardProgress/OnboardProgress';
 import HtmlTooltip from './HtmlTooltip/HtmlTooltip';
 import Card from './Card/Card';
+
 export {
   Input,
   Button,
@@ -45,4 +49,5 @@ export {
   OnboardProgress,
   HtmlTooltip,
   Card,
+  Map,
 };

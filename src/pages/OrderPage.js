@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import LinearProgress from '@material-ui/core/LinearProgress';
-
-import Paper from '@material-ui/core/Paper';
 
 import { useSelector } from 'react-redux';
 import { Row, Col, Container, Image } from 'react-bootstrap';
@@ -15,6 +12,7 @@ import {
   Loader,
   Order,
   ErrorComponent,
+  Map,
 } from '../components';
 
 import api from '../api';
@@ -32,7 +30,12 @@ const OrderPage = () => {
     setError(false);
     try {
       let resp = await api.getOrder(id);
-      setOrder(resp[0]);
+      setOrder({
+        ...resp[0],
+        Driver: {
+          public_id: '445fe2',
+        },
+      });
       setLoading(false);
       return resp[0];
     } catch (error) {
@@ -125,24 +128,15 @@ const OrderPage = () => {
                   />
                 </div>
                 <Typography title className="t-center">
-                  No Rider Found{' '}
+                  No Rider Found
                 </Typography>
                 <Typography className="t-center">
-                  No rider was found that was attached to this request{' '}
+                  No rider was found that was attached to this request
                 </Typography>
               </div>
             )}
             {order.Driver && (
-              <div className="mt-3 mb-3 t-center">
-                <Paper className="pb-3">
-                  <LinearProgress />
-                  <br /> <br />
-                  <Typography className="t-center">
-                    Finding location{' '}
-                  </Typography>
-                  <Button>Cancel</Button>
-                </Paper>
-              </div>
+              <Map rider={order.Driver.public_id} token={token} />
             )}
           </Container>
         </Col>
