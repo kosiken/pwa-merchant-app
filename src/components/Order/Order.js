@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import moment from 'moment';
 import Typography from '../Typography/Typography';
-
+import Button from '../Button/Button';
 import styles from './Order.module.scss';
 // const Statuses = [
 //   'Created',
@@ -149,6 +149,11 @@ const Order = ({ order, loader, page }) => {
 
             <Typography>{order.Address.order_notes}</Typography> */}
           <hr />
+          <a href="#track">
+            <Button full className="navbar-toggler">
+              Track
+            </Button>
+          </a>
         </div>
       </Container>
     );

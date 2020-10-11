@@ -4,7 +4,7 @@ import $script from 'scriptjs';
 import { Container, Image, Alert } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { TopBar, DrawerNav, Typography, Button } from './components';
+import { TopBar, DrawerNav, Typography, Button, NavBar } from './components';
 // import Cards from './pages/Cards';
 import Customers from './pages/Customers';
 import CreateOrder from './pages/CreateOrder';
@@ -20,7 +20,7 @@ import CreateFoodItem from './pages/CreateFoodItem';
 import CreateCard from './pages/CreateCard';
 import Cards from './pages/Cards';
 import OrderPage from './pages/OrderPage';
-
+import Orders from './pages/Orders';
 import Onboard from './pages/Onboard';
 import LFRPage from './pages/LFRPage';
 
@@ -130,6 +130,17 @@ const Auththenticated = () => {
               }}
             >
               <Dashboard />
+            </main>
+          </Route>{' '}
+          <Route exact path="/requests">
+            <TopBar title="All Delivery Requests" /> <DrawerNav />
+            <main
+              id="contents"
+              style={{
+                flexGrow: 1,
+              }}
+            >
+              <Orders />
             </main>
           </Route>
           <Route exact path="/add-card">
@@ -300,6 +311,7 @@ const Auththenticated = () => {
 const UnAuththenticated = () => {
   return (
     <Router>
+      <NavBar />
       <Switch>
         <Route exact path="/login">
           <Login />

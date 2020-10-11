@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Nav, Navbar, Row, Col, Image } from 'react-bootstrap';
+import { Container, Nav, Row, Col, Image } from 'react-bootstrap';
 import { Button, Typography } from '../components';
 import { Link } from 'react-router-dom';
 import landing1 from '../assets/landing1.svg';
@@ -18,7 +18,7 @@ import {
 
 const links = [
   {
-    url: '/home',
+    url: '/',
     name: 'Home',
   },
   {
@@ -58,56 +58,6 @@ const Socials = [
 const LandingPage = () => {
   return (
     <div>
-      <Container>
-        <Navbar
-          expand="lg"
-          sticky="top"
-          style={{
-            backgroundColor: 'transparent',
-          }}
-        >
-          <Navbar.Brand>
-            {' '}
-            <Typography
-              variant="primary"
-              className="mb-0"
-              style={{
-                fontSize: '1.5em',
-                fontWeight: '700',
-              }}
-            >
-              500dash
-            </Typography>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
-            {links.map((link, index) => {
-              if (link.button) {
-                return (
-                  <Link
-                    to={link.url}
-                    className={'nav-link'}
-                    key={'landing-link' + index}
-                  >
-                    <Button>{link.name}</Button>
-                  </Link>
-                );
-              } else
-                return (
-                  <Link
-                    to={link.url}
-                    className={'nav-link'}
-                    key={'landing-link' + index}
-                  >
-                    <Typography inline bold>
-                      {link.name}
-                    </Typography>
-                  </Link>
-                );
-            })}
-          </Navbar.Collapse>
-        </Navbar>
-      </Container>
       <Container className="margino pt-5 pb-3">
         <Row
           className="m-0"

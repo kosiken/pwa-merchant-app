@@ -111,7 +111,6 @@ const Orders = () => {
                 <tr>
                   <th>Customer</th>
 
-                  <th>Total</th>
                   <th>Status</th>
                   <th>View</th>
                 </tr>

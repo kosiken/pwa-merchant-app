@@ -66,9 +66,11 @@ const Dashboard = () => {
           >
             Recent Delivery Requests
           </Typography>
-
           <Link to="/home">
             <Button color="clear"> Create Delivery Request</Button>
+          </Link>{' '}
+          <Link to="/requests">
+            <Button color="clear">See All</Button>
           </Link>
         </div>{' '}
         <Calender onChange={setCurrentDate} />

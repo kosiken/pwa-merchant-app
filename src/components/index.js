@@ -2,7 +2,7 @@ import Input from './Input/Input';
 import Button from './Button/Button';
 import IconButton from './IconButton/IconButton';
 import SwitchBox from './SwitchBox/SwitchBox';
-
+import NavBar from './NavBar/NavBar';
 import Typography from './Typography/Typography';
 import TopBar from './TopBar/TopBar';
 import Checkbox from './Checkbox/Checkbox';
@@ -28,6 +28,7 @@ export {
   SwitchBox,
   Typography,
   TopBar,
+  NavBar,
   Checkbox,
   CustomerListItem,
   Loader,

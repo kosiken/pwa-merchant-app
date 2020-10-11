@@ -7,6 +7,10 @@ body {
 a {
   color: inherit;
 }
+
+.t-center {
+  text-align: center;
+}
 .nav-link:hover {
   color: #f39237;
 }
@@ -290,7 +294,7 @@ main {
     overflow-x: hidden;
   }
   .navbar-toggler {
-    display: none;
+    display: none !important;
   }
 
   .flex-md {
